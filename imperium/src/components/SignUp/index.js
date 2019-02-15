@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   error: null,
+  
 };
 
 class SignUpFormBase extends Component {
