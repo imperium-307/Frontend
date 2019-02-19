@@ -18,7 +18,7 @@ const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   error: null,
-  
+
 };
 
 class SignUpFormBase extends Component {
@@ -29,14 +29,30 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    const { username, email, passwordOne, passwordTwo } = this.state;
 
-    this.props.firebase
-      .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
-      })
+    fetch("http://localhost:3000/api/user/signup", {
+  			body: JSON.stringify({
+  				email: email,
+  				password: passwordOne,
+          passwordConfirm: passwordTwo
+  			}),
+  			cache: 'no-cache',
+  			credentials: 'same-origin',
+  			headers: {
+  				'content-type': 'application/json'
+  			},
+  			mode: 'cors',
+  			method: 'POST'
+  		})
+  			.then((res) => {
+  				return res.json()
+  			})
+  			.then((res) => {
+  				this.setState({token: res.token});
+  				this.props.history.push(ROUTES.HOME);
+  				console.log("signed in")
+  			})
       .catch(error => {
         this.setState({ error });
       });
