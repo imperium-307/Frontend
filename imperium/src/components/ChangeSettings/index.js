@@ -1,10 +1,10 @@
 import React from 'react';
 
-const DeleteAccountButton = () => (
+const ChangeSettingsButton = () => (
   <button type="button">
-    Delete Account
+    Change Settings
     //TODO actually send call to delete account
   </button>
 );
 
-export default DeleteAccountButton;
+export default ChangeSettingsButton;

@@ -23,6 +23,9 @@ const Navigation = () => (
         <Link to={ROUTES.ADMIN}>Admin</Link>
       </li>
       <li>
+        <Link to={ROUTES.MATCHES}>Matches</Link>
+      </li>
+      <li>
         <SignOutButton />
       </li>
     </ul>
