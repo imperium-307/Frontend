@@ -4,8 +4,15 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+const styles = {
+  fontFamily: "sans-serif",
+  textAlign: "center",
+  marginTop: "40px",
+	color: "#3D23B0"
+};
+
 const Account = () => (
-	<AccountPreferences />
+		<AccountPreferences />
 );
 
 const INITIAL_STATE = {
@@ -156,7 +163,8 @@ class AccountPreferences extends Component {
 			bio === '';
 
 		return (
-			<div>
+			<div style={styles}>
+			<style>{'body { background-color: #282c34; }'}</style>
 			<h1>Account</h1>
 			<form onSubmit={this.onSubmit}>
 			<input
@@ -201,7 +209,7 @@ class AccountPreferences extends Component {
 
 			<br/>
 			<button type="button" type="submit" disabled={isInvalid}>
-			save preferences
+			Save Preferences
 			</button>
 
 			{error && <p>{error.message}</p>}

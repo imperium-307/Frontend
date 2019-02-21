@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import './Button.css';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+const styles = {
+  fontFamily: "sans-serif",
+  textAlign: "center",
+  marginTop: "40px",
+  color: "#3D23B0"
+};
+
 const SignUpPage = () => (
-  <div>
+  <div style={styles}>
+  <style>{'body { background-color: #282c34; }'}</style>
     <h1>Sign Up As A Student</h1>
     <SignUpForm />
   </div>

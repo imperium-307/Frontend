@@ -6,12 +6,19 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import * as ROUTES from '../../constants/routes';
 
+const styles = {
+  fontFamily: "sans-serif",
+  textAlign: "center",
+  marginTop: "40px",
+	color: "#3D23B0"
+};
 const SignInPage = () => (
-	<div>
-	<h1>Welcome!</h1>
-	<SignInForm />
-	<PasswordForgetLink />
-	<SignUpLink />
+	<div style={styles}>
+		<style>{'body { background-color: #282c34; }'}</style>
+		<h1>Welcome to Imperium!</h1>
+		<SignInForm />
+		<PasswordForgetLink />
+		<SignUpLink />
 	</div>
 );
 
@@ -113,7 +120,7 @@ class SignInFormBase extends Component {
 			Sign In
 			</button>
 
-			{error && <p>{error}</p>}
+			{error && <p>{error.message}</p>}
 			</form>
 		);
 	}
