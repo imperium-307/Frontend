@@ -14,6 +14,7 @@ const Account = () => (
 const INITIAL_STATE = {
   username: '',
   email: '',
+	bio: '',
   passwordOne: '',
   passwordTwo: '',
   error: null,
@@ -76,6 +77,33 @@ class AccountPreferences extends Component {
 			mode: 'cors',
 			method: 'POST'
 		})
+			.then(() => {
+				fetch("http://localhost:3000/api/user", {
+					body: JSON.stringify({
+						token: localStorage.getItem('token')
+					}),
+					cache: 'no-cache',
+					credentials: 'same-origin',
+					headers: {
+						'content-type': 'application/json'
+					},
+					mode: 'cors',
+					method: 'POST'
+				})
+					.then((res) => {
+						return res.json()
+					})
+					.then((res) => {
+						this.setState({
+							username: res.username,
+							email: res.email,
+							bio: res.bio
+						});
+					})
+					.catch(error => {
+						this.setState({ error });
+					});
+			})
 			.catch(error => {
 				this.setState({ error });
 			});
