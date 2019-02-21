@@ -18,6 +18,9 @@ const buttonText = {
 	        fontWeight: '400',
 	        color: "#fff"
 }
+const formStyle = {
+
+}
 const buttonStyle = {
 	fontSize: 20,
 	fontWeight: '400',
@@ -55,7 +58,7 @@ class SignInFormBase extends Component {
 
 	onSubmit = event => {
 		const { email, password } = this.state;
-
+		var x = 1;
 		fetch("http://localhost:3000/api/user/login", {
 			body: JSON.stringify({
 				email: email,
@@ -70,12 +73,19 @@ class SignInFormBase extends Component {
 			method: 'POST'
 		})
 			.then((res) => {
+				if (res.status != 200) {
+					x = 0;
+					return;
+				}
 				return res.json()
 			})
 			.then((res) => {
+				if (!Boolean(x)) {
+					return;
+				}
 				this.props.history.push(ROUTES.HOME);
 				localStorage.setItem('token', res.token)
-				
+
 				if (this.state.rememberEmail == "on") {
 					localStorage.setItem('email', email)
 				} else {
@@ -101,7 +111,7 @@ class SignInFormBase extends Component {
 		const isInvalid = password === '' || email === '';
 
 		return (
-			<form onSubmit={this.onSubmit}>
+			<form style={formStyle} onSubmit={this.onSubmit}>
 			<input
 			name="email"
 			value={email}
