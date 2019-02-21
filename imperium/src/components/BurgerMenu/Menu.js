@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 
+function logout() {
+	localStorage.removeItem('token')
+}
+
 export default ({ close }) => (
   <div className="menu">
     <ul>
@@ -26,8 +30,7 @@ export default ({ close }) => (
         <Link to={ROUTES.MATCHES}>Matches</Link>
       </li>
       <li onClick={close}>
-        <SignOutButton />
-        <Link to={ROUTES.LANDING}>Sign Out</Link>
+        <Link onClick={logout} to={ROUTES.LANDING}>Sign Out</Link>
       </li>
     </ul>
   </div>

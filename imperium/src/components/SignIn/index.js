@@ -50,6 +50,7 @@ class SignInFormBase extends Component {
 			.then((res) => {
 				this.setState({token: res.token});
 				this.props.history.push(ROUTES.HOME);
+				localStorage.setItem('token', res.token)
 				console.log("logged in")
 			})
 			.catch(error => {
