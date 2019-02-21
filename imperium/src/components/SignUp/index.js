@@ -17,6 +17,7 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  bio: '',
   error: null,
 
 };
@@ -37,7 +38,7 @@ class SignUpFormBase extends Component {
   				email: email,
   				password: passwordOne,
           passwordConfirm: passwordTwo,
-          bio: bio 
+          bio: bio
   			}),
   			cache: 'no-cache',
   			credentials: 'same-origin',
