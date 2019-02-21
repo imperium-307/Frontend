@@ -11,7 +11,7 @@ const styles = {
   fontFamily: "sans-serif",
   textAlign: "center",
   marginTop: "40px",
-	color: "#3D23B0",
+	color: "#421CE8",
 };
 const buttonText = {
 	        fontSize: 40,
@@ -22,7 +22,7 @@ const buttonStyle = {
 	fontSize: 20,
 	fontWeight: '400',
 	color: "#fff",
-	backgroundColor: "#3D23B0",
+	backgroundColor: "#421CE8",
 	paddingHorizontal: 30,
 	paddingVertical: 5,
 	borderRadius: 30

@@ -4,7 +4,7 @@ const styles = {
   fontFamily: "sans-serif",
   textAlign: "center",
   marginTop: "40px",
-  color: "#3D23B0"
+  color: "#421CE8"
 };
 
 const Matches = () => (
