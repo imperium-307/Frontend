@@ -6,9 +6,16 @@ import { compose } from 'recompose';
 
 
 import * as ROUTES from '../../constants/routes';
+const styles = {
+  fontFamily: "sans-serif",
+  textAlign: "center",
+  marginTop: "40px",
+  color: "#3D23B0"
+};
 
 const PasswordForgetPage = () => (
-  <div>
+  <div style={styles}>
+  <style>{'body { background-color: #282c34; }'}</style>
     <h1>Forgot Password</h1>
     <PasswordForgetForm />
   </div>
