@@ -52,10 +52,14 @@ class SignUpFormBase extends Component {
   				return res.json()
   			})
   			.then((res) => {
-  				this.setState({token: res.token});
-  				this.props.history.push(ROUTES.HOME);
-					localStorage.setItem('token', res.token)
-  				console.log("signed in")
+					if (res.token) {
+						this.props.history.push(ROUTES.HOME);
+						localStorage.setItem('token', res.token)
+						console.log("signed up and logged in with token" + res.token)
+					} else if (res.err) {
+						console.log("sign up failed")
+						this.setState({ error: res.err });
+					}
   			})
       .catch(error => {
         this.setState({ error });
@@ -131,7 +135,7 @@ class SignUpFormBase extends Component {
           Sign Up
         </button>
 
-        {error && <p>{error.message}</p>}
+        {error && <p>{error}</p>}
       </form>
     );
   }
