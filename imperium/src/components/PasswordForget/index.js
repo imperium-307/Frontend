@@ -40,14 +40,17 @@ class PasswordForgetFormBase extends Component {
       mode: 'cors',
       method: 'POST'
     })
-      .then((res) => {
-        if (res.status !== 200) {
-          console.log("failed");
-          return;
-        }
-        this.props.history.push(ROUTES.SIGN_IN);
-        console.log("password changed");
-        return res.json()
+			.then((res) => {
+				return res.json()
+			})
+			.then((res) => {
+        if (res.err) {
+          console.log("reset failed");
+					this.setState({ error: res.err });
+        } else {
+          console.log("reset successful");
+					this.props.history.push(ROUTES.SIGN_IN);
+				}
       })
       .catch(error => {
         this.setState({ error });
@@ -79,7 +82,7 @@ class PasswordForgetFormBase extends Component {
           Reset My Password
         </button>
 
-        {error && <p>{error.message}</p>}
+				{error && <p>{error}</p>}
       </form>
     );
   }
