@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import DeleteAccountButton from '../DeleteAccount';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/routes';
 
 const Account = () => (
-	<div>
-	<h1>Account</h1>
-
 	<AccountPreferences />
-	<br/>
-	<DeleteAccountButton />
-	</div>
 );
 
 const INITIAL_STATE = {
@@ -111,6 +108,37 @@ class AccountPreferences extends Component {
 		event.preventDefault();
 	}
 
+	deleteAccount = () => {
+		fetch("http://localhost:3000/api/user/delete", {
+			body: JSON.stringify({
+				token: localStorage.getItem('token')
+			}),
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors',
+			method: 'POST'
+		})
+			.then((res) => {
+				return res.json()
+			})
+			.then((res) => {
+				if (res.err) {
+					console.log("delete account failed")
+					this.setState({ error: res.err });
+				} else {
+					console.log("delete account successful")
+					this.props.history.push(ROUTES.HOME);
+					localStorage.removeItem('token')
+				}
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+	}
+
 	render() {
 		const {
 			username,
@@ -128,6 +156,8 @@ class AccountPreferences extends Component {
 			bio === '';
 
 		return (
+			<div>
+			<h1>Account</h1>
 			<form onSubmit={this.onSubmit}>
 			<input
 			name="username"
@@ -176,8 +206,18 @@ class AccountPreferences extends Component {
 
 			{error && <p>{error.message}</p>}
 			</form>
+
+			<button type="button" onClick={this.deleteAccount}>
+				Delete Account
+			</button>
+			</div>
 		);
 	}
 }
 
-export default Account;
+const AccountPage = compose(
+	withRouter,
+	withFirebase,
+)(AccountPreferences)
+
+export default AccountPage;
