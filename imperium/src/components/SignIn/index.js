@@ -6,11 +6,26 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import * as ROUTES from '../../constants/routes';
 
+
 const styles = {
   fontFamily: "sans-serif",
   textAlign: "center",
   marginTop: "40px",
-	color: "#3D23B0"
+	color: "#3D23B0",
+};
+const buttonText = {
+	        fontSize: 40,
+	        fontWeight: '400',
+	        color: "#fff"
+}
+const buttonStyle = {
+	fontSize: 20,
+	fontWeight: '400',
+	color: "#fff",
+	backgroundColor: "#3D23B0",
+	paddingHorizontal: 30,
+	paddingVertical: 5,
+	borderRadius: 30
 };
 const SignInPage = () => (
 	<div style={styles}>
@@ -93,7 +108,8 @@ class SignInFormBase extends Component {
 			placeholder="Password"
 			/>
 			<br/>
-			<button disabled={isInvalid} type="submit">
+			<br/>
+			<button style={buttonStyle}  disabled={isInvalid} type="submit">
 			Sign In
 			</button>
 

@@ -11,6 +11,16 @@ const styles = {
 	color: "#3D23B0"
 };
 
+const buttonStyle = {
+	fontSize: 20,
+	fontWeight: '400',
+	color: "#fff",
+	backgroundColor: "#3D23B0",
+	paddingHorizontal: 30,
+	paddingVertical: 5,
+	borderRadius: 30
+};
+
 const Account = () => (
 		<AccountPreferences />
 );
@@ -208,14 +218,15 @@ class AccountPreferences extends Component {
 			/>
 
 			<br/>
-			<button type="button" type="submit" disabled={isInvalid}>
+			<br/>
+			<button style={buttonStyle} type="button" type="submit" disabled={isInvalid}>
 			Save Preferences
 			</button>
 
 			{error && <p>{error.message}</p>}
 			</form>
-
-			<button type="button" onClick={this.deleteAccount}>
+			<br/>
+			<button style={buttonStyle} type="button" onClick={this.deleteAccount}>
 				Delete Account
 			</button>
 			</div>

@@ -12,6 +12,15 @@ const styles = {
   marginTop: "40px",
   color: "#3D23B0"
 };
+const buttonStyle = {
+	fontSize: 20,
+	fontWeight: '400',
+	color: "#fff",
+	backgroundColor: "#3D23B0",
+	paddingHorizontal: 30,
+	paddingVertical: 5,
+	borderRadius: 30
+};
 
 const SignUpPage = () => (
   <div style={styles}>
@@ -140,7 +149,8 @@ class SignUpFormBase extends Component {
           placeholder="Bio"
         />
         <br/>
-        <button disabled={isInvalid} type="submit">
+        <br/>
+        <button style={buttonStyle} disabled={isInvalid} type="submit">
           Sign Up
         </button>
 

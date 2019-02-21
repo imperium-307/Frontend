@@ -13,6 +13,16 @@ const styles = {
   color: "#3D23B0"
 };
 
+const buttonStyle = {
+	fontSize: 20,
+	fontWeight: '400',
+	color: "#fff",
+	backgroundColor: "#3D23B0",
+	paddingHorizontal: 30,
+	paddingVertical: 5,
+	borderRadius: 30
+};
+
 const PasswordForgetPage = () => (
   <div style={styles}>
   <style>{'body { background-color: #282c34; }'}</style>
@@ -85,7 +95,8 @@ class PasswordForgetFormBase extends Component {
           placeholder="Email Address"
         />
         <br/>
-        <button disabled={isInvalid} type="submit">
+        <br/>
+        <button style={buttonStyle} disabled={isInvalid} type="submit">
           Reset My Password
         </button>
 
