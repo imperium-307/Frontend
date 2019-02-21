@@ -73,27 +73,25 @@ class SignInFormBase extends Component {
 			method: 'POST'
 		})
 			.then((res) => {
-				if (res.status != 200) {
-					x = 0;
-					return;
-				}
 				return res.json()
 			})
 			.then((res) => {
 				if (res.token) {
-				this.props.history.push(ROUTES.HOME);
-				localStorage.setItem('token', res.token)
-			}
-				if (this.state.rememberEmail == "on") {
-					localStorage.setItem('email', email)
-					console.log("signed in and logged in with token" + res.token)
-				} else if (res.err) {
-					localStorage.removeItem('email')
-					console.log("sign in failed")
-					this.setState({ error: res.err });
-				}
+					console.log("logged in with token" + res.token)
+					this.props.history.push(ROUTES.HOME);
+					localStorage.setItem('token', res.token)
 
-				console.log("logged in with token" + res.token)
+					if (this.state.rememberEmail == "on") {
+						localStorage.setItem('email', email)
+						console.log("signed in and logged in with token" + res.token)
+					} else {
+						localStorage.removeItem('email')
+						this.setState({ error: res.err });
+					}
+				} else {
+					this.setState({ error: res.err });
+					console.log("sign in failed")
+				}
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -141,7 +139,7 @@ class SignInFormBase extends Component {
 			Sign In
 			</button>
 
-			{error && <p>{error.message}</p>}
+			{error && <p>{error}</p>}
 			</form>
 		);
 	}
