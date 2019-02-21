@@ -95,7 +95,6 @@ class AccountPreferences extends Component {
 
 		const isInvalid =
 			passwordOne !== passwordTwo ||
-			passwordOne === '' ||
 			email === '' ||
 			username === '' ||
 			bio === '';
@@ -143,7 +142,7 @@ class AccountPreferences extends Component {
 			/>
 
 			<br/>
-			<button type="button" type="submit">
+			<button type="button" type="submit" disabled={isInvalid}>
 			save preferences
 			</button>
 
