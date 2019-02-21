@@ -7,7 +7,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => (
   <div>
-    <h1>SignUp</h1>
+    <h1>Sign Up As A Student</h1>
     <SignUpForm />
   </div>
 );
@@ -29,13 +29,15 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne, passwordTwo } = this.state;
+    const { username, email, passwordOne, passwordTwo, bio } = this.state;
 
     fetch("http://localhost:3000/api/user/signup", {
   			body: JSON.stringify({
+          username: username,
   				email: email,
   				password: passwordOne,
-          passwordConfirm: passwordTwo
+          passwordConfirm: passwordTwo,
+          bio: bio 
   			}),
   			cache: 'no-cache',
   			credentials: 'same-origin',
@@ -70,6 +72,7 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
+      bio,
       error,
     } = this.state;
 
@@ -77,7 +80,8 @@ class SignUpFormBase extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      username === '';
+      username === '' ||
+      bio === '';
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -111,6 +115,14 @@ class SignUpFormBase extends Component {
           onChange={this.onChange}
           type="password"
           placeholder="Confirm Password"
+        />
+        <br/>
+        <input
+          name="bio"
+          value={bio}
+          onChange={this.onChange}
+          type="bio"
+          placeholder="Bio"
         />
         <br/>
         <button disabled={isInvalid} type="submit">
