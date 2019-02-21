@@ -48,6 +48,9 @@ class SignInFormBase extends Component {
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
+		if (localStorage.getItem('email')) {
+			this.state.email = localStorage.getItem('email')
+		}
 	}
 
 	onSubmit = event => {
@@ -70,9 +73,21 @@ class SignInFormBase extends Component {
 				return res.json()
 			})
 			.then((res) => {
-				this.props.history.push(ROUTES.HOME);
-				localStorage.setItem('token', res.token)
-				console.log("logged in")
+				if (res.token) {
+					this.props.history.push(ROUTES.HOME);
+					localStorage.setItem('token', res.token)
+
+					if (this.state.rememberEmail == "on") {
+						localStorage.setItem('email', email)
+					} else {
+						localStorage.removeItem('email')
+					}
+
+					console.log("logged in with token" + res.token)
+				} else if (res.err) {
+					console.log("log in failed")
+					this.setState({ error: res.err });
+				}
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -108,8 +123,15 @@ class SignInFormBase extends Component {
 			placeholder="Password"
 			/>
 			<br/>
+			<input
+			type="checkbox"
+			name="rememberEmail"
+			checked={this.state.rememberEmail}
+			onChange={this.onChange}
+			/>
+			<span>Remember email?</span>
 			<br/>
-			<button style={buttonStyle}  disabled={isInvalid} type="submit">
+			<button disabled={isInvalid} type="submit">
 			Sign In
 			</button>
 
