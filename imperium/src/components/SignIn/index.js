@@ -48,10 +48,14 @@ class SignInFormBase extends Component {
 				return res.json()
 			})
 			.then((res) => {
-				this.setState({token: res.token});
-				this.props.history.push(ROUTES.HOME);
-				localStorage.setItem('token', res.token)
-				console.log("logged in")
+				if (res.token) {
+					this.props.history.push(ROUTES.HOME);
+					localStorage.setItem('token', res.token)
+					console.log("logged in with token" + res.token)
+				} else if (res.err) {
+					console.log("log in failed")
+					this.setState({ error: res.err });
+				}
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -91,7 +95,7 @@ class SignInFormBase extends Component {
 			Sign In
 			</button>
 
-			{error && <p>{error.message}</p>}
+			{error && <p>{error}</p>}
 			</form>
 		);
 	}
