@@ -80,16 +80,17 @@ class SignInFormBase extends Component {
 				return res.json()
 			})
 			.then((res) => {
-				if (!Boolean(x)) {
-					return;
-				}
+				if (res.token) {
 				this.props.history.push(ROUTES.HOME);
 				localStorage.setItem('token', res.token)
-
+			}
 				if (this.state.rememberEmail == "on") {
 					localStorage.setItem('email', email)
-				} else {
+					console.log("signed in and logged in with token" + res.token)
+				} else if (res.err) {
 					localStorage.removeItem('email')
+					console.log("sign in failed")
+					this.setState({ error: res.err });
 				}
 
 				console.log("logged in with token" + res.token)
