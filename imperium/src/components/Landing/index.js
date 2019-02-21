@@ -1,4 +1,5 @@
 import React from 'react';
+import BurgerMenu from '../BurgerMenu';
 
 const Landing = () => (
   <div>
