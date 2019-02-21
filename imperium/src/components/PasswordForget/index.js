@@ -25,17 +25,29 @@ class PasswordForgetFormBase extends Component {
 
   onSubmit = event => {
     const { email } = this.state;
-
-    //TODO pass to backend
-
-    // this.props.firebase
-    //   .doPasswordReset(email)
-    //   .then(() => {
-    //     this.setState({ ...INITIAL_STATE });
-    //   })
-    //   .catch(error => {
-    //     this.setState({ error });
-    //   });
+    fetch("http://localhost:3000/api/user/reset", {
+      body: JSON.stringify({
+        email: email
+      }),
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'content-type': 'application/json'
+      },
+      mode: 'cors',
+      method: 'POST'
+    })
+      .then((res) => {
+        return res.json()
+      })
+      .then((res) => {
+        this.setState({token: res.token});
+        this.props.history.push(ROUTES.SIGN_IN);
+        console.log("password reset")
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
 
     event.preventDefault();
   };
