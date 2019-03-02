@@ -25,7 +25,7 @@ const buttonStyle = {
 
 const PasswordForgetPage = () => (
   <div style={styles}>
-  <style>{'body { background-color: #282c34; }'}</style>
+  <style>{'body { background-color: #878491; }'}</style>
     <h1>Forgot Password</h1>
     <PasswordForgetForm />
   </div>

@@ -32,7 +32,7 @@ const buttonStyle = {
 }
 const SignInPage = () => (
 	<div style={styles}>
-		<style>{'body { background-color: #282c34; }'}</style>
+		<style>{'body { background-color: #878491; }'}</style>
 		<h1>Welcome to Imperium!</h1>
 		<SignInForm />
 		<PasswordForgetLink />

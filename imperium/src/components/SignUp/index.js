@@ -24,7 +24,7 @@ const buttonStyle = {
 
 const SignUpPage = () => (
   <div style={styles}>
-  <style>{'body { background-color: #282c34; }'}</style>
+  <style>{'body { background-color: #878491; }'}</style>
     <h1>Sign Up As A Student</h1>
     <SignUpForm />
   </div>
@@ -49,7 +49,6 @@ class SignUpFormBase extends Component {
 
   onSubmit = event => {
     const { username, email, passwordOne, passwordTwo, bio } = this.state;
-    var x = 1;
     fetch("http://localhost:3000/api/user/signup", {
   			body: JSON.stringify({
           username: username,
@@ -67,9 +66,6 @@ class SignUpFormBase extends Component {
   			method: 'POST'
   		})
   			.then((res) => {
-          if (res.status != 200) {
-					x = 0;
-				}
   				return res.json()
   			})
   			.then((res) => {

@@ -9,7 +9,7 @@ const styles = {
 
 const Home = () => (
   <div style={styles}>
-  <style>{'body { background-color: #282c34; }'}</style>
+  <style>{'body { background-color: #878491; }'}</style>
     <h1>Home</h1>
   </div>
 );

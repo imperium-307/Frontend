@@ -174,7 +174,7 @@ class AccountPreferences extends Component {
 
 		return (
 			<div style={styles}>
-			<style>{'body { background-color: #282c34; }'}</style>
+			<style>{'body { background-color: #878491; }'}</style>
 			<h1>Account</h1>
 			<form onSubmit={this.onSubmit}>
 			<input

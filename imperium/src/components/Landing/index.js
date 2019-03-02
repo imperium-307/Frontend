@@ -10,7 +10,7 @@ const styles = {
 
 const Landing = () => (
   <div style={styles}>
-  <style>{'body { background-color: #282c34; }'}</style>
+  <style>{'body { background-color: #878491; }'}</style>
     <h1>Landing</h1>
   </div>
 );

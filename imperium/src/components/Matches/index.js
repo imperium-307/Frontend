@@ -9,7 +9,7 @@ const styles = {
 
 const Matches = () => (
   <div style={styles}>
-  <style>{'body { background-color: #282c34; }'}</style>
+  <style>{'body { background-color: #878491; }'}</style>
     <h1>Matches</h1>
   </div>
 );
