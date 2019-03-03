@@ -79,7 +79,6 @@ class SignUpFormBase extends Component {
             else if (persona == "employer") {
               this.props.history.push(ROUTES.EMPLOYER_SIGN_UP);
             }
-						localStorage.setItem('token', res.token)
 						console.log("signed up and logged in with token" + res.token)
 					} else if (res.err) {
 						console.log("sign up failed")
