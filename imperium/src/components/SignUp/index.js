@@ -25,7 +25,7 @@ const buttonStyle = {
 const SignUpPage = () => (
   <div style={styles}>
   <style>{'body { background-color: #878491; }'}</style>
-    <h1>Sign Up As A Student</h1>
+    <h1>Sign Up</h1>
     <SignUpForm />
   </div>
 );
@@ -35,6 +35,7 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  persona: '',
   bio: '',
   error: null,
 
@@ -48,13 +49,14 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne, passwordTwo, bio } = this.state;
+    const { username, email, passwordOne, passwordTwo,persona, bio } = this.state;
     fetch("http://localhost:3000/api/user/signup", {
   			body: JSON.stringify({
           username: username,
   				email: email,
   				password: passwordOne,
           passwordConfirm: passwordTwo,
+          persona: persona,
           bio: bio
   			}),
   			cache: 'no-cache',
@@ -70,7 +72,13 @@ class SignUpFormBase extends Component {
   			})
   			.then((res) => {
 					if (res.token) {
-						this.props.history.push(ROUTES.HOME);
+            if (persona == "student"){
+              this.props.history.push(ROUTES.STUDENT_SIGN_UP);
+
+            }
+            else if (persona == "employer") {
+              this.props.history.push(ROUTES.EMPLOYER_SIGN_UP);
+            }
 						localStorage.setItem('token', res.token)
 						console.log("signed up and logged in with token" + res.token)
 					} else if (res.err) {
@@ -95,6 +103,7 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
+      persona,
       bio,
       error,
     } = this.state;
@@ -104,7 +113,7 @@ class SignUpFormBase extends Component {
       passwordOne === '' ||
       email === '' ||
       username === '' ||
-      bio === '';
+      persona === '';
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -140,13 +149,11 @@ class SignUpFormBase extends Component {
           placeholder="Confirm Password"
         />
         <br/>
-        <input
-          name="bio"
-          value={bio}
-          onChange={this.onChange}
-          type="bio"
-          placeholder="Bio"
-        />
+        <select name="persona" value={persona} onChange={this.onChange}>
+          <option value="" disabled selected hidden>Who are you?</option>
+          <option value="student">Student</option>
+          <option value="employer">Employer</option>
+        </select>
         <br/>
         <br/>
         <button style={buttonStyle} disabled={isInvalid} type="submit">

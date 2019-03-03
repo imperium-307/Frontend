@@ -2,6 +2,8 @@ import React from 'react';
 import LandingPage from '../Landing';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
+import StudentSignUpPage from '../StudentSignUp';
+import EmployerSignUpPage from '../EmployerSignUp';
 import PasswordForgetPage from '../PasswordForget';
 import HomePage from '../Home';
 import AccountPage from '../Account';
@@ -23,6 +25,8 @@ const App = () => (
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.HOME} component={HomePage} />
+      <Route path={ROUTES.STUDENT_SIGN_UP} component={StudentSignUpPage} />
+      <Route path={ROUTES.EMPLOYER_SIGN_UP} component={EmployerSignUpPage} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
       <Route path={ROUTES.MATCHES} component={MatchesPage} />
