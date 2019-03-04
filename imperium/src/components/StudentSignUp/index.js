@@ -32,6 +32,9 @@ const StudentSignUp = () => (
 
 const INITIAL_STATE = {
   bio: '',
+  internship: false,
+  coop: false,
+  fullTime: false,
   error: null,
 
 };
@@ -44,10 +47,14 @@ class StudentSignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { bio } = this.state;
+    const { bio, internship, coop, fullTime } = this.state;
+    console.log(internship);
     fetch("http://localhost:3000/api/user/studentsignup", {
   			body: JSON.stringify({
-          bio: bio
+          bio: bio,
+          internship: internship,
+          coop: coop,
+          fullTime: fullTime
   			}),
   			cache: 'no-cache',
   			credentials: 'same-origin',
@@ -84,6 +91,9 @@ class StudentSignUpFormBase extends Component {
   render() {
     const {
       bio,
+      internship,
+      coop,
+      fullTime,
       error,
     } = this.state;
 
@@ -100,11 +110,19 @@ class StudentSignUpFormBase extends Component {
           placeholder="Bio"
         />
         <br/>
+        <input type="checkbox" name="internship" value={internship} onChange={this.onChange}/>
+        Internship
+        <br/>
+        <input type="checkbox" name="coop" value={coop} onChange={this.onChange}/>
+        Co-op
+        <br/>
+        <input type="checkbox" name="fullTime" value={fullTime} onChange={this.onChange}/>
+        Full Time
+        <br/>
         <br/>
         <button style={buttonStyle} disabled={isInvalid} type="submit">
           Sign Up
         </button>
-
         {error && <p>{error}</p>}
       </form>
     );
