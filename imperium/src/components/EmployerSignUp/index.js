@@ -32,6 +32,7 @@ const EmployerSignUp = () => (
 
 const INITIAL_STATE = {
   bio: '',
+  jobType: '',
   error: null,
 
 };
@@ -44,10 +45,11 @@ class EmployerSignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { bio } = this.state;
+    const { bio, jobType } = this.state;
     fetch("http://localhost:3000/api/user/employersignup", {
   			body: JSON.stringify({
-          bio: bio
+          bio: bio,
+          jobType: jobType
   			}),
   			cache: 'no-cache',
   			credentials: 'same-origin',
@@ -84,11 +86,13 @@ class EmployerSignUpFormBase extends Component {
   render() {
     const {
       bio,
+      jobType,
       error,
     } = this.state;
 
     const isInvalid =
-      bio === '';
+      bio === '' ||
+      jobType === '';
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -99,6 +103,13 @@ class EmployerSignUpFormBase extends Component {
           type="text"
           placeholder="Description of Job"
         />
+        <br/>
+        <select name="jobType" value={jobType} onChange={this.onChange}>
+          <option value="" disabled selected hidden>What type of job?</option>
+          <option value="internship">Internship</option>
+          <option value="coop">Co-op</option>
+          <option value="fullTime">fullTime</option>
+        </select>
         <br/>
         <br/>
         <button style={buttonStyle} disabled={isInvalid} type="submit">
