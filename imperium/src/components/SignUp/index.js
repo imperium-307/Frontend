@@ -37,7 +37,11 @@ const INITIAL_STATE = {
   passwordTwo: '',
   persona: '',
   bio: '',
-  error: null,
+  major: '',
+  university: '',
+  criteria: '',
+  company: '',
+  error: null
 
 };
 
@@ -46,10 +50,11 @@ class SignUpFormBase extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne, passwordTwo,persona, bio } = this.state;
+    const { username, email, passwordOne, passwordTwo, persona, university, major, bio, company, criteria } = this.state;
     fetch("http://localhost:3000/api/user/signup", {
   			body: JSON.stringify({
           username: username,
@@ -57,7 +62,12 @@ class SignUpFormBase extends Component {
   				password: passwordOne,
           passwordConfirm: passwordTwo,
           persona: persona,
-          bio: bio
+          bio: bio,
+          university: university,
+          major: major,
+          company: company,
+          criteria: criteria
+
   			}),
   			cache: 'no-cache',
   			credentials: 'same-origin',
@@ -93,8 +103,20 @@ class SignUpFormBase extends Component {
   }
 
   onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({value: event.target.value});
+    //this.setState({ [event.target.name]: event.target.value });
   };
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
 
   render() {
     const {
@@ -104,7 +126,11 @@ class SignUpFormBase extends Component {
       passwordTwo,
       persona,
       bio,
-      error,
+      university,
+      major,
+      company,
+      criteria,
+      error
     } = this.state;
 
     const isInvalid =
@@ -119,7 +145,7 @@ class SignUpFormBase extends Component {
         <input
           name="username"
           value={username}
-          onChange={this.onChange}
+          onChange={this.handleInputChange}
           type="text"
           placeholder="Full Name"
         />
@@ -127,7 +153,7 @@ class SignUpFormBase extends Component {
         <input
           name="email"
           value={email}
-          onChange={this.onChange}
+          onChange={this.handleInputChange}
           type="text"
           placeholder="Email Address"
         />
@@ -135,7 +161,7 @@ class SignUpFormBase extends Component {
         <input
           name="passwordOne"
           value={passwordOne}
-          onChange={this.onChange}
+          onChange={this.handleInputChange}
           type="password"
           placeholder="Password"
         />
@@ -143,17 +169,38 @@ class SignUpFormBase extends Component {
         <input
           name="passwordTwo"
           value={passwordTwo}
-          onChange={this.onChange}
+          onChange={this.handleInputChange}
           type="password"
           placeholder="Confirm Password"
         />
         <br/>
-        <select name="persona" value={persona} onChange={this.onChange}>
+        <select name="persona" id="persona" value={this.state.value} onChange={this.onChange}>
           <option value="" disabled selected hidden>Who are you?</option>
           <option value="student">Student</option>
           <option value="employer">Employer</option>
         </select>
         <br/>
+        <br/>
+        <div>
+        {(() => {
+        switch (this.state.value) {
+          case "student":   return [
+            <input name="University" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="University"/>,
+            <br/>,
+            <input name="Major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Major"/>,
+            <br/>,
+            <input name="Bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>
+          ]
+
+          case "employer": return [
+            <input name="Company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>,
+            <br/>,
+            <input name="Criteria" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Criteria"/>
+          ]
+                  }
+      })()}
+
+        </div>
         <br/>
         <button style={buttonStyle} disabled={isInvalid} type="submit">
           Sign Up
