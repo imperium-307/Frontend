@@ -38,9 +38,15 @@ const INITIAL_STATE = {
   persona: '',
   bio: '',
   major: '',
+  minor: '',
   university: '',
-  criteria: '',
   company: '',
+  resume: '',
+  photo: '',
+  jobType: '',
+  start: '',
+  end: '',
+  wage: '',
   error: null
 
 };
@@ -54,7 +60,8 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne, passwordTwo, persona, university, major, bio, company, criteria } = this.state;
+    const { username, email, passwordOne, passwordTwo, persona, university,
+      major, bio, company, criteria, resume, photo, jobType, start, end, wage, minor } = this.state;
     fetch("http://localhost:3000/api/user/signup", {
   			body: JSON.stringify({
           username: username,
@@ -65,8 +72,16 @@ class SignUpFormBase extends Component {
           bio: bio,
           university: university,
           major: major,
+          minor: minor,
           company: company,
-          criteria: criteria
+          criteria: criteria,
+          photo: photo,
+          resume: resume,
+          jobType: jobType,
+          start: start,
+          end: end,
+          wage: wage,
+
 
   			}),
   			cache: 'no-cache',
@@ -83,11 +98,11 @@ class SignUpFormBase extends Component {
   			.then((res) => {
 					if (res.token) {
             if (persona == "student"){
-              this.props.history.push(ROUTES.STUDENT_SIGN_UP);
+              this.props.history.push(ROUTES.HOME);
 
             }
             else if (persona == "employer") {
-              this.props.history.push(ROUTES.EMPLOYER_SIGN_UP);
+              this.props.history.push(ROUTES.HOME);
             }
 						console.log("signed up and logged in with token" + res.token)
 					} else if (res.err) {
@@ -130,9 +145,16 @@ class SignUpFormBase extends Component {
       major,
       company,
       criteria,
+      resume,
+      photo,
+      jobType,
+      start,
+      end,
+      wage,
+      minor,
       error
     } = this.state;
-
+//TODO check if new sign up options are empty
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
@@ -189,13 +211,64 @@ class SignUpFormBase extends Component {
             <br/>,
             <input name="Major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Major"/>,
             <br/>,
-            <input name="Bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>
+            <p1>*if mulitple majors please seperate with a ","</p1>,
+            <br/>,
+            <input name="Minor" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Minor"/>,
+            <br/>,
+            <p1>*if mulitple minors please seperate with a ","</p1>,
+            <br/>,
+            <input name="Bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>,
+            <br/>,
+            <label for="resume" class="btn">Upload Resume</label>,
+            <input type="file" value={resume} name="resume" id="resume" onChange={this.handleInputChange} placeholder="Resume Upload" />,
+            <br/>,
+            <label for="photo" class="btn">Profile Picture</label>,
+            <input type="file" value={photo} name="photo" id="photo" onChange={this.handleInputChange}/>,
+            <br/>,
+            <select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
+              <option value="" disabled selected hidden>What type of job are you looking for?</option>
+              <option value="fullTime">Full Time</option>
+              <option value="internship">Internship</option>
+              <option value="coop">Co-op</option>
+            </select>,
+            <br/>,
+            <p2>Please enter which days you will be able start and end</p2>,
+            <br/>,
+            <input name="start" value={this.state.text} onChange={this.handleInputChange} type="date"/>,
+            <input name="end" value={this.state.text} onChange={this.handleInputChange} type="date"/>,
+            <br/>,
+            <input name="wage" value={this.state.text} onChange={this.handleInputChange} type="number" step=".1" placeholder="Desired Wage"/>,
+
+
+
           ]
 
           case "employer": return [
             <input name="Company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>,
             <br/>,
-            <input name="Criteria" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Criteria"/>
+            <input name="Bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>,
+            <br/>,
+            <input name="Major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Related Major"/>,
+            <br/>,
+            <label for="photo" class="btn">Profile Picture</label>,
+            <input type="file" value={photo} name="photo" id="photo" onChange={this.handleInputChange} />,
+            <br/>,
+            <select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
+              <option value="" disabled selected hidden>What type of job are you posting?</option>
+              <option value="fullTime">Full Time</option>
+              <option value="internship">Internship</option>
+              <option value="coop">Co-op</option>
+            </select>,
+            <br/>,
+            <p2>Please enter when the postiton will start and end</p2>,
+            <br/>,
+            <input name="start" value={this.state.text} onChange={this.handleInputChange} type="date"/>,
+            <input name="end" value={this.state.text} onChange={this.handleInputChange} type="date"/>,
+            <br/>,
+            <input name="wage" value={this.state.text} onChange={this.handleInputChange} type="number" step=".1" placeholder="Salary of Job"/>,
+
+
+
           ]
                   }
       })()}
