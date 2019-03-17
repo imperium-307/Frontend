@@ -5,7 +5,9 @@ import './Button.css';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-
+var pdf = false;
+var jpeg = false;
+var sub = true;
 const styles = {
   fontFamily: "sans-serif",
   textAlign: "center",
@@ -159,8 +161,8 @@ class SignUpFormBase extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      username === '' ||
-      persona === '';
+      username === '';
+
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -196,7 +198,7 @@ class SignUpFormBase extends Component {
           placeholder="Confirm Password"
         />
         <br/>
-        <select name="persona" id="persona" value={this.state.value} onChange={this.onChange}>
+        <select name="persona" id="persona" value={this.state.text} onChange={this.onChange}>
           <option value="" disabled selected hidden>Who are you?</option>
           <option value="student">Student</option>
           <option value="employer">Employer</option>
@@ -273,9 +275,45 @@ class SignUpFormBase extends Component {
                   }
       })()}
 
+      {(() => {
+        var rString = resume.substring(resume.length-4, resume.length);
+        if (rString === ".pdf"){
+          pdf = true;
+        }
+        else {
+          pdf = false;
+        }
+        var pString = photo.substring(photo.length-4, photo.length);
+        if (pString === ".PNG"){
+          jpeg = true;
+        }
+        else {
+          jpeg = false;
+        }
+      })()}
+
+      {(() => {
+        if (jpeg){
+          if(!isInvalid){
+            if (persona === "employer" || pdf) {
+              sub = false;
+            }
+            else {
+              sub = true;
+            }
+          }
+          else {
+            sub = true;
+          }
+        }
+        else {
+          sub = true;
+        }
+      })()}
+
         </div>
         <br/>
-        <button style={buttonStyle} disabled={isInvalid} type="submit">
+        <button style={buttonStyle} disabled={sub} type="submit">
           Sign Up
         </button>
 
