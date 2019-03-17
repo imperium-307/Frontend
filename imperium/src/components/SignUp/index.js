@@ -198,7 +198,7 @@ class SignUpFormBase extends Component {
           placeholder="Confirm Password"
         />
         <br/>
-        <select name="persona" id="persona" value={this.state.text} onChange={this.onChange}>
+        <select name="persona" id="persona" value={this.state.text} onChange={this.handleInputChange}>
           <option value="" disabled selected hidden>Who are you?</option>
           <option value="student">Student</option>
           <option value="employer">Employer</option>
@@ -309,6 +309,16 @@ class SignUpFormBase extends Component {
         else {
           sub = true;
         }
+      })()}
+
+      {(() => {
+          if (persona === "student"){
+          }
+          else if (persona === "employer") {
+          }
+          else {
+            sub = true;
+          }
       })()}
 
         </div>
