@@ -7,8 +7,10 @@ import { PasswordForgetLink } from '../PasswordForget';
 import * as ROUTES from '../../constants/routes';
 
 
+
+
 const styles = {
-  fontFamily: "sans-serif",
+  fontFamily: "arial",
   textAlign: "center",
   marginTop: "40px",
 	color: "#421CE8",
@@ -32,7 +34,7 @@ const buttonStyle = {
 }
 const SignInPage = () => (
 	<div style={styles}>
-		<style>{'body { background-color: #878491; }'}</style>
+		<style>{'body { background-color: #DBDAE1; }'}</style>
 		<h1>Welcome to Imperium!</h1>
 		<SignInForm />
 		<PasswordForgetLink />
