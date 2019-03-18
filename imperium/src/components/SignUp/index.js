@@ -101,10 +101,11 @@ class SignUpFormBase extends Component {
 					if (res.token) {
             if (persona == "student"){
               this.props.history.push(ROUTES.HOME);
-
+              localStorage.setItem('token', res.token)
             }
             else if (persona == "employer") {
               this.props.history.push(ROUTES.HOME);
+              localStorage.setItem('token', res.token)
             }
 						console.log("signed up and logged in with token" + res.token)
 					} else if (res.err) {
