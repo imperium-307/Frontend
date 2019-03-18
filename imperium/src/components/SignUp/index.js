@@ -198,7 +198,7 @@ class SignUpFormBase extends Component {
           placeholder="Confirm Password"
         />
         <br/>
-        <select name="persona" id="persona" value={this.state.text} onChange={this.handleInputChange}>
+        <select name="persona" id="persona" value={persona} onChange={this.handleInputChange}>
           <option value="" disabled selected hidden>Who are you?</option>
           <option value="student">Student</option>
           <option value="employer">Employer</option>
@@ -207,19 +207,19 @@ class SignUpFormBase extends Component {
         <br/>
         <div>
         {(() => {
-        switch (this.state.value) {
+        switch (persona) {
           case "student":   return [
-            <input name="University" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="University"/>,
+            <input name="university" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="University"/>,
             <br/>,
-            <input name="Major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Major"/>,
+            <input name="major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Major"/>,
             <br/>,
             <p1>*if mulitple majors please seperate with a ","</p1>,
             <br/>,
-            <input name="Minor" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Minor"/>,
+            <input name="minor" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Minor"/>,
             <br/>,
             <p1>*if mulitple minors please seperate with a ","</p1>,
             <br/>,
-            <input name="Bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>,
+            <input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>,
             <br/>,
             <label for="resume" class="btn">Upload Resume</label>,
             <input type="file" value={resume} name="resume" id="resume" onChange={this.handleInputChange} placeholder="Resume Upload" />,
@@ -246,11 +246,11 @@ class SignUpFormBase extends Component {
           ]
 
           case "employer": return [
-            <input name="Company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>,
+            <input name="company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>,
             <br/>,
-            <input name="Bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>,
+            <input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>,
             <br/>,
-            <input name="Major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Related Major"/>,
+            <input name="major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Related Major"/>,
             <br/>,
             <label for="photo" class="btn">Profile Picture</label>,
             <input type="file" value={photo} name="photo" id="photo" onChange={this.handleInputChange} />,
@@ -312,9 +312,28 @@ class SignUpFormBase extends Component {
       })()}
 
       {(() => {
+        console.log(minor);
+        console.log(bio);
+
           if (persona === "student"){
+              if (major === '' || university === '' || minor === '' || bio === '' || jobType === '' || start === '' || end === '' || wage === '') {
+                  sub = true;
+              }
+              else {
+                if (sub === false){
+                  sub = false;
+                }
+              }
           }
           else if (persona === "employer") {
+            if (major === '' || company === '' || bio === '' || jobType === '' || start === '' || end === '' || wage === '') {
+                sub = true;
+            }
+            else {
+              if (sub === false){
+                sub = false;
+              }
+            }
           }
           else {
             sub = true;
