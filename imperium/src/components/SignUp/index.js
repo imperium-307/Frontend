@@ -44,7 +44,9 @@ const INITIAL_STATE = {
   university: '',
   company: '',
   resume: '',
+	resumeFile: null,
   photo: '',
+  photoFile: null,
   jobType: '',
   start: '',
   end: '',
@@ -63,7 +65,16 @@ class SignUpFormBase extends Component {
 
   onSubmit = event => {
     const { username, email, passwordOne, passwordTwo, persona, university,
-      major, bio, company, criteria, resume, photo, jobType, start, end, wage, minor } = this.state;
+      major, bio, company, criteria, resumeFile, photoFile, jobType, start, end, wage, minor } = this.state;
+
+		const data = new FormData();
+		data.append('file', resumeFile);
+
+		fetch('http://localhost:3000/api/user/ch-resume/' + email, {
+			method: 'POST',
+			body: data,
+		})
+
     fetch("http://localhost:3000/api/user/signup", {
   			body: JSON.stringify({
           username: username,
@@ -77,8 +88,7 @@ class SignUpFormBase extends Component {
           minor: minor,
           company: company,
           criteria: criteria,
-          photo: photo,
-          resume: resume,
+          photo: photoFile,
           jobType: jobType,
           start: start,
           end: end,
@@ -130,9 +140,26 @@ class SignUpFormBase extends Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({
-      [name]: value
-    });
+		if (target.name == "resume") {
+			this.setState({
+				["resumeFile"]: target.files[0]
+			});
+		} 
+
+		if (target.name == "photo") {
+			var f = target.files[0];
+			var r = new FileReader();
+			r.onloadend = ()=> {
+				this.setState({
+					["photoFile"]: r.result
+				});
+			}
+			r.readAsDataURL(f);
+		}
+
+		this.setState({
+			[name]: value
+		});
   }
 
 
