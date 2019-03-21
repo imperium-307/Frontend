@@ -51,6 +51,11 @@ const INITIAL_STATE = {
   start: '',
   end: '',
   wage: '',
+  northeast: '',
+  south: '',
+  west: '',
+  midwest: '',
+  radius: '',
   error: null
 
 };
@@ -65,7 +70,8 @@ class SignUpFormBase extends Component {
 
   onSubmit = event => {
     const { username, email, passwordOne, passwordTwo, persona, university,
-      major, bio, company, criteria, resumeFile, photoFile, jobType, start, end, wage, minor } = this.state;
+      major, bio, company, criteria, resumeFile, photoFile,
+      jobType, start, end, wage, minor, northeast, west, south, midwest } = this.state;
 
 		const data = new FormData();
 		data.append('file', resumeFile);
@@ -93,8 +99,10 @@ class SignUpFormBase extends Component {
           start: start,
           end: end,
           wage: wage,
-
-
+          northeast: northeast,
+          west: west,
+          south: south,
+          midwest: midwest,
   			}),
   			cache: 'no-cache',
   			credentials: 'same-origin',
@@ -144,7 +152,7 @@ class SignUpFormBase extends Component {
 			this.setState({
 				["resumeFile"]: target.files[0]
 			});
-		} 
+		}
 
 		if (target.name == "photo") {
 			var f = target.files[0];
@@ -182,6 +190,11 @@ class SignUpFormBase extends Component {
       end,
       wage,
       minor,
+      northeast,
+      west,
+      south,
+      midwest,
+      radius,
       error
     } = this.state;
 //TODO check if new sign up options are empty
@@ -249,6 +262,20 @@ class SignUpFormBase extends Component {
             <br/>,
             <input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>,
             <br/>,
+            <p1>Please select what reigons you would be interested in working on</p1>,
+            <br/>,
+            <input name="northeast" value={"northeast"} onChange={this.handleInputChange} type="checkbox"/>,
+            <p1>Northeast</p1>,
+            <br/>,
+            <input name="west" value={"west"} onChange={this.handleInputChange} type="checkbox"/>,
+            <p1>West</p1>,
+            <br/>,
+            <input name="south" value={"south"} onChange={this.handleInputChange} type="checkbox"/>,
+            <p1>South</p1>,
+            <br/>,
+            <input name="midwest" value={"midwest"} onChange={this.handleInputChange} type="checkbox"/>,
+            <p1>Midwest</p1>,
+            <br/>,
             <label for="resume" class="btn">Upload Resume</label>,
             <input type="file" value={resume} name="resume" id="resume" onChange={this.handleInputChange} placeholder="Resume Upload" />,
             <br/>,
@@ -277,6 +304,21 @@ class SignUpFormBase extends Component {
             <input name="company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>,
             <br/>,
             <input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>,
+            <br/>,
+            <p1>Please select what reigon that the positon will be in</p1>,
+            <br/>,
+            <input name="northeast" value={"northeast"} onChange={this.handleInputChange} type="checkbox"/>,
+            <p1>Northeast</p1>,
+            <br/>,
+            <input name="west" value={"west"} onChange={this.handleInputChange} type="checkbox"/>,
+            <p1>West</p1>,
+            <br/>,
+            <input name="south" value={"south"} onChange={this.handleInputChange} type="checkbox"/>,
+            <p1>South</p1>,
+            <br/>,
+            <input name="midwest" value={"midwest"} onChange={this.handleInputChange} type="checkbox"/>,
+            <p1>Midwest</p1>,
+            <br/>,
             <br/>,
             <input name="major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Related Major"/>,
             <br/>,
