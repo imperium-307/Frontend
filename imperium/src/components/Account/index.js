@@ -38,6 +38,14 @@ const INITIAL_STATE = {
   major: '',
   resume: '',
   photo: '',
+  wage: '',
+  jobType: '',
+  northeast: '',
+  west: '',
+  south: '',
+  midwest: '',
+  start: '',
+  end: '',
   photoFile: null,
   resumeFile: null,
   error: null,
@@ -71,7 +79,15 @@ class AccountPreferences extends Component {
 					bio: res.bio,
           minor: res.minor,
           major: res.major,
-          photoFile: res.photo
+          photoFile: res.photo,
+          wage: res.wage,
+          jobType: res.jobType,
+          northeast: res.northeast,
+          west: res.west,
+          south: res.south,
+          midwest: res.midwest,
+          start: res.start,
+          end: res.end
 				});
 			})
 			.catch(error => {
@@ -80,7 +96,9 @@ class AccountPreferences extends Component {
 	}
 
 	onChange = event => {
-		this.setState({ [event.target.name]: event.target.value });
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+//event.target.value
+		this.setState({ [event.target.name]: value });
 
 		if (event.target.name == "resume") {
 			this.setState({
@@ -101,7 +119,7 @@ class AccountPreferences extends Component {
 	};
 
 	onSubmit = event => {
-		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile, resumeFile } = this.state;
+		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile, resumeFile, wage, jobType, midwest, northeast, west, south, start, end } = this.state;
 
 		const data = new FormData();
 		data.append('file', resumeFile);
@@ -121,6 +139,14 @@ class AccountPreferences extends Component {
         minor: minor,
         major: major,
         photo: photoFile,
+        wage: wage,
+        jobType: jobType,
+        northeast: northeast,
+        west: west,
+        south: south,
+        midwest: midwest,
+        start: start,
+        end: end,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -154,7 +180,15 @@ class AccountPreferences extends Component {
 							bio: res.bio,
               minor: res.minor,
               major: res.major,
-              photoFile: res.photo
+              photoFile: res.photo,
+              wage: res.wage,
+              jobType: res.jobType,
+              northeast: res.northeast,
+              west: res.west,
+              south: res.south,
+              midwest: res.midwest,
+              start: res.start,
+              end: res.end
 						});
 					})
 					.catch(error => {
@@ -211,6 +245,14 @@ class AccountPreferences extends Component {
 			resume,
       photo,
       photoFile,
+      wage,
+      jobType,
+      northeast,
+      west,
+      south,
+      midwest,
+      start,
+      end,
 			error,
 		} = this.state;
 
@@ -307,6 +349,36 @@ console.log(photo)
       id="photo"
       onChange={this.onChange}/>
       <a href={ photoFile } target="_blank"><img src={ photoFile }/></a>
+      <br/>
+
+      <select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
+        <option value="" disabled selected hidden>What type of job are you looking for?</option>
+        <option value="fullTime">Full Time</option>
+        <option value="parttime">Part Time</option>
+        <option value="internship">Internship</option>
+        <option value="coop">Co-op</option>
+      </select>
+      <br/>
+
+      <p1>Please select what reigons you would be interested in working on</p1>
+      <br/>
+      <input name="northeast" value={"northeast"} onChange={this.onChange} type="checkbox"/>
+      <p1>Northeast</p1>
+      <br/>
+      <input name="west" value={"west"} onChange={this.onChange} type="checkbox"/>
+      <p1>West</p1>
+      <br/>
+      <input name="south" value={"south"} onChange={this.onChange} type="checkbox"/>
+      <p1>South</p1>
+      <br/>
+      <input name="midwest" value={"midwest"} onChange={this.onChange} type="checkbox"/>
+      <p1>Midwest</p1>
+      <br/>
+
+      <p2>Please enter which days you will be able start and end</p2>
+      <br/>
+      <input name="start" value={this.state.text} onChange={this.onChange} type="date"/>
+      <input name="end" value={this.state.text} onChange={this.onChange} type="date"/>
       <br/>
 
 			<br/>
