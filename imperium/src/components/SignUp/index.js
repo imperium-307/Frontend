@@ -429,7 +429,7 @@ class SignUpFormBase extends Component {
           Sign Up
         </button>
 
-        {error && <p>{error}</p>}
+        {error && <p>{error.err}</p>}
       </form>
     );
   }
