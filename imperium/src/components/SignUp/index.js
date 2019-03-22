@@ -357,7 +357,7 @@ class SignUpFormBase extends Component {
           pdf = false;
         }
         var pString = photo.substring(photo.length-4, photo.length);
-        if (pString === ".PNG"){
+        if (pString.toLowerCase() === ".png"){
           jpeg = true;
         }
         else {
