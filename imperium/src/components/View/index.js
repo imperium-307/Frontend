@@ -70,7 +70,7 @@ class GetACardBase extends Component{
 						user.jobType = "a full time job";
 					}
 					else if (user.jobType === "internship") {
-						user.jobType.jobType = "an internship";
+						user.jobType = "an internship";
 					}
 					else {
 						user.jobType = " a co-op";
