@@ -3,7 +3,6 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
 
-var first = true;
 const styles = {
   fontFamily: "sans-serif",
   textAlign: "center",
@@ -19,21 +18,19 @@ const Home = () => (
   </div>
 );
 var INITIAL_STATE = {
-  cards: '',
+  cards: null,
   index: 0,
   photoFile: null,
   resumeFile: null,
+  likee: true,
   error: null,
 };
 
 class GetACardBase extends Component{
   constructor(props) {
 		super(props);
-    if (first) {
-      this.state = { ...INITIAL_STATE };
-      first = false;
-  }
 
+    this.state = { ...INITIAL_STATE };
 		fetch("http://localhost:3000/api/user/request-users", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token')
@@ -66,6 +63,29 @@ class GetACardBase extends Component{
     this.setState({
       index: temp
     })
+    const {likee} = this.state;
+    fetch("http://localhost:3000/api/user/like", {
+			body: JSON.stringify({
+        likee: likee,
+				token: localStorage.getItem('token')
+			}),
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors',
+			method: 'POST'
+		})
+			.then((res) => {
+				return res.json()
+			})
+			.then((res) => {
+
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
   };
 
   Favorite = event => {
@@ -84,27 +104,24 @@ class GetACardBase extends Component{
     })
   }
   render (){
-    var {cards, index, photoFile, error} = this.state;
-    if (cards == null|| index >= cards.length) {
+    var check = false;
+    if (this.state && this.state.cards){
+      if (this.state.index >= this.state.cards.length) {
+        check = true;
+      }
+    }
+    if (!this.state || !this.state.cards || check) {
       return(
-        <div style={styles}>
-            <button onClick={this.Like}>
-            Like
-            </button>
-            <button onClick={this.Favorite}>
-            Favorite
-            </button>
-            <button onClick={this.Dislike}>
-              Dislike
-            </button>
+        <div>
+            <p1>There are no profiles available</p1>
         </div>
       );
-    }
-    else {
-    console.log(cards);
+    } else {
+      const {cards, index, photoFile, error} = this.state;
     return(
       <div style={styles}>
       {(() => {
+
         if (cards[index].jobType === "fullTime") {
               cards[index].jobType = "a full time job";
         }
