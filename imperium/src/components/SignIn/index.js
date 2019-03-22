@@ -94,8 +94,8 @@ class SignInFormBase extends Component {
 			.then((res) => {
 				if (res.token) {
 					console.log("logged in with token" + res.token)
-					this.props.history.push(ROUTES.HOME);
 					localStorage.setItem('token', res.token)
+
 
 					if (this.state.rememberEmail == "on") {
 						localStorage.setItem('email', email)
@@ -104,6 +104,7 @@ class SignInFormBase extends Component {
 						localStorage.removeItem('email')
 						this.setState({ error: res.err });
 					}
+          this.props.history.push(ROUTES.HOME);
 				} else {
 					this.setState({ error: res.err });
 					console.log("sign in failed")
