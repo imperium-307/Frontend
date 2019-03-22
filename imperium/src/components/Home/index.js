@@ -3,8 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
 
-var cards = [100];
-cards[0] = "hello"
+var cards = [];
 
 const styles = {
   fontFamily: "sans-serif",
@@ -50,8 +49,8 @@ class GetACardBase extends Component{
 				return res.json()
 			})
 			.then((res) => {
+        cards = res.users;
         console.log(res);
-        //cards = res.users;
 
 			})
 			.catch(error => {
@@ -59,7 +58,7 @@ class GetACardBase extends Component{
 			});
 	}
   Like = event => {
-    console.log(cards[0]);
+
   };
 
   Favorite = event => {
