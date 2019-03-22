@@ -13,7 +13,7 @@ const styles = {
 
 const Home = () => (
   <div style={styles}>
-  <style>{'body { background-color: #878491; }'}</style>
+  <style>{'body { background-color: #DBDAE1; }'}</style>
     <h1>Home</h1>
     <GetACard />
   </div>
