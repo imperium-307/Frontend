@@ -37,6 +37,7 @@ const INITIAL_STATE = {
   minor: '',
   major: '',
   resume: '',
+	jobType: '',
   photo: '',
   photoFile: null,
   resumeFile: null,
@@ -71,7 +72,8 @@ class AccountPreferences extends Component {
 					bio: res.bio,
           minor: res.minor,
           major: res.major,
-          photoFile: res.photo
+          photoFile: res.photo,
+					jobType: res.jobType
 				});
 			})
 			.catch(error => {
@@ -101,7 +103,7 @@ class AccountPreferences extends Component {
 	};
 
 	onSubmit = event => {
-		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile, resumeFile } = this.state;
+		const { username, jobType, email, bio, passwordOne, passwordTwo, minor, major, photoFile, resumeFile } = this.state;
 
 		const data = new FormData();
 		data.append('file', resumeFile);
@@ -117,6 +119,7 @@ class AccountPreferences extends Component {
 				email: email,
 				password: passwordOne,
 				passwordConfirm: passwordTwo,
+				jobType: jobType,
 				bio: bio,
         minor: minor,
         major: major,
@@ -205,6 +208,7 @@ class AccountPreferences extends Component {
 			email,
 			passwordOne,
 			passwordTwo,
+			jobType,
 			bio,
       minor,
       major,
@@ -221,8 +225,6 @@ class AccountPreferences extends Component {
 			bio === '' ||
       minor === '' ||
       major === '';
-
-console.log(photo)
 
 		return (
 			<div style={styles}>
@@ -293,21 +295,29 @@ console.log(photo)
       name="resume"
       id="resume"
       onChange={this.onChange}
-      placeholder="resume" />
+			placeholder="resume" />
 			<div>
 			<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank">View your current resume</a>
 			</div>
-      <br/>
-      <p1>Please upload a photo of yourself as a .png</p1>
-      <br/>
-      <input
-      type="file"
-      value={ photo }
-      name="photo"
-      id="photo"
-      onChange={this.onChange}/>
-      <a href={ photoFile } target="_blank"><img src={ photoFile }/></a>
-      <br/>
+			<br/>
+			<p1>Please upload a photo of yourself as a .png</p1>
+			<br/>
+			<input
+			type="file"
+			value={ photo }
+			name="photo"
+			id="photo"
+			onChange={this.onChange}/>
+			<a href={ photoFile } target="_blank"><img src={ photoFile }/></a>
+			<br/>
+
+			<select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
+			<option value="" disabled selected hidden>What type of job are you posting?</option>
+			<option value="fullTime">Full Time</option>
+			<option value="parttime">Part Time</option>
+			<option value="internship">Internship</option>
+			<option value="coop">Co-op</option>
+			</select>
 
 			<br/>
 			<button style={buttonStyle} type="button" type="submit" disabled={isInvalid}>
@@ -318,7 +328,7 @@ console.log(photo)
 			</form>
 			<br/>
 			<button style={buttonStyle} type="button" onClick={this.deleteAccount}>
-				Delete Account
+			Delete Account
 			</button>
 			</div>
 		);
