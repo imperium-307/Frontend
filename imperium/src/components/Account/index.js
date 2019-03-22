@@ -40,7 +40,6 @@ const INITIAL_STATE = {
 	jobType: '',
   photo: '',
   wage: '',
-  jobType: '',
   northeast: '',
   west: '',
   south: '',
@@ -141,7 +140,6 @@ class AccountPreferences extends Component {
         major: major,
         photo: photoFile,
         wage: wage,
-        jobType: jobType,
         northeast: northeast,
         west: west,
         south: south,
@@ -183,12 +181,12 @@ class AccountPreferences extends Component {
               major: res.major,
               photoFile: res.photo,
               wage: res.wage,
-              jobType: res.jobType,
               northeast: res.northeast,
               west: res.west,
               south: res.south,
               midwest: res.midwest,
               start: res.start,
+              jobType: res.jobType,
               end: res.end
 						});
 					})
@@ -248,7 +246,6 @@ class AccountPreferences extends Component {
       photo,
       photoFile,
       wage,
-      jobType,
       northeast,
       west,
       south,
@@ -359,34 +356,26 @@ class AccountPreferences extends Component {
 			<option value="coop">Co-op</option>
 			</select>
 
-      <select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
-        <option value="" disabled selected hidden>What type of job are you looking for?</option>
-        <option value="fullTime">Full Time</option>
-        <option value="parttime">Part Time</option>
-        <option value="internship">Internship</option>
-        <option value="coop">Co-op</option>
-      </select>
-      <br/>
-
+			<br/>
       <p1>Please select what reigons you would be interested in working on</p1>
       <br/>
-      <input name="northeast" value={"northeast"} onChange={this.onChange} type="checkbox"/>
+      <input name="northeast" checked={northeast} onChange={this.onChange} type="checkbox"/>
       <p1>Northeast</p1>
       <br/>
-      <input name="west" value={"west"} onChange={this.onChange} type="checkbox"/>
+      <input name="west" checked={west} onChange={this.onChange} type="checkbox"/>
       <p1>West</p1>
       <br/>
-      <input name="south" value={"south"} onChange={this.onChange} type="checkbox"/>
+      <input name="south" checked={south} onChange={this.onChange} type="checkbox"/>
       <p1>South</p1>
       <br/>
-      <input name="midwest" value={"midwest"} onChange={this.onChange} type="checkbox"/>
+      <input name="midwest" checked={midwest} onChange={this.onChange} type="checkbox"/>
       <p1>Midwest</p1>
       <br/>
 
       <p2>Please enter which days you will be able start and end</p2>
       <br/>
-      <input name="start" value={this.state.text} onChange={this.onChange} type="date"/>
-      <input name="end" value={this.state.text} onChange={this.onChange} type="date"/>
+      <input name="start" value={start} onChange={this.onChange} type="date"/>
+      <input name="end" value={end} onChange={this.onChange} type="date"/>
       <br/>
 
 			<br/>
