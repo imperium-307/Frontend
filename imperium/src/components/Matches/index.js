@@ -48,11 +48,17 @@ class MatchesList extends React.Component {
 			});
 	}
 
+	removeChild = (email) => {
+		var matches = this.state.matches
+		matches = matches.filter(e => e !== email)
+		this.setState({ matches });
+	}
+
 	render() {
 		let body;
 		if (this.state.matches) {
-			body = this.state.matches.map(function(d, i){
-				return (<Card email={d} />)
+			body = this.state.matches.map((d, i) => {
+				return (<Card email={d} removeChild={this.removeChild} />)
 			})
 		} else {
 			body = <h2>No matches yet</h2>
@@ -60,23 +66,49 @@ class MatchesList extends React.Component {
 
 		return (
 			<ul className="card_container">
-				{body}
+			{body}
 			</ul>
 		)
 	}
 }
 
 class Card extends React.Component {
+	unmatch = () => {
+		fetch("http://localhost:3000/api/user/dislike", {
+			body: JSON.stringify({
+				token: localStorage.getItem('token'),
+				likee: this.props.email
+			}),
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors',
+			method: 'POST'
+		})
+			.then((res) => {
+				return res.json()
+			})
+			.then((res) => {
+				this.props.removeChild(this.props.email);
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+	}
+
 	render() {
 		const email = this.props.email;
 
 		return (
 			<li className="user_details">
-				<p>{email}</p>
-				<div className="user_contact">
-					<button>chat</button>
-					<button>view profile</button>
-				</div>
+			<p>{email}</p>
+			<div className="user_contact">
+			<button onClick={this.unmatch}>Unmatch</button>
+			<button>Chat</button>
+			<button>view profile</button>
+			</div>
 			</li>
 		);
 	}
