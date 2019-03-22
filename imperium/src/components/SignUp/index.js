@@ -187,6 +187,7 @@ class SignUpFormBase extends Component {
       criteria,
       resume,
       photo,
+      photoFile,
       jobType,
       start,
       end,
@@ -286,6 +287,7 @@ class SignUpFormBase extends Component {
             <p1>Please upload a photo of yourself as a .PNG</p1>,
             <br/>,
             <input type="file" value={photo} name="photo" id="photo" onChange={this.handleInputChange}/>,
+      			<a href={ photoFile } target="_blank"><img src={ photoFile }/></a>,
             <br/>,
             <select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
               <option value="" disabled selected hidden>What type of job are you looking for?</option>
@@ -333,6 +335,7 @@ class SignUpFormBase extends Component {
             <p1>Please upload a photo of your company as a .PNG</p1>,
             <br/>,
             <input type="file" value={photo} name="photo" id="photo" onChange={this.handleInputChange} />,
+      			<a href={ photoFile } target="_blank"><img src={ photoFile }/></a>,
             <br/>,
             <select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
               <option value="" disabled selected hidden>What type of job are you posting?</option>
