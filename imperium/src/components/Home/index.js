@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
-import './index.css';
 
 const styles = {
   fontFamily: "sans-serif",
@@ -184,7 +183,7 @@ class GetACardBase extends Component{
         if (cards[index].persona === "student") {
 
           return [
-            <img id="photoData" src= { cards[index].photo }/>,
+            <img src= { cards[index].photo }/>,
             <br/>,
             <p1>Name: {cards[index].username}</p1>,
             <br/>,
@@ -208,15 +207,17 @@ class GetACardBase extends Component{
         }
         else {
           return[
-          <img id="photoData" src= { cards[index].photo }/>,
+          <img src= { cards[index].photo }/>,
           <br/>,
-          <p1>Compnay: {cards[index].company}</p1>,
+          <p1>Company: {cards[index].company}</p1>,
           <br/>,
           <p1>Major: {cards[index].major}</p1>,
           <br/>,
           <p1>Job Description: {cards[index].bio}</p1>,
           <br/>,
           <p1>Type of job is {cards[index].jobType}</p1>,
+          <br/>,
+          <p1>Location: {cards[index].location}</p1>,
           <br/>,
           <p1>Start: {cards[index].start} End: {cards[index].end}</p1>,
           <br/>,
