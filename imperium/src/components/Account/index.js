@@ -81,7 +81,6 @@ class AccountPreferences extends Component {
           minor: res.minor,
           major: res.major,
           photoFile: res.photo,
-<<<<<<< HEAD
           wage: res.wage,
           jobType: res.jobType,
           northeast: res.northeast,
@@ -90,9 +89,6 @@ class AccountPreferences extends Component {
           midwest: res.midwest,
           start: res.start,
           end: res.end
-=======
-					jobType: res.jobType
->>>>>>> c7b404ab697479e838b946e226433fd6fc8f3a4c
 				});
 			})
 			.catch(error => {
@@ -124,12 +120,7 @@ class AccountPreferences extends Component {
 	};
 
 	onSubmit = event => {
-<<<<<<< HEAD
 		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile, resumeFile, wage, jobType, midwest, northeast, west, south, start, end } = this.state;
-=======
-		const { username, jobType, email, bio, passwordOne, passwordTwo, minor, major, photoFile, resumeFile } = this.state;
->>>>>>> c7b404ab697479e838b946e226433fd6fc8f3a4c
-
 		const data = new FormData();
 		data.append('file', resumeFile);
 
