@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import './index.css';
 
 var pdf = false;
 var jpeg = false;
@@ -330,7 +331,7 @@ class AccountPreferences extends Component {
 			name="photo"
 			id="photo"
 			onChange={this.onChange}/>
-			<a href={ photoFile } target="_blank"><img src={ photoFile }/></a>
+			<a href={ photoFile } target="_blank"><img id="photoData" src={ photoFile }/></a>
 			<br/>
 
 			<select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>

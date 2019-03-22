@@ -5,3 +5,7 @@
 input[type="file"] {
 	margin: auto;
 }
+
+#photoData {
+	width: 200px;
+}

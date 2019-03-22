@@ -175,7 +175,7 @@ class GetACardBase extends Component{
               cards[index].jobType = "a full time job";
         }
         else if (cards[index].jobType === "internship") {
-          cards[index].jobType.jobType = "an internship";
+          cards[index].jobType = "an internship";
         }
         else {
           cards[index].jobType = " a co-op";
