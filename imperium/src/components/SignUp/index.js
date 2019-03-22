@@ -56,6 +56,7 @@ const INITIAL_STATE = {
   west: '',
   midwest: '',
   radius: '',
+  location: '',
   error: null
 
 };
@@ -70,7 +71,7 @@ class SignUpFormBase extends Component {
 
   onSubmit = event => {
     const { username, email, passwordOne, passwordTwo, persona, university,
-      major, bio, company, criteria, resumeFile, photoFile,
+      major, bio, company, criteria, resumeFile, photoFile, location,
       jobType, start, end, wage, minor, northeast, west, south, midwest } = this.state;
 
 		const data = new FormData();
@@ -103,6 +104,7 @@ class SignUpFormBase extends Component {
           west: west,
           south: south,
           midwest: midwest,
+          location: location,
   			}),
   			cache: 'no-cache',
   			credentials: 'same-origin',
@@ -195,6 +197,7 @@ class SignUpFormBase extends Component {
       south,
       midwest,
       radius,
+      location,
       error
     } = this.state;
 //TODO check if new sign up options are empty
@@ -258,7 +261,7 @@ class SignUpFormBase extends Component {
             <br/>,
             <input name="minor" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Minor"/>,
             <br/>,
-            <p1>*if mulitple minors please seperate with a ","</p1>,
+            <p1>*if you don't have a minor say "none", mulitple minors please seperate with a ","</p1>,
             <br/>,
             <input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>,
             <br/>,
@@ -306,6 +309,8 @@ class SignUpFormBase extends Component {
             <input name="company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>,
             <br/>,
             <input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>,
+            <br/>,
+            <input name="location" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Exact Location"/>,
             <br/>,
             <p1>Please select what reigon that the positon will be in</p1>,
             <br/>,
