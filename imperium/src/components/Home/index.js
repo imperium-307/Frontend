@@ -57,18 +57,13 @@ class GetACardBase extends Component{
 			});
 	}
 
-  Like = event => {
+  Like = (email) => {
     var temp = this.state.index;
-    temp++;
-    this.setState({
-      index: temp
-    })
-    const {likee} = this.state.cards[this.state.index].email;
-    console.log(this.state.cards[this.state.index].email);
+		console.log(email)
     fetch("http://localhost:3000/api/user/like", {
 			body: JSON.stringify({
-        likee: likee,
-				token: localStorage.getItem('token')
+				token: localStorage.getItem('token'),
+        likee: email
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
@@ -87,18 +82,71 @@ class GetACardBase extends Component{
 			.catch(error => {
 				this.setState({ error });
 			});
+
+    temp++;
+    this.setState({
+      index: temp
+    })
   };
 
-  Favorite = event => {
+  Favorite = email => {
     var temp = this.state.index;
+		console.log(email)
+    fetch("http://localhost:3000/api/user/like", {
+			body: JSON.stringify({
+				token: localStorage.getItem('token'),
+        likee: email
+			}),
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors',
+			method: 'POST'
+		})
+			.then((res) => {
+				return res.json()
+			})
+			.then((res) => {
+          console.log(res);
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+
     temp++;
     this.setState({
       index: temp
     })
   }
 
-  Dislike = event => {
+  Dislike = email => {
     var temp = this.state.index;
+		console.log(email)
+    fetch("http://localhost:3000/api/user/like", {
+			body: JSON.stringify({
+				token: localStorage.getItem('token'),
+        likee: email
+			}),
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors',
+			method: 'POST'
+		})
+			.then((res) => {
+				return res.json()
+			})
+			.then((res) => {
+          console.log(res);
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+
     temp++;
     this.setState({
       index: temp
@@ -179,23 +227,23 @@ class GetACardBase extends Component{
         {(() => {
           if (cards[index].persona === "employer"){
             return [
-          <button onClick={this.Like}>
-          Like
-          </button>,
-          <button onClick={this.Favorite}>
+					<button onClick={() => {this.Like(cards[index].email) }}>
+					Like
+					</button>,
+          <button onClick={() => {this.Favorite(cards[index].email)}}>
           Favorite
           </button>,
-          <button onClick={this.Dislike}>
-            Dislike
-          </button>,
+					<button onClick={() => {this.Dislike(cards[index].email) }}>
+						Dislike
+					</button>,
         ]
         }
         else {
           return [
-        <button onClick={this.Like}>
+        <button onClick={() => {this.Like(cards[index].email) }}>
         Like
         </button>,
-        <button onClick={this.Dislike}>
+        <button onClick={() => {this.Dislike(cards[index].email) }}>
           Dislike
         </button>,
       ]
