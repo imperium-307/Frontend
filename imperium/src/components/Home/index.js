@@ -3,8 +3,11 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
 
+var cards = [100];
+cards[0] = "hello"
+
 const styles = {
-  fontFamily: "arial",
+  fontFamily: "sans-serif",
   textAlign: "center",
   marginTop: "40px",
   color: "#421CE8"
@@ -12,7 +15,7 @@ const styles = {
 
 const Home = () => (
   <div style={styles}>
-  <style>{'body { background-color: #DBDAE1; }'}</style>
+  <style>{'body { background-color: #878491; }'}</style>
     <h1>Home</h1>
     <GetACard />
   </div>
@@ -21,8 +24,7 @@ const INITIAL_STATE = {
   username: '',
   email: '',
 	bio: '',
-  passwordOne: '',
-  passwordTwo: '',
+
   error: null,
 };
 
@@ -32,7 +34,7 @@ class GetACardBase extends Component{
 
     this.state = { ...INITIAL_STATE };
 
-		fetch("http://localhost:3000/api/user", {
+		fetch("http://localhost:3000/api/user/request-users", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token')
 			}),
@@ -48,19 +50,16 @@ class GetACardBase extends Component{
 				return res.json()
 			})
 			.then((res) => {
-				this.setState({
-					username: res.username,
-					email: res.email,
-					bio: res.bio
-				});
+        console.log(res);
+        //cards = res.users;
+
 			})
 			.catch(error => {
 				this.setState({ error });
 			});
 	}
   Like = event => {
-
-    console.log("clicked");
+    console.log(cards[0]);
   };
 
   Favorite = event => {
