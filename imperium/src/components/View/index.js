@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
-import './index.css';
+import './index.css'; 
 
 const styles = {
 	fontFamily: "sans-serif",
