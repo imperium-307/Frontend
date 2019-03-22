@@ -21,6 +21,8 @@ const Home = () => (
 var INITIAL_STATE = {
   cards: '',
   index: 0,
+  photoFile: null,
+  resumeFile: null,
   error: null,
 };
 
@@ -49,6 +51,7 @@ class GetACardBase extends Component{
 			})
 			.then((res) => {
         this.setState({
+          photoFile: res.users[this.state.index].photo,
           cards: res.users,
         });
 			})
@@ -81,8 +84,8 @@ class GetACardBase extends Component{
     })
   }
   render (){
-    var {cards, index, error} = this.state;
-    if (cards == '' || index >= cards.length) {
+    var {cards, index, photoFile, error} = this.state;
+    if (cards == null|| index >= cards.length) {
       return(
         <div style={styles}>
             <button onClick={this.Like}>
@@ -114,6 +117,8 @@ class GetACardBase extends Component{
         if (cards[index].persona === "student") {
 
           return [
+            <img src= { cards[index].photo }/>,
+            <br/>,
             <p1>Name: {cards[index].username}</p1>,
             <br/>,
             <p1>University: {cards[index].university}</p1>,
@@ -134,6 +139,8 @@ class GetACardBase extends Component{
         }
         else {
           return[
+          <img src= { cards[index].photo }/>,
+          <br/>,
           <p1>Compnay: {cards[index].company}</p1>,
           <br/>,
           <p1>Major: {cards[index].major}</p1>,
