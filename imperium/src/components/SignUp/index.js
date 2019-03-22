@@ -144,7 +144,7 @@ class SignUpFormBase extends Component {
 			this.setState({
 				["resumeFile"]: target.files[0]
 			});
-		} 
+		}
 
 		if (target.name == "photo") {
 			var f = target.files[0];
