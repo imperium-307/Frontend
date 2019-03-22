@@ -104,18 +104,16 @@ class GetACardBase extends Component{
     })
   }
   render (){
-    if (!this.state || !this.state.cards) {
+    var check = false;
+    if (this.state && this.state.cards){
+      if (this.state.index >= this.state.cards.length) {
+        check = true;
+      }
+    }
+    if (!this.state || !this.state.cards || check) {
       return(
         <div>
-            <button onClick={this.Like}>
-            Like
-            </button>
-            <button onClick={this.Favorite}>
-            Favorite
-            </button>
-            <button onClick={this.Dislike}>
-            Dislike
-            </button>
+            <p1>There are no profiles available</p1>
         </div>
       );
     } else {
