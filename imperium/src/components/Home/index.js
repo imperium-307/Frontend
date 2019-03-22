@@ -175,15 +175,31 @@ class GetACardBase extends Component{
         ]
         }
         })()}
+        {(() => {
+          if (cards[index].persona === "employer"){
+            return [
           <button onClick={this.Like}>
           Like
-          </button>
+          </button>,
           <button onClick={this.Favorite}>
           Favorite
-          </button>
+          </button>,
           <button onClick={this.Dislike}>
             Dislike
-          </button>
+          </button>,
+        ]
+        }
+        else {
+          return [
+        <button onClick={this.Like}>
+        Like
+        </button>,
+        <button onClick={this.Dislike}>
+          Dislike
+        </button>,
+      ]
+        }
+          })()}
       </div>
     );
   }
