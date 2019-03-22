@@ -71,7 +71,7 @@ class AccountPreferences extends Component {
 					bio: res.bio,
           minor: res.minor,
           major: res.major,
-          photo: res.photo
+          photoFile: res.photo
 				});
 			})
 			.catch(error => {
@@ -81,10 +81,35 @@ class AccountPreferences extends Component {
 
 	onChange = event => {
 		this.setState({ [event.target.name]: event.target.value });
+
+		if (event.target.name == "resume") {
+			this.setState({
+				["resumeFile"]: event.target.files[0]
+			});
+		}
+
+		if (event.target.name == "photo") {
+			var f = event.target.files[0];
+			var r = new FileReader();
+			r.onloadend = ()=> {
+				this.setState({
+					["photoFile"]: r.result
+				});
+			}
+			r.readAsDataURL(f);
+		}
 	};
 
 	onSubmit = event => {
-		const { username, email, bio, passwordOne, passwordTwo, minor, major, photo } = this.state;
+		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile, resumeFile } = this.state;
+
+		const data = new FormData();
+		data.append('file', resumeFile);
+
+		fetch('http://localhost:3000/api/user/ch-resume/' + email, {
+			method: 'POST',
+			body: data,
+		})
 
 		fetch("http://localhost:3000/api/user/ch-settings", {
 			body: JSON.stringify({
@@ -95,7 +120,7 @@ class AccountPreferences extends Component {
 				bio: bio,
         minor: minor,
         major: major,
-        photo: photo,
+        photo: photoFile,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -129,7 +154,7 @@ class AccountPreferences extends Component {
 							bio: res.bio,
               minor: res.minor,
               major: res.major,
-              photo: res.photo
+              photoFile: res.photo
 						});
 					})
 					.catch(error => {
@@ -183,7 +208,9 @@ class AccountPreferences extends Component {
 			bio,
       minor,
       major,
+			resume,
       photo,
+      photoFile,
 			error,
 		} = this.state;
 
@@ -262,22 +289,24 @@ console.log(photo)
       <br/>
       <input
       type="file"
-      value={minor}
+      value={resume}
       name="resume"
       id="resume"
       onChange={this.onChange}
       placeholder="resume" />
+			<div>
+			<a href={"http://localhost:3000/resumes/"+email+".pdf"}>View your current resume</a>
+			</div>
       <br/>
-      <p1>Please upload a photo of yourself as a .PNG</p1>
+      <p1>Please upload a photo of yourself as a .png</p1>
       <br/>
       <input
       type="file"
-      value={ photo ? photo : '' }
+      value={ photo }
       name="photo"
       id="photo"
       onChange={this.onChange}/>
-      <img src= { photo ? photo : '' }/>
-    {/*  <img src={ `data:image/jpeg;base64,${photo}` } /> */}
+      <img src= { photoFile }/>
       <br/>
 
 			<br/>
