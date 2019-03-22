@@ -129,6 +129,8 @@ class GetACardBase extends Component{
             <br/>,
             <p1>Bio: {cards[index].bio}</p1>,
             <br/>,
+            <a href={"http://localhost:3000/resumes/"+cards[index].email+".pdf"}>View your current resume</a>,
+            <br/>,
             <p1>Looking for {cards[index].jobType}</p1>,
             <br/>,
             <p1>Start: {cards[index].start} End: {cards[index].end}</p1>,
