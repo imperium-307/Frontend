@@ -4,6 +4,9 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+var pdf = false;
+var jpeg = false;
+
 const styles = {
   fontFamily: "arial",
   textAlign: "center",
@@ -31,6 +34,12 @@ const INITIAL_STATE = {
 	bio: '',
   passwordOne: '',
   passwordTwo: '',
+  minor: '',
+  major: '',
+  resume: '',
+  photo: '',
+  photoFile: null,
+  resumeFile: null,
   error: null,
 };
 
@@ -59,7 +68,10 @@ class AccountPreferences extends Component {
 				this.setState({
 					username: res.username,
 					email: res.email,
-					bio: res.bio
+					bio: res.bio,
+          minor: res.minor,
+          major: res.major,
+          photo: res.photo
 				});
 			})
 			.catch(error => {
@@ -72,7 +84,7 @@ class AccountPreferences extends Component {
 	};
 
 	onSubmit = event => {
-		const { username, email, bio, passwordOne, passwordTwo } = this.state;
+		const { username, email, bio, passwordOne, passwordTwo, minor, major, photo } = this.state;
 
 		fetch("http://localhost:3000/api/user/ch-settings", {
 			body: JSON.stringify({
@@ -81,6 +93,9 @@ class AccountPreferences extends Component {
 				password: passwordOne,
 				passwordConfirm: passwordTwo,
 				bio: bio,
+        minor: minor,
+        major: major,
+        photo: photo,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -111,7 +126,10 @@ class AccountPreferences extends Component {
 						this.setState({
 							username: res.username,
 							email: res.email,
-							bio: res.bio
+							bio: res.bio,
+              minor: res.minor,
+              major: res.major,
+              photo: res.photo
 						});
 					})
 					.catch(error => {
@@ -163,6 +181,9 @@ class AccountPreferences extends Component {
 			passwordOne,
 			passwordTwo,
 			bio,
+      minor,
+      major,
+      photo,
 			error,
 		} = this.state;
 
@@ -170,7 +191,11 @@ class AccountPreferences extends Component {
 			passwordOne !== passwordTwo ||
 			email === '' ||
 			username === '' ||
-			bio === '';
+			bio === '' ||
+      minor === '' ||
+      major === '';
+
+console.log(photo)
 
 		return (
 			<div style={styles}>
@@ -216,8 +241,45 @@ class AccountPreferences extends Component {
 			type="bio"
 			placeholder="Bio"
 			/>
-
 			<br/>
+			<input
+			name="major"
+			value={major}
+			onChange={this.onChange}
+			type="text"
+			placeholder="Major"
+			/>
+			<br/>
+			<input
+			name="minor"
+			value={minor}
+			onChange={this.onChange}
+			type="text"
+			placeholder="Minor"
+			/>
+			<br/>
+      <p1>Upload your resume as a .pdf</p1>
+      <br/>
+      <input
+      type="file"
+      value={minor}
+      name="resume"
+      id="resume"
+      onChange={this.onChange}
+      placeholder="resume" />
+      <br/>
+      <p1>Please upload a photo of yourself as a .PNG</p1>
+      <br/>
+      <input
+      type="file"
+      value={ photo ? photo : '' }
+      name="photo"
+      id="photo"
+      onChange={this.onChange}/>
+      <img src= { photo ? photo : '' }/>
+    {/*  <img src={ `data:image/jpeg;base64,${photo}` } /> */}
+      <br/>
+
 			<br/>
 			<button style={buttonStyle} type="button" type="submit" disabled={isInvalid}>
 			Save Preferences
