@@ -22,7 +22,7 @@ var INITIAL_STATE = {
   index: 0,
   photoFile: null,
   resumeFile: null,
-  likee: true,
+  likee: '',
   error: null,
 };
 
@@ -63,7 +63,8 @@ class GetACardBase extends Component{
     this.setState({
       index: temp
     })
-    const {likee} = this.state;
+    const {likee} = this.state.cards[this.state.index].email;
+    console.log(this.state.cards[this.state.index].email);
     fetch("http://localhost:3000/api/user/like", {
 			body: JSON.stringify({
         likee: likee,
@@ -81,7 +82,7 @@ class GetACardBase extends Component{
 				return res.json()
 			})
 			.then((res) => {
-
+          console.log(res);
 			})
 			.catch(error => {
 				this.setState({ error });
