@@ -2,7 +2,7 @@ import React from 'react';
 import BurgerMenu from '../BurgerMenu';
 
 const styles = {
-  fontFamily: "sans-serif",
+  fontFamily: "arial",
   textAlign: "center",
   marginTop: "40px",
   color: "#421CE8"
@@ -10,7 +10,7 @@ const styles = {
 
 const Landing = () => (
   <div style={styles}>
-  <style>{'body { background-color: #878491; }'}</style>
+  <style>{'body { background-color: #DBDAE1; }'}</style>
     <h1>Landing</h1>
   </div>
 );
