@@ -47,9 +47,7 @@ const SignInPage = () => (
 		<SignUpLink />
     <div>
 
-      <img src={logo} alt="Logo" className="Logo" />
-      <img src={logo2} alt="Logo2" className="Logo2" />
-      <img src={logo3} alt="Logo3" className="Logo3" />
+      
       </div>
 	</div>
 );
