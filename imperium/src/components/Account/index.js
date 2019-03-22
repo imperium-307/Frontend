@@ -156,43 +156,27 @@ class AccountPreferences extends Component {
 			mode: 'cors',
 			method: 'POST'
 		})
-			.then(() => {
-				fetch("http://localhost:3000/api/user", {
-					body: JSON.stringify({
-						token: localStorage.getItem('token')
-					}),
-					cache: 'no-cache',
-					credentials: 'same-origin',
-					headers: {
-						'content-type': 'application/json'
-					},
-					mode: 'cors',
-					method: 'POST'
-				})
-					.then((res) => {
-						return res.json()
-					})
-					.then((res) => {
-						this.setState({
-							username: res.username,
-							email: res.email,
-							bio: res.bio,
-              minor: res.minor,
-              major: res.major,
-              photoFile: res.photo,
-              wage: res.wage,
-              northeast: res.northeast,
-              west: res.west,
-              south: res.south,
-              midwest: res.midwest,
-              start: res.start,
-              jobType: res.jobType,
-              end: res.end
-						});
-					})
-					.catch(error => {
-						this.setState({ error });
-					});
+			.then((res) => {
+				return res.json()
+			})
+			.then((res) => {
+				console.log("setting:" + res)
+				this.setState({
+					username: res.user.username,
+					email: res.user.email,
+					bio: res.user.bio,
+					minor: res.user.minor,
+					major: res.user.major,
+					photoFile: res.user.photo,
+					wage: res.user.wage,
+					northeast: res.user.northeast,
+					west: res.user.west,
+					south: res.user.south,
+					midwest: res.user.midwest,
+					start: res.user.start,
+					jobType: res.user.jobType,
+					end: res.user.end
+				});
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -240,28 +224,29 @@ class AccountPreferences extends Component {
 			passwordTwo,
 			jobType,
 			bio,
-      minor,
-      major,
+			minor,
+			major,
 			resume,
-      photo,
-      photoFile,
-      wage,
-      northeast,
-      west,
-      south,
-      midwest,
-      start,
-      end,
+			photo,
+			photoFile,
+			wage,
+			northeast,
+			west,
+			south,
+			midwest,
+			start,
+			end,
 			error,
 		} = this.state;
+		console.log("render:" + jobType)
 
 		const isInvalid =
 			passwordOne !== passwordTwo ||
 			email === '' ||
 			username === '' ||
 			bio === '' ||
-      minor === '' ||
-      major === '';
+			minor === '' ||
+			major === '';
 
 		return (
 			<div style={styles}>
@@ -324,14 +309,14 @@ class AccountPreferences extends Component {
 			placeholder="Minor"
 			/>
 			<br/>
-      <p1>Upload your resume as a .pdf</p1>
-      <br/>
-      <input
-      type="file"
-      value={resume}
-      name="resume"
-      id="resume"
-      onChange={this.onChange}
+			<p1>Upload your resume as a .pdf</p1>
+			<br/>
+			<input
+			type="file"
+			value={resume}
+			name="resume"
+			id="resume"
+			onChange={this.onChange}
 			placeholder="resume" />
 			<div>
 			<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank">View your current resume</a>
@@ -357,26 +342,26 @@ class AccountPreferences extends Component {
 			</select>
 
 			<br/>
-      <p1>Please select what reigons you would be interested in working on</p1>
-      <br/>
-      <input name="northeast" checked={northeast} onChange={this.onChange} type="checkbox"/>
-      <p1>Northeast</p1>
-      <br/>
-      <input name="west" checked={west} onChange={this.onChange} type="checkbox"/>
-      <p1>West</p1>
-      <br/>
-      <input name="south" checked={south} onChange={this.onChange} type="checkbox"/>
-      <p1>South</p1>
-      <br/>
-      <input name="midwest" checked={midwest} onChange={this.onChange} type="checkbox"/>
-      <p1>Midwest</p1>
-      <br/>
+			<p1>Please select what reigons you would be interested in working on</p1>
+			<br/>
+			<input name="northeast" checked={northeast} onChange={this.onChange} type="checkbox"/>
+			<p1>Northeast</p1>
+			<br/>
+			<input name="west" checked={west} onChange={this.onChange} type="checkbox"/>
+			<p1>West</p1>
+			<br/>
+			<input name="south" checked={south} onChange={this.onChange} type="checkbox"/>
+			<p1>South</p1>
+			<br/>
+			<input name="midwest" checked={midwest} onChange={this.onChange} type="checkbox"/>
+			<p1>Midwest</p1>
+			<br/>
 
-      <p2>Please enter which days you will be able start and end</p2>
-      <br/>
-      <input name="start" value={start} onChange={this.onChange} type="date"/>
-      <input name="end" value={end} onChange={this.onChange} type="date"/>
-      <br/>
+			<p2>Please enter which days you will be able start and end</p2>
+			<br/>
+			<input name="start" value={start} onChange={this.onChange} type="date"/>
+			<input name="end" value={end} onChange={this.onChange} type="date"/>
+			<br/>
 
 			<br/>
 			<button style={buttonStyle} type="button" type="submit" disabled={isInvalid}>
