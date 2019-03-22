@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
+import './index.css';
 
 const styles = {
 	fontFamily: "sans-serif",
@@ -28,17 +29,14 @@ class GetACardBase extends Component{
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
-		fetch("http://localhost:3000/api/user/", {
-			body: JSON.stringify({
-				token: localStorage.getItem('token')
-			}),
+		fetch("http://localhost:3000/api/user/view/"+this.props.match.params.email, {
 			cache: 'no-cache',
 			credentials: 'same-origin',
 			headers: {
 				'content-type': 'application/json'
 			},
 			mode: 'cors',
-			method: 'POST'
+			method: 'GET'
 		})
 			.then((res) => {
 				return res.json()
@@ -78,7 +76,7 @@ class GetACardBase extends Component{
 					if (user.persona === "student") {
 
 						return [
-							<img src= { user.photo }/>,
+							<img id="photoData" src= { user.photo }/>,
 							<br/>,
 							<p1>Name: {user.username}</p1>,
 							<br/>,
@@ -102,7 +100,7 @@ class GetACardBase extends Component{
 					}
 					else {
 						return[
-							<img src= { user.photo }/>,
+							<img id="photoData" src= { user.photo }/>,
 							<br/>,
 							<p1>Compnay: {user.company}</p1>,
 							<br/>,
