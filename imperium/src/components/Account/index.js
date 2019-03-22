@@ -295,7 +295,7 @@ console.log(photo)
       onChange={this.onChange}
       placeholder="resume" />
 			<div>
-			<a href={"http://localhost:3000/resumes/"+email+".pdf"}>View your current resume</a>
+			<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank">View your current resume</a>
 			</div>
       <br/>
       <p1>Please upload a photo of yourself as a .png</p1>
@@ -306,7 +306,7 @@ console.log(photo)
       name="photo"
       id="photo"
       onChange={this.onChange}/>
-      <img src= { photoFile }/>
+      <a href={ photoFile } target="_blank"><img src={ photoFile }/></a>
       <br/>
 
 			<br/>
