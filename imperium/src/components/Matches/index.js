@@ -1,5 +1,7 @@
 import React from 'react';
 import './matches.css';
+import { Link } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 
 const styles = {
   fontFamily: "arial",
@@ -98,6 +100,10 @@ class Card extends React.Component {
 			});
 	}
 
+	viewProfile = () => {
+
+	}
+
 	render() {
 		const email = this.props.email;
 
@@ -107,7 +113,7 @@ class Card extends React.Component {
 			<div className="user_contact">
 			<button onClick={this.unmatch}>Unmatch</button>
 			<button>Chat</button>
-			<button>view profile</button>
+			<Link to={"/view/" + email }>View profile</Link>
 			</div>
 			</li>
 		);

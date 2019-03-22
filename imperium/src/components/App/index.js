@@ -6,6 +6,7 @@ import StudentSignUpPage from '../StudentSignUp';
 import EmployerSignUpPage from '../EmployerSignUp';
 import PasswordForgetPage from '../PasswordForget';
 import HomePage from '../Home';
+import ViewPage from '../View';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import MatchesPage from '../Matches';
@@ -30,6 +31,7 @@ const App = () => (
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
       <Route path={ROUTES.MATCHES} component={MatchesPage} />
+      <Route path={ROUTES.VIEW} component={ViewPage} />
     </div>
   </Router>
 );
