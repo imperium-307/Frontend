@@ -290,6 +290,7 @@ class SignUpFormBase extends Component {
             <select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
               <option value="" disabled selected hidden>What type of job are you looking for?</option>
               <option value="fullTime">Full Time</option>
+              <option value="parttime">Part Time</option>
               <option value="internship">Internship</option>
               <option value="coop">Co-op</option>
             </select>,
@@ -336,6 +337,7 @@ class SignUpFormBase extends Component {
             <select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
               <option value="" disabled selected hidden>What type of job are you posting?</option>
               <option value="fullTime">Full Time</option>
+              <option value="parttime">Part Time</option>
               <option value="internship">Internship</option>
               <option value="coop">Co-op</option>
             </select>,
