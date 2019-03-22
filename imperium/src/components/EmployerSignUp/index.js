@@ -6,7 +6,7 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const styles = {
-  fontFamily: "sans-serif",
+  fontFamily: "arial",
   textAlign: "center",
   marginTop: "40px",
   color: "#421CE8"
@@ -24,7 +24,7 @@ const buttonStyle = {
 
 const EmployerSignUp = () => (
   <div style={styles}>
-  <style>{'body { background-color: #878491; }'}</style>
+  <style>{'body { background-color: #DBDAE1; }'}</style>
     <h1>Employer Sign Up</h1>
     <EmployerSignUpForm />
   </div>

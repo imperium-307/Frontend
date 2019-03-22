@@ -9,7 +9,7 @@ var pdf = false;
 var jpeg = false;
 var sub = true;
 const styles = {
-  fontFamily: "sans-serif",
+  fontFamily: "arial",
   textAlign: "center",
   marginTop: "40px",
   color: "#421CE8"
@@ -26,7 +26,7 @@ const buttonStyle = {
 
 const SignUpPage = () => (
   <div style={styles}>
-  <style>{'body { background-color: #878491; }'}</style>
+  <style>{'body { background-color: #DBDAE1; }'}</style>
     <h1>Sign Up</h1>
     <SignUpForm />
   </div>
