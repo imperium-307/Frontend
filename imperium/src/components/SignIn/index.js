@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import logo from './logo.jpg'
+import logo2 from './logo2.jpg'
+import logo3 from './logo3.jpg'
+import "./logo.css"
+import "./logo2.css"
+import "./logo3.css"
 
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
@@ -39,8 +45,16 @@ const SignInPage = () => (
 		<SignInForm />
 		<PasswordForgetLink />
 		<SignUpLink />
+    <div>
+
+      <img src={logo} alt="Logo" className="Logo" />
+      <img src={logo2} alt="Logo2" className="Logo2" />
+      <img src={logo3} alt="Logo3" className="Logo3" />
+      </div>
 	</div>
 );
+
+
 
 const INITIAL_STATE = {
 	email: '',

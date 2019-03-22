@@ -9,7 +9,7 @@ var pdf = false;
 var jpeg = false;
 var sub = true;
 const styles = {
-  fontFamily: "sans-serif",
+  fontFamily: "arial",
   textAlign: "center",
   marginTop: "40px",
   color: "#421CE8"
@@ -26,7 +26,7 @@ const buttonStyle = {
 
 const SignUpPage = () => (
   <div style={styles}>
-  <style>{'body { background-color: #878491; }'}</style>
+  <style>{'body { background-color: #DBDAE1; }'}</style>
     <h1>Sign Up</h1>
     <SignUpForm />
   </div>
@@ -357,7 +357,7 @@ class SignUpFormBase extends Component {
           pdf = false;
         }
         var pString = photo.substring(photo.length-4, photo.length);
-        if (pString === ".PNG"){
+        if (pString.toLowerCase() === ".png"){
           jpeg = true;
         }
         else {
