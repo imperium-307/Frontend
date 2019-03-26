@@ -10,6 +10,8 @@ import ViewPage from '../View';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import MatchesPage from '../Matches';
+import CompanyHomePage from '../CompanyHome';
+import JobPostingCreatorPage from '../JobPostingCreator';
 import * as ROUTES from '../../constants/routes';
 import {
   BrowserRouter as Router,
@@ -32,6 +34,8 @@ const App = () => (
       <Route path={ROUTES.ADMIN} component={AdminPage} />
       <Route path={ROUTES.MATCHES} component={MatchesPage} />
       <Route path={ROUTES.VIEW} component={ViewPage} />
+      <Route path={ROUTES.JOB_POSTING_CREATOR} component={JobPostingCreatorPage} />
+      <Route path={ROUTES.COMPANY_HOME} component={CompanyHomePage} />
     </div>
   </Router>
 );

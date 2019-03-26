@@ -124,7 +124,7 @@ class SignUpFormBase extends Component {
               localStorage.setItem('token', res.token)
             }
             else if (persona == "employer") {
-              this.props.history.push(ROUTES.HOME);
+              this.props.history.push(ROUTES.COMPANY_HOME);
               localStorage.setItem('token', res.token)
             }
 						console.log("signed up and logged in with token" + res.token)
@@ -311,49 +311,10 @@ class SignUpFormBase extends Component {
           case "employer": return [
             <input name="company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>,
             <br/>,
-            <input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>,
-            <br/>,
-            <input name="location" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Exact Location"/>,
-            <br/>,
-            <p1>Please select what reigon that the positon will be in</p1>,
-            <br/>,
-            <input name="northeast" value={"northeast"} onChange={this.handleInputChange} type="checkbox"/>,
-            <p1>Northeast</p1>,
-            <br/>,
-            <input name="west" value={"west"} onChange={this.handleInputChange} type="checkbox"/>,
-            <p1>West</p1>,
-            <br/>,
-            <input name="south" value={"south"} onChange={this.handleInputChange} type="checkbox"/>,
-            <p1>South</p1>,
-            <br/>,
-            <input name="midwest" value={"midwest"} onChange={this.handleInputChange} type="checkbox"/>,
-            <p1>Midwest</p1>,
-            <br/>,
-            <br/>,
-            <input name="major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Related Major"/>,
-            <br/>,
             <p1>Please upload a photo of your company as a .PNG</p1>,
             <br/>,
             <input type="file" value={photo} name="photo" id="photo" onChange={this.handleInputChange} />,
       			<a href={ photoFile } target="_blank"><img id="photoData" src={ photoFile }/></a>,
-            <br/>,
-            <select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
-              <option value="" disabled selected hidden>What type of job are you posting?</option>
-              <option value="fullTime">Full Time</option>
-              <option value="parttime">Part Time</option>
-              <option value="internship">Internship</option>
-              <option value="coop">Co-op</option>
-            </select>,
-            <br/>,
-            <p2>Please enter when the postiton will start and end</p2>,
-            <br/>,
-            <input name="start" value={this.state.text} onChange={this.handleInputChange} type="date"/>,
-            <input name="end" value={this.state.text} onChange={this.handleInputChange} type="date"/>,
-            <br/>,
-            <input name="wage" value={this.state.text} onChange={this.handleInputChange} type="number" step=".1" placeholder="Salary of Job"/>,
-
-
-
           ]
                   }
       })()}
@@ -409,7 +370,7 @@ class SignUpFormBase extends Component {
               }
           }
           else if (persona === "employer") {
-            if (major === '' || company === '' || bio === '' || jobType === '' || start === '' || end === '' || wage === '') {
+            if (company === '') {
                 sub = true;
             }
             else {

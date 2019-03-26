@@ -9,3 +9,5 @@ export const ADMIN = '/admin';
 export const PASSWORD_FORGET = '/pw-forget';
 export const MATCHES = '/matches';
 export const VIEW = '/view/:email';
+export const COMPANY_HOME = '/companyhome';
+export const JOB_POSTING_CREATOR = '/jobpostingcreator'
