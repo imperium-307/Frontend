@@ -341,7 +341,8 @@ class AccountPreferences extends Component {
 			<option value="internship">Internship</option>
 			<option value="coop">Co-op</option>
 			</select>
-
+			<br/>
+			<input name="wage" value={wage} onChange={this.onChange} type="number" step=".1" placeholder="Salary of Job"/>
 			<br/>
 			<p1>Please select what reigons you would be interested in working on</p1>
 			<br/>
