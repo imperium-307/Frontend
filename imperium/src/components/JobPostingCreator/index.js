@@ -73,6 +73,15 @@ class CreateJobPosting extends Component {
 
     event.preventDefault();
   }
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
 
   render(){
     const {jobType, location, west, south, midwest, northeast, major, bio, wage} = this.state;
@@ -121,6 +130,7 @@ class CreateJobPosting extends Component {
       </form>
     )
   }
+
 }
 
 export default JobPostingCreator;
