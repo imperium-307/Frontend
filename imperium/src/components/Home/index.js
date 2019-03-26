@@ -93,7 +93,7 @@ class GetACardBase extends Component{
   Favorite = email => {
     var temp = this.state.index;
 		console.log(email)
-    fetch("http://localhost:3000/api/user/like", {
+    fetch("http://localhost:3000/api/user/favorite", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
         likee: email
@@ -110,25 +110,28 @@ class GetACardBase extends Component{
 				return res.json()
 			})
 			.then((res) => {
-          console.log(res);
+				if (res.err) {
+					this.setState({ error: res.err });
+				} else {
+					temp++;
+					this.setState({
+						index: temp
+					})
+				}
 			})
 			.catch(error => {
 				this.setState({ error });
 			});
 
-    temp++;
-    this.setState({
-      index: temp
-    })
-  }
+	}
 
-  Dislike = email => {
-    var temp = this.state.index;
+	Dislike = email => {
+		var temp = this.state.index;
 		console.log(email)
-    fetch("http://localhost:3000/api/user/like", {
+		fetch("http://localhost:3000/api/user/like", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
-        likee: email
+				likee: email
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
@@ -142,124 +145,125 @@ class GetACardBase extends Component{
 				return res.json()
 			})
 			.then((res) => {
-          console.log(res);
+				console.log(res);
 			})
 			.catch(error => {
 				this.setState({ error });
 			});
 
-    temp++;
-    this.setState({
-      index: temp
-    })
-  }
-  render (){
-    var check = false;
-    if (this.state && this.state.cards){
-      if (this.state.index >= this.state.cards.length) {
-        check = true;
-      }
-    }
-    if (!this.state || !this.state.cards || check) {
-      return(
-        <div>
-            <p1>There are no profiles available</p1>
-        </div>
-      );
-    } else {
-      const {cards, index, photoFile, error} = this.state;
-    return(
-      <div style={styles}>
-      {(() => {
+		temp++;
+		this.setState({
+			index: temp
+		})
+	}
+	render (){
+		var check = false;
+		if (this.state && this.state.cards){
+			if (this.state.index >= this.state.cards.length) {
+				check = true;
+			}
+		}
+		if (!this.state || !this.state.cards || check) {
+			return(
+				<div>
+				<p1>There are no profiles available</p1>
+				</div>
+			);
+		} else {
+			const {cards, index, photoFile, error} = this.state;
+			return(
+				<div style={styles}>
+				{(() => {
 
-        if (cards[index].jobType === "fullTime") {
-              cards[index].jobType = "a full time job";
-        }
-        else if (cards[index].jobType === "internship") {
-          cards[index].jobType = "an internship";
-        }
-        else {
-          cards[index].jobType = " a co-op";
-        }
-        if (cards[index].persona === "student") {
+					if (cards[index].jobType === "fullTime") {
+						cards[index].jobType = "a full time job";
+					}
+					else if (cards[index].jobType === "internship") {
+						cards[index].jobType = "an internship";
+					}
+					else {
+						cards[index].jobType = " a co-op";
+					}
+					if (cards[index].persona === "student") {
 
-          return [
-            <img id="photoData" src= { cards[index].photo }/>,
-            <br/>,
-            <p1>Name: {cards[index].username}</p1>,
-            <br/>,
-            <p1>University: {cards[index].university}</p1>,
-            <br/>,
-            <p1>Major: {cards[index].major}</p1>,
-            <br/>,
-            <p1>Minor: {cards[index].minor}</p1>,
-            <br/>,
-            <p1>Bio: {cards[index].bio}</p1>,
-            <br/>,
-            <a href={"http://localhost:3000/resumes/"+cards[index].email+".pdf"}>View your current resume</a>,
-            <br/>,
-            <p1>Looking for {cards[index].jobType}</p1>,
-            <br/>,
-            <p1>Start: {cards[index].start} End: {cards[index].end}</p1>,
-            <br/>,
-            <p1>Prefered Wage: {cards[index].wage}</p1>,
-            <br/>,
-          ]
-        }
-        else {
-          return[
-          <img id="photoData" src= { cards[index].photo }/>,
-          <br/>,
-          <p1>Company: {cards[index].company}</p1>,
-          <br/>,
-          <p1>Major: {cards[index].major}</p1>,
-          <br/>,
-          <p1>Job Description: {cards[index].bio}</p1>,
-          <br/>,
-          <p1>Type of job is {cards[index].jobType}</p1>,
-          <br/>,
-          <p1>Location: {cards[index].location}</p1>,
-          <br/>,
-          <p1>Start: {cards[index].start} End: {cards[index].end}</p1>,
-          <br/>,
-          <p1>Wage: {cards[index].wage}</p1>,
-          <br/>,
-        ]
-        }
-        })()}
-        {(() => {
-          if (cards[index].persona === "employer"){
-            return [
-					<button onClick={() => {this.Like(cards[index].email) }}>
-					Like
-					</button>,
-          <button onClick={() => {this.Favorite(cards[index].email)}}>
-          Favorite
-          </button>,
-					<button onClick={() => {this.Dislike(cards[index].email) }}>
-						Dislike
-					</button>,
-        ]
-        }
-        else {
-          return [
-        <button onClick={() => {this.Like(cards[index].email) }}>
-        Like
-        </button>,
-        <button onClick={() => {this.Dislike(cards[index].email) }}>
-          Dislike
-        </button>,
-      ]
-        }
-          })()}
-      </div>
-    );
-  }
-  }
+						return [
+							<img id="photoData" src= { cards[index].photo }/>,
+							<br/>,
+							<p1>Name: {cards[index].username}</p1>,
+							<br/>,
+							<p1>University: {cards[index].university}</p1>,
+							<br/>,
+							<p1>Major: {cards[index].major}</p1>,
+							<br/>,
+							<p1>Minor: {cards[index].minor}</p1>,
+							<br/>,
+							<p1>Bio: {cards[index].bio}</p1>,
+							<br/>,
+							<a href={"http://localhost:3000/resumes/"+cards[index].email+".pdf"}>View your current resume</a>,
+							<br/>,
+							<p1>Looking for {cards[index].jobType}</p1>,
+							<br/>,
+							<p1>Start: {cards[index].start} End: {cards[index].end}</p1>,
+							<br/>,
+							<p1>Prefered Wage: {cards[index].wage}</p1>,
+							<br/>,
+						]
+					}
+					else {
+						return[
+							<img id="photoData" src= { cards[index].photo }/>,
+							<br/>,
+							<p1>Company: {cards[index].company}</p1>,
+							<br/>,
+							<p1>Major: {cards[index].major}</p1>,
+							<br/>,
+							<p1>Job Description: {cards[index].bio}</p1>,
+							<br/>,
+							<p1>Type of job is {cards[index].jobType}</p1>,
+							<br/>,
+							<p1>Location: {cards[index].location}</p1>,
+							<br/>,
+							<p1>Start: {cards[index].start} End: {cards[index].end}</p1>,
+							<br/>,
+							<p1>Wage: {cards[index].wage}</p1>,
+							<br/>,
+						]
+					}
+				})()}
+				{(() => {
+					if (cards[index].persona === "employer"){
+						return [
+							<button onClick={() => {this.Like(cards[index].email) }}>
+							Like
+							</button>,
+							<button onClick={() => {this.Favorite(cards[index].email)}}>
+							Favorite
+							</button>,
+							<button onClick={() => {this.Dislike(cards[index].email) }}>
+							Dislike
+							</button>,
+						]
+					}
+					else {
+						return [
+							<button onClick={() => {this.Like(cards[index].email) }}>
+							Like
+							</button>,
+							<button onClick={() => {this.Dislike(cards[index].email) }}>
+							Dislike
+							</button>,
+						]
+					}
+				})()}
+        {error && <p>{error}</p>}
+				</div>
+			);
+		}
+	}
 }
 
 const GetACard = compose (
-  withRouter,
+	withRouter,
 )(GetACardBase);
 
 export default Home;
