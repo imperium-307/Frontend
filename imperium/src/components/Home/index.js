@@ -3,35 +3,23 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
 import "./index.css";
+import 'react-bulma-components/dist/react-bulma-components.min.css';
+import { Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
 
-const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center",
-  marginTop: "40px",
-  color: "#421CE8"
-};
-
-const Home = () => (
-  <div style={styles}>
-  <style>{'body { background-color: #DBDAE1; }'}</style>
-    <h1>Home</h1>
-    <GetACard />
-  </div>
-);
 var INITIAL_STATE = {
-  cards: null,
-  index: 0,
-  photoFile: null,
-  resumeFile: null,
-  likee: '',
-  error: null,
+	cards: null,
+	index: 0,
+	photoFile: null,
+	likee: '',
+	isLoading: true,
+	error: null,
 };
 
-class GetACardBase extends Component{
-  constructor(props) {
+class Home extends Component{
+	constructor(props) {
 		super(props);
 
-    this.state = { ...INITIAL_STATE };
+		this.state = { ...INITIAL_STATE };
 		fetch("http://localhost:3000/api/user/request-users", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token')
@@ -48,87 +36,28 @@ class GetACardBase extends Component{
 				return res.json()
 			})
 			.then((res) => {
-        this.setState({
-          photoFile: res.users[this.state.index].photo,
-          cards: res.users,
-        });
-			})
-			.catch(error => {
-				this.setState({ error });
-			});
-	}
-
-  Like = (email) => {
-    var temp = this.state.index;
-		console.log(email)
-    fetch("http://localhost:3000/api/user/like", {
-			body: JSON.stringify({
-				token: localStorage.getItem('token'),
-        likee: email
-			}),
-			cache: 'no-cache',
-			credentials: 'same-origin',
-			headers: {
-				'content-type': 'application/json'
-			},
-			mode: 'cors',
-			method: 'POST'
-		})
-			.then((res) => {
-				return res.json()
-			})
-			.then((res) => {
-          console.log(res);
-			})
-			.catch(error => {
-				this.setState({ error });
-			});
-
-    temp++;
-    this.setState({
-      index: temp
-    })
-  };
-
-  Favorite = email => {
-    var temp = this.state.index;
-		console.log(email)
-    fetch("http://localhost:3000/api/user/favorite", {
-			body: JSON.stringify({
-				token: localStorage.getItem('token'),
-        likee: email
-			}),
-			cache: 'no-cache',
-			credentials: 'same-origin',
-			headers: {
-				'content-type': 'application/json'
-			},
-			mode: 'cors',
-			method: 'POST'
-		})
-			.then((res) => {
-				return res.json()
-			})
-			.then((res) => {
-				if (res.err) {
-					this.setState({ error: res.err });
-				} else {
-					temp++;
+				if (res.users) {
 					this.setState({
-						index: temp
-					})
+						photoFile: res.users[this.state.index].photo,
+						cards: res.users,
+						isLoading: false,
+					});
+				} else {
+					if (res.err) {
+						this.setState({ error: res.err });
+					}
+
+					this.setState({ isLoading: false });
 				}
 			})
 			.catch(error => {
 				this.setState({ error });
 			});
-
 	}
 
-	Dislike = email => {
-		var temp = this.state.index;
-		console.log(email)
-		fetch("http://localhost:3000/api/user/like", {
+	doAction = (action) => {
+		var email = this.state.cards[this.state.index].email
+		fetch("http://localhost:3000/api/user/" + action, {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
 				likee: email
@@ -145,127 +74,171 @@ class GetACardBase extends Component{
 				return res.json()
 			})
 			.then((res) => {
-				console.log(res);
+				if (res.err) {
+					this.setState({ error: res.err });
+				} else {
+					this.setState(oldState => {
+						return {index: oldState.index + 1}
+					})
+				}
 			})
 			.catch(error => {
 				this.setState({ error });
 			});
-
-		temp++;
-		this.setState({
-			index: temp
-		})
 	}
+
 	render (){
-		var check = false;
-		if (this.state && this.state.cards){
-			if (this.state.index >= this.state.cards.length) {
-				check = true;
-			}
-		}
-		if (!this.state || !this.state.cards || check) {
-			return(
-				<div>
-				<p1>There are no profiles available</p1>
-				</div>
-			);
-		} else {
-			const {cards, index, photoFile, error} = this.state;
-			return(
-				<div style={styles}>
-				{(() => {
+		const {cards, index, photoFile, error} = this.state;
+		var hasCards = cards && index < cards.length;
 
-					if (cards[index].jobType === "fullTime") {
-						cards[index].jobType = "a full time job";
+		return (
+			<div>
+			<Heading className="text-center" size={1}>Home</Heading>
+			<div className="flex">
+			<Card className="__user_card auto-margin is-centered">
+			{(() => {
+				if (hasCards) {
+					var user = cards[index]
+					var jobType = "";
+					switch(user.jobType) {
+						case "fullTime":
+							jobType = "a full time job";
+							break;
+						case "internship":
+							jobType = "an internship";
+							break;
+						case "coop":
+							jobType = " a co-op";
+							break;
+						case "parttime":
+							jobType = " a part time job"
+							break;
 					}
-					else if (cards[index].jobType === "internship") {
-						cards[index].jobType = "an internship";
-					}
-					else {
-						cards[index].jobType = " a co-op";
-					}
-					if (cards[index].persona === "student") {
 
-						return [
-							<img id="photoData" src= { cards[index].photo }/>,
-							<br/>,
-							<p1>Name: {cards[index].username}</p1>,
-							<br/>,
-							<p1>University: {cards[index].university}</p1>,
-							<br/>,
-							<p1>Major: {cards[index].major}</p1>,
-							<br/>,
-							<p1>Minor: {cards[index].minor}</p1>,
-							<br/>,
-							<p1>Bio: {cards[index].bio}</p1>,
-							<br/>,
-							<a href={"http://localhost:3000/resumes/"+cards[index].email+".pdf"}>View your current resume</a>,
-							<br/>,
-							<p1>Looking for {cards[index].jobType}</p1>,
-							<br/>,
-							<p1>Start: {cards[index].start} End: {cards[index].end}</p1>,
-							<br/>,
-							<p1>Prefered Wage: {cards[index].wage}</p1>,
-							<br/>,
-						]
-					}
-					else {
-						return[
-							<img id="photoData" src= { cards[index].photo }/>,
-							<br/>,
-							<p1>Company: {cards[index].company}</p1>,
-							<br/>,
-							<p1>Major: {cards[index].major}</p1>,
-							<br/>,
-							<p1>Job Description: {cards[index].bio}</p1>,
-							<br/>,
-							<p1>Type of job is {cards[index].jobType}</p1>,
-							<br/>,
-							<p1>Location: {cards[index].location}</p1>,
-							<br/>,
-							<p1>Start: {cards[index].start} End: {cards[index].end}</p1>,
-							<br/>,
-							<p1>Wage: {cards[index].wage}</p1>,
-							<br/>,
-						]
-					}
-				})()}
-				{(() => {
-					if (cards[index].persona === "employer"){
-						return [
-							<button onClick={() => {this.Like(cards[index].email) }}>
+					if (user.persona == "student") {
+						return (
+							<Card.Content className="auto-margin">
+							<Media className="">
+							<Media.Item renderAs="figure" position="left">
+							<Image renderAs="p" style={{width:200}} size={200} alt={user.username + "'s profile picture"} src={user.photo} />
+							</Media.Item>
+							<Media.Item style={{'margin-top': 'auto'}}> 
+							<Heading size={3}>{user.username}</Heading>
+							<Heading subtitle size={6}>{user.university}</Heading>
+							</Media.Item>
+							</Media>
+
+							<Content className="">
+							<i>{user.bio}</i>
+							<br/>
+							<a href={"http://localhost:3000/resumes/"+user.email+".pdf"}>View resume</a>
+							<br/>
+							<br/>
+
+							<span><b>Major:</b> {user.major}</span>
+							<br/>
+							<span><b>Minor:</b> {user.minor}</span>
+							<br/>
+							<span><b>Looking for:</b> {jobType}</span>
+							<br/>
+
+							<br/>
+							<span><b>Start:</b> {user.start}</span>
+							<br/>
+							<span><b>End:</b> {user.end}</span>
+							<br/>
+							<span><b>Desired wage:</b> {user.wage}</span>
+							<br/>
+
+							<hr/>
+							<div className="buttons is-centered">
+							<Button className="is-success is-grouped" onClick={() => {this.doAction("like")}}>
 							Like
-							</button>,
-							<button onClick={() => {this.Favorite(cards[index].email)}}>
+							</Button>
+							<Button className="is-danger is-grouped" onClick={() => {this.doAction("dislike")}}>
+							Dislike
+							</Button>
+							</div>
+							</Content>
+							</Card.Content>
+						);
+					} else {
+						return (
+							<Card.Content className="auto-margin">
+							<Media className="">
+							<Media.Item renderAs="figure" position="left">
+							<Image renderAs="p" style={{width:200}} size={200} alt={user.username + "'s profile picture"} src={user.photo} />
+							</Media.Item>
+							<Media.Item style={{'margin-top': 'auto'}}> 
+							<Heading size={3}>{user.username}</Heading>
+							</Media.Item>
+							</Media>
+
+							<Content className="">
+							<i>{user.bio}</i>
+							<br/>
+							<a href={"http://localhost:3000/resumes/"+user.email+".pdf"}>View resume</a>
+							<br/>
+
+							<br/>
+							<span><b>Desired major:</b> {user.major}</span>
+							<br/>
+							<span><b>Minor:</b> {user.minor}</span>
+							<br/>
+							<span><b>Job type:</b> {jobType}</span>
+							<br/>
+
+							<br/>
+							<span><b>Location:</b> {user.location}</span>
+							<br/>
+							<span><b>Start:</b> {user.start}</span>
+							<br/>
+							<span><b>End:</b> {user.end}</span>
+							<br/>
+							<span><b>Estimated wage:</b> {user.wage}</span>
+							<br/>
+
+							<br/>
+							<div className="buttons is-centered">
+							<Button className="is-success is-grouped" onClick={() => {this.doAction("like")}}>
+							Like
+							</Button>
+							<Button className="is-warning is-grouped" onClick={() => {this.doAction("favorite")}}>
 							Favorite
-							</button>,
-							<button onClick={() => {this.Dislike(cards[index].email) }}>
+							</Button>
+							<Button className="is-danger is-grouped" onClick={() => {this.doAction("dislike")}}>
 							Dislike
-							</button>,
-						]
+							</Button>
+							</div>
+							</Content>
+							</Card.Content>
+						)
 					}
-					else {
-						return [
-							<button onClick={() => {this.Like(cards[index].email) }}>
-							Like
-							</button>,
-							<button onClick={() => {this.Dislike(cards[index].email) }}>
-							Dislike
-							</button>,
-						]
-					}
-				})()}
-        {error && <p>{error}</p>}
-				</div>
-			);
-		}
+				} else if (this.state.isLoading) {
+					return (
+						<Loader className="auto-margin"
+						style={{
+							width: 100,
+								height: 100,
+								border: '4px solid',
+								borderTopColor: 'transparent',
+								borderRightColor: 'transparent',
+						}}
+						/>
+					)
+				} else if(error == null) {
+					return <p>There are no profiles available</p>
+				}
+			})()}
+
+			{error && <p>{error}</p>}
+			</Card>
+			</div>
+			</div>
+		)
 	}
 }
 
-const GetACard = compose (
+export default compose(
 	withRouter,
-)(GetACardBase);
-
-export default Home;
-
-export {GetACard};
+)(Home);
