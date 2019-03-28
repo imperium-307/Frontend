@@ -33,45 +33,45 @@ class CreateJobPosting extends Component {
     const {
       major, bio, company,location,
       jobType,northeast, west, south, midwest } = this.state;
-
-    fetch("http://localhost:3000/api/user/signup", {
-  			body: JSON.stringify({
-          bio: bio,
-          major: major,
-          company: company,
-          jobType: jobType,
-          northeast: northeast,
-          west: west,
-          south: south,
-          midwest: midwest,
-          location: location,
-  			}),
-  			cache: 'no-cache',
-  			credentials: 'same-origin',
-  			headers: {
-  				'content-type': 'application/json'
-  			},
-  			mode: 'cors',
-  			method: 'POST'
-  		})
-  			.then((res) => {
-  				return res.json()
-  			})
-  			.then((res) => {
-					if (res.token) {
-              this.props.history.push(ROUTES.COMPANY_HOME);
-              localStorage.setItem('token', res.token)
-						console.log("signed up and logged in with token" + res.token)
-					} else if (res.err) {
-						console.log("sign up failed")
-						this.setState({ error: res.err });
-					}
-  			})
-      .catch(error => {
-        this.setState({ error });
-      });
-
-    event.preventDefault();
+      this.props.history.push(ROUTES.COMPANY_HOME)
+    // fetch("http://localhost:3000/api/user/signup", {
+  	// 		body: JSON.stringify({
+    //       bio: bio,
+    //       major: major,
+    //       company: company,
+    //       jobType: jobType,
+    //       northeast: northeast,
+    //       west: west,
+    //       south: south,
+    //       midwest: midwest,
+    //       location: location,
+  	// 		}),
+  	// 		cache: 'no-cache',
+  	// 		credentials: 'same-origin',
+  	// 		headers: {
+  	// 			'content-type': 'application/json'
+  	// 		},
+  	// 		mode: 'cors',
+  	// 		method: 'POST'
+  	// 	})
+  	// 		.then((res) => {
+  	// 			return res.json()
+  	// 		})
+  	// 		.then((res) => {
+		// 			if (res.token) {
+    //           this.props.history.push(ROUTES.COMPANY_HOME);
+    //           localStorage.setItem('token', res.token)
+		// 				console.log("signed up and logged in with token" + res.token)
+		// 			} else if (res.err) {
+		// 				console.log("sign up failed")
+		// 				this.setState({ error: res.err });
+		// 			}
+  	// 		})
+    //   .catch(error => {
+    //     this.setState({ error });
+    //   });
+    //
+    // event.preventDefault();
   }
   handleInputChange(event) {
     const target = event.target;
@@ -86,7 +86,7 @@ class CreateJobPosting extends Component {
   render(){
     const {jobType, location, west, south, midwest, northeast, major, bio, wage} = this.state;
     return(
-      <form  onSubmit={this.onClick}>
+      <div>
       <input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>
       <br/>
       <input name="location" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Exact Location"/>
@@ -124,10 +124,11 @@ class CreateJobPosting extends Component {
       <br/>
       <input name="wage" value={this.state.text} onChange={this.handleInputChange} type="number" step=".1" placeholder="Salary of Job"/>
       <br/>
-      <button type="submit">
+      <button type="submit" onClick="onClick">
       Create Posting
       </button>
-      </form>
+      <Link to={ROUTES.COMPANY_HOME}>Cancel</Link>
+      </div>
     )
   }
 
