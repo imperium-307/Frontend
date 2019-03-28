@@ -6,6 +6,7 @@ import * as ROUTES from '../../constants/routes';
 //TODO make it so you cant click the create posting button without entering all the fields
 
 var INITIAL_STATE = {
+  jobName: '',
   jobType: '',
   location: '',
   west: '',
@@ -27,11 +28,12 @@ class CreateJobPosting extends Component {
 
 	onClick = event => {
 		const {
-			major, bio, location,
+			jobName, major, bio, location,
 			jobType,northeast, west, south, midwest } = this.state;
 
 		fetch("http://localhost:3000/api/user/create-job", {
 			body: JSON.stringify({
+        jobName: jobName,
 				bio: bio,
 				major: major,
 				jobType: jobType,
@@ -85,6 +87,8 @@ class CreateJobPosting extends Component {
 			<div>
 			<h1>Job Posting Creator</h1>
 			<div>
+      <input name="jobName" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Name of Job"/>
+      <br/>
 			<input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>
 			<br/>
 			<input name="location" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Exact Location"/>
