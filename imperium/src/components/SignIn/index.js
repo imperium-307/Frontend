@@ -7,24 +7,20 @@ import logo3 from './logo3.jpg'
 import "./logo.css"
 import "./logo2.css"
 import "./logo3.css"
-
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import * as ROUTES from '../../constants/routes';
 
-
-
-
 const styles = {
-  fontFamily: "arial",
-  textAlign: "center",
-  marginTop: "40px",
+	fontFamily: "arial",
+	textAlign: "center",
+	marginTop: "40px",
 	color: "#421CE8",
 };
 const buttonText = {
-	        fontSize: 40,
-	        fontWeight: '400',
-	        color: "#fff"
+	fontSize: 40,
+	fontWeight: '400',
+	color: "#fff"
 }
 const formStyle = {
 
@@ -40,19 +36,13 @@ const buttonStyle = {
 }
 const SignInPage = () => (
 	<div style={styles}>
-		<style>{'body { background-color: #DBDAE1; }'}</style>
-		<h1>Welcome to Imperium!</h1>
-		<SignInForm />
-		<PasswordForgetLink />
-		<SignUpLink />
-    <div>
-
-      
-      </div>
+	<style>{'body { background-color: #DBDAE1; }'}</style>
+	<h1>Welcome to Imperium!</h1>
+	<SignInForm />
+	<PasswordForgetLink />
+	<SignUpLink />
 	</div>
 );
-
-
 
 const INITIAL_STATE = {
 	email: '',
@@ -102,7 +92,7 @@ class SignInFormBase extends Component {
 						localStorage.removeItem('email')
 						this.setState({ error: res.err });
 					}
-          this.props.history.push(ROUTES.HOME);
+					this.props.history.push(ROUTES.HOME);
 				} else {
 					this.setState({ error: res.err });
 					console.log("sign in failed")
