@@ -12,6 +12,7 @@ import AdminPage from '../Admin';
 import MatchesPage from '../Matches';
 import CompanyHome from '../CompanyHome';
 import JobPostingCreatorPage from '../JobPostingCreator';
+import HistoryPage from '../History';
 import * as ROUTES from '../../constants/routes';
 import {
   BrowserRouter as Router,
@@ -36,6 +37,7 @@ const App = () => (
       <Route path={ROUTES.VIEW} component={ViewPage} />
       <Route path={ROUTES.JOB_POSTING_CREATOR} component={JobPostingCreatorPage} />
       <Route path={ROUTES.COMPANY_HOME} component={CompanyHome} />
+      <Route path={ROUTES.HISTORY} component={HistoryPage} />
     </div>
   </Router>
 );

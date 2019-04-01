@@ -10,4 +10,5 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const MATCHES = '/matches';
 export const VIEW = '/view/:email';
 export const COMPANY_HOME = '/companyhome';
-export const JOB_POSTING_CREATOR = '/jobpostingcreator'
+export const JOB_POSTING_CREATOR = '/jobpostingcreator';
+export const HISTORY = '/history';
