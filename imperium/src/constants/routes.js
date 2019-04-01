@@ -12,3 +12,4 @@ export const VIEW = '/view/:email';
 export const COMPANY_HOME = '/companyhome';
 export const JOB_POSTING_CREATOR = '/jobpostingcreator';
 export const HISTORY = '/history';
+export const CHAT = '/chat';
