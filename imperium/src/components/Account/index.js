@@ -47,6 +47,7 @@ const INITIAL_STATE = {
   midwest: '',
   start: '',
   end: '',
+  hide: '',
   photoFile: null,
   resumeFile: null,
   error: null,
@@ -88,7 +89,8 @@ class AccountPreferences extends Component {
           south: res.south,
           midwest: res.midwest,
           start: res.start,
-          end: res.end
+          end: res.end,
+          hide: res.hide,
 				});
 			})
 			.catch(error => {
@@ -120,7 +122,9 @@ class AccountPreferences extends Component {
 	};
 
 	onSubmit = event => {
-		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile, resumeFile, wage, jobType, midwest, northeast, west, south, start, end } = this.state;
+		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile,
+      resumeFile, wage, jobType, midwest, northeast,
+      west, south, start, end, hide } = this.state;
 		const data = new FormData();
 		data.append('file', resumeFile);
 
@@ -147,6 +151,7 @@ class AccountPreferences extends Component {
         midwest: midwest,
         start: start,
         end: end,
+        hide: hide,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -176,7 +181,8 @@ class AccountPreferences extends Component {
 					midwest: res.user.midwest,
 					start: res.user.start,
 					jobType: res.user.jobType,
-					end: res.user.end
+					end: res.user.end,
+          hide: res.user.hide,
 				});
 			})
 			.catch(error => {
@@ -237,6 +243,7 @@ class AccountPreferences extends Component {
 			midwest,
 			start,
 			end,
+      hide,
 			error,
 		} = this.state;
 		console.log("render:" + jobType)
@@ -364,7 +371,9 @@ class AccountPreferences extends Component {
 			<input name="start" value={start} onChange={this.onChange} type="date"/>
 			<input name="end" value={end} onChange={this.onChange} type="date"/>
 			<br/>
-
+			<input name="hide" checked={hide} onChange={this.onChange} type="checkbox"/>
+			<p1>Hide My Account</p1>
+      <br/>
 			<br/>
 			<button style={buttonStyle} type="button" type="submit" disabled={isInvalid}>
 			Save Preferences
