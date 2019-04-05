@@ -74,9 +74,9 @@ class CompanyHome extends Component {
 							<br/>
 
 							{/* ok so this is just stupid.  I can't have this be /home/:email/:id because then the router matches the route without params (/home)? like what the hell? Maybe I'm missing something but that's seriously horrendous */}
-							<Link to={"/homes/" + job.creator + "/" + job.id}>Match within this job</Link>
+							<Link to={"/homes/" + job.email + "/" + job.id}>Match within this job</Link>
 							<br/>
-							<Link to={"/jobs/" + job.creator + "/" + job.id + "/edit"}>Edit this job</Link>
+							<Link to={"/jobs/" + job.email + "/" + job.id + "/edit"}>Edit this job</Link>
 							</div>
 							</Columns.Column>
 						);

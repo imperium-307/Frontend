@@ -58,20 +58,20 @@ class Home extends Component{
 					this.setState({ error });
 				});
 		} else {
-			var creator = this.props.match.params.email
+			var email = this.props.match.params.email
 			var id = this.props.match.params.id
-			console.log(creator, id)
+			console.log(email, id)
 
-			if (!creator) {
+			if (!email) {
 				this.props.history.push("/companyhome")
 			}
-			this.setState({ creator, id })
+			this.setState({ email, id })
 
 			requestURL += "/request-students";
 			fetch(requestURL, {
 				body: JSON.stringify({
 					token: localStorage.getItem('token'),
-					job: creator + "/" + id
+					job: email + "/" + id
 				}),
 				cache: 'no-cache',
 				credentials: 'same-origin',
@@ -109,7 +109,7 @@ class Home extends Component{
 	doAction = (action) => {
 		var likee;
 		if (localStorage.getItem('persona') === "student") {
-			likee = this.state.cards[this.state.index].creator + "/" + this.state.cards[this.state.index].id
+			likee = this.state.cards[this.state.index].email + "/" + this.state.cards[this.state.index].id
 		} else {
 			likee = this.state.cards[this.state.index].email
 		}

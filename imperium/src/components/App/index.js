@@ -36,7 +36,6 @@ const App = () => (
       <Route path={ROUTES.JOB_POSTING_CREATOR} component={JobPostingCreatorPage} />
       <Route path={ROUTES.COMPANY_HOME} component={CompanyHome} />
 			{/* TODO make components for these */}
-      <Route path={ROUTES.VIEW_JOB} component={CompanyHome} />
       <Route path={ROUTES.EDIT_JOB} component={CompanyHome} />
       <Route path={ROUTES.HISTORY} component={HistoryPage} />
       <Route path={ROUTES.CHAT} component={ChatPage} />
