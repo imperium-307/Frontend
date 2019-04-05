@@ -1,8 +1,6 @@
 export const LANDING = '/';
 export const SIGN_UP = '/signup';
 export const SIGN_IN = '/signin';
-export const STUDENT_SIGN_UP = '/studentsignup'
-export const EMPLOYER_SIGN_UP = '/employersignup'
 export const HOME_WITH_JOB_ID = '/homes/:email/:id';
 export const HOME = '/home';
 export const ACCOUNT = '/account';
