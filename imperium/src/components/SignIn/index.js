@@ -70,7 +70,7 @@ class SignInFormBase extends Component {
 					console.log("logged in with token" + res.token)
 					localStorage.setItem('token', res.token)
 					localStorage.setItem('persona', res.persona)
-
+					localStorage.setItem('myemail', email)
 
 					if (this.state.rememberEmail === "on") {
 						localStorage.setItem('email', email)
@@ -82,10 +82,8 @@ class SignInFormBase extends Component {
 
 					if (res.persona === "student"){
 						this.props.history.push(ROUTES.HOME);
-						localStorage.setItem('token', res.token)
 					} else {
-						this.props.history.push(ROUTES.COMPANY_HOME);
-						localStorage.setItem('token', res.token)
+						this.props.history.push("/company/" + email);
 					}
 				} else {
 					this.setState({ error: res.err });

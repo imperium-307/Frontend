@@ -19,10 +19,10 @@ export default ({ close }) => (
       </li>
 			{ localStorage.getItem('token') !== null && localStorage.getItem('persona') === "employer" &&
 				<li onClick={close}>
-					<Link to={ROUTES.COMPANY_HOME}>My Company</Link>
+					<Link to={"/company/" + localStorage.getItem('myemail')}>My Company</Link>
 				</li>
 			}
-			{ localStorage.getItem('token') != null &&
+			{ localStorage.getItem('token') != null && localStorage.getItem('persona') === "student" &&
       <li onClick={close}>
         <Link to={ROUTES.HOME}>Home</Link>
       </li>

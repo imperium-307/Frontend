@@ -58,20 +58,18 @@ class Home extends Component{
 					this.setState({ error });
 				});
 		} else {
-			var email = this.props.match.params.email
-			var id = this.props.match.params.id
-			console.log(email, id)
+			var jobid = this.props.match.params.jobid
+			console.log(jobid)
 
-			if (!email) {
+			if (!jobid) {
 				this.props.history.push("/companyhome")
 			}
-			this.setState({ email, id })
 
 			requestURL += "/request-students";
 			fetch(requestURL, {
 				body: JSON.stringify({
 					token: localStorage.getItem('token'),
-					job: email + "/" + id
+					job: jobid
 				}),
 				cache: 'no-cache',
 				credentials: 'same-origin',
@@ -107,16 +105,18 @@ class Home extends Component{
 	}
 
 	doAction = (action) => {
-		var likee;
+		// iam is the job id, only used when employer is liking a student (as a job)
+		var likee, iam;
 		if (localStorage.getItem('persona') === "student") {
-			likee = this.state.cards[this.state.index].email + "/" + this.state.cards[this.state.index].id
+			likee = this.state.cards[this.state.index].email + "-" + this.state.cards[this.state.index].id;
 		} else {
 			likee = this.state.cards[this.state.index].email
 		}
 		fetch("http://localhost:3000/api/user/" + action, {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
-				likee: likee
+				likee: likee,
+				iam: iam
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',

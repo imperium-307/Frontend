@@ -29,11 +29,8 @@ class CreateJobPosting extends Component {
 	}
 
 	onClick = event => {
-		const {
-			jobName, major, bio, location,
-			jobType,northeast, west, south, midwest, start, end } = this.state;
+		const { jobName, major, bio, location, jobType,northeast, west, south, midwest, start, end } = this.state;
 
-		console.log(start)
 		fetch("http://localhost:3000/api/user/create-job", {
 			body: JSON.stringify({
 				jobName: jobName,
@@ -65,8 +62,9 @@ class CreateJobPosting extends Component {
 					console.log("create job failed")
 					this.setState({ error: res.err });
 				} else {
-					this.props.history.push(ROUTES.COMPANY_HOME);
+					this.props.history.push("/company/" + localStorage.getItem('myemail'));
 				}
+				console.log(res)
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -134,7 +132,7 @@ class CreateJobPosting extends Component {
 			<button type="submit" onClick={this.onClick}>
 			Create Posting
 			</button>
-			<Link to={ROUTES.COMPANY_HOME}>Cancel</Link>
+			<Link to={"/company/" + localStorage.getItem('myemail')}>Cancel</Link>
 			{error && <p>{error}</p>}
 			</div>
 			</div>

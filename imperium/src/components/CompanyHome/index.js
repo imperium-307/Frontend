@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
-import { Heading, Columns } from 'react-bulma-components';
+import { Heading, Columns, Loader } from 'react-bulma-components';
 
 const INITIAL_STATE = {
+	company: {},
   jobs: null,
+	isLoading: true,
   error: null
 };
 
@@ -17,7 +19,7 @@ class CompanyHome extends Component {
 
 		fetch("http://localhost:3000/api/user/get-all-jobs", {
 			body: JSON.stringify({
-				companyemail: "apple@example.com", // TODO set this to the company's email
+				companyemail: this.props.match.params.email,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -35,8 +37,11 @@ class CompanyHome extends Component {
 				if (res.err) {
 					this.setState({ error: res.err });
 				} else {
-					this.setState({ jobs: res.jobs });
+					console.log(res)
+					this.setState({ jobs: res.jobs, company: res.company });
 				}
+
+				this.setState({ isLoading: false });
 			})
 			.catch(error => {
 				console.log(error);
@@ -45,49 +50,78 @@ class CompanyHome extends Component {
 	}
 
 	render() {
-		const {company, jobs, error} = this.state;
+		const {company, isLoading, jobs, error} = this.state;
 
-		return (
-			<div style={{'maxWidth': '960px', 'margin': 'auto'}}>
-			<Heading className="has-text-centered" size={1}>TODO set this to company name</Heading>
-			<Columns className="is-multiline is-centered">
-			{(() => {
-				if (jobs) {
-					return jobs.map((job) => {
-						return (
-							<Columns.Column size={4} className="has-text-centered">
-							<div className="custom-card">
-							<br/>
-							<span><b>Desired major:</b> {job.major}</span>
-							<br/>
-							<span><b>Job type:</b> {job.jobType}</span>
-							<br/>
+		// TODO we should use the company thing (see line above) to show a nice heading with a prof pic and all that
+		if (isLoading) {
+			return (
+				<div style={{'maxWidth': '960px', 'margin': 'auto'}}>
+				<Loader className="auto-margin"
+				style={{
+					width: 100,
+						height: 100,
+						border: '4px solid',
+						borderTopColor: 'transparent',
+						borderRightColor: 'transparent',
+				}}
+				/>
+				</div>
+			)
+		} else {
+			return (
+				<div style={{'maxWidth': '960px', 'margin': 'auto'}}>
+				<Heading className="has-text-centered" size={1}>{company.company}'s home</Heading>
+				<Columns className="is-multiline is-centered">
+				{(() => {
+					if (jobs) {
+						return jobs.map((job) => {
+							return (
+								<Columns.Column size={4} className="has-text-centered">
+								<div className="custom-card">
+								<br/>
+								<Heading className="has-text-centered" size={3}>{job.jobName}</Heading>
+								<hr/>
+								<span><b>Desired major:</b> {job.major}</span>
+								<br/>
+								<span><b>Job type:</b> {job.jobType}</span>
+								<br/>
 
-							<br/>
-							<span><b>Location:</b> {job.location}</span>
-							<br/>
-							<span><b>Start:</b> {job.start}</span>
-							<br/>
-							<span><b>End:</b> {job.end}</span>
-							<br/>
-							<span><b>Estimated wage:</b> {job.wage}</span>
-							<br/>
+								<br/>
+								<span><b>Location:</b> {job.location}</span>
+								<br/>
+								<span><b>Start:</b> {job.start}</span>
+								<br/>
+								<span><b>End:</b> {job.end}</span>
+								<br/>
+								<span><b>Estimated wage:</b> {job.wage}</span>
+								<br/>
 
-							{/* ok so this is just stupid.  I can't have this be /home/:email/:id because then the router matches the route without params (/home)? like what the hell? Maybe I'm missing something but that's seriously horrendous */}
-							<Link to={"/homes/" + job.email + "/" + job.id}>Match within this job</Link>
-							<br/>
-							<Link to={"/jobs/" + job.email + "/" + job.id + "/edit"}>Edit this job</Link>
-							</div>
-							</Columns.Column>
-						);
-					});
-				}
-			})()}
-			</Columns>
-			<Link to={ROUTES.JOB_POSTING_CREATOR}>Create a Job Posting</Link>
-			{error && <p>{error}</p>}
-			</div>
-		);
+								{/* ok so this is just stupid.  I can't have this be /home/:email/:id because then the router matches the route without params (/home)? like what the heck? Maybe I'm missing something but that's seriously horrendous */}
+								{/* TODO should a student be able to browse a company's page? I think so */}
+								{(() => {
+									if (localStorage.getItem('persona') === "employer") {
+										return (
+											<div>
+											<Link to={"/homes/" + job.email}>Match within this job</Link>
+											<br/>
+											<Link to={"/editjob/" + job.email}>Edit this job</Link>
+											</div>
+										)
+									}
+								})()}
+								<br/>
+								</div>
+								</Columns.Column>
+							);
+						});
+					}
+				})()}
+				</Columns>
+				<Link to={ROUTES.JOB_POSTING_CREATOR}>Create a Job Posting</Link>
+				{error && <p>{error}</p>}
+				</div>
+			);
+		}
 	}
 }
 
