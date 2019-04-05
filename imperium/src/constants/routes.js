@@ -12,3 +12,5 @@ export const COMPANY_HOME = '/companyhome';
 export const JOB_POSTING_CREATOR = '/jobpostingcreator'
 export const VIEW_JOB = '/jobs/:creator/:id'
 export const EDIT_JOB = '/jobs/:creator/:id/edit'
+export const HISTORY = '/history';
+export const CHAT = '/chat';

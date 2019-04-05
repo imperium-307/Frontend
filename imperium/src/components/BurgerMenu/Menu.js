@@ -41,6 +41,11 @@ export default ({ close }) => (
 			}
 			{ localStorage.getItem('token') != null &&
 				<li onClick={close}>
+					<Link to={ROUTES.HISTORY}>History</Link>
+				</li>
+			}
+			{ localStorage.getItem('token') != null &&
+				<li onClick={close}>
 					<Link onClick={logout} to={ROUTES.LANDING}>Sign Out</Link>
 				</li>
 			}

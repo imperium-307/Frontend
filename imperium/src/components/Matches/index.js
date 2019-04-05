@@ -2,6 +2,11 @@ import React from 'react';
 import './matches.css';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
+import {
+  BrowserRouter as Router,
+  Route,
+  withRouter,
+} from 'react-router-dom';
 
 const styles = {
   fontFamily: "arial",
@@ -102,6 +107,10 @@ class Card extends React.Component {
 			});
 	}
 
+  GoToChat = () => {
+    //TODO route to chat
+	}
+
 	render() {
 		const email = this.props.email;
 
@@ -114,16 +123,18 @@ class Card extends React.Component {
 			{(() => {
 				if (localStorage.getItem('persona') == "student") {
 
+					// TODO this needs lots of work
 					// TODO should we add a button to show them the company's profile?
 					return (
 						<Link to={"/jobs/" + email }>View Posting</Link>
 					);
 				} else {
 					return (
-						<Link to={"/view/" + email }>View Posting</Link>
+						<Link to={"/view/" + email }>View Profile</Link>
 					);
 				}
 			})()}
+			<button onClick={this.GoToChat}>Chat</button>
 			</div>
 			</li>
 		);

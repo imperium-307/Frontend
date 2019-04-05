@@ -8,8 +8,10 @@ import ViewPage from '../View';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import MatchesPage from '../Matches';
-import CompanyHomePage from '../CompanyHome';
+import CompanyHome from '../CompanyHome';
 import JobPostingCreatorPage from '../JobPostingCreator';
+import HistoryPage from '../History';
+import ChatPage from '../Chat';
 import * as ROUTES from '../../constants/routes';
 import {
   BrowserRouter as Router,
@@ -32,10 +34,12 @@ const App = () => (
       <Route path={ROUTES.MATCHES} component={MatchesPage} />
       <Route path={ROUTES.VIEW} component={ViewPage} />
       <Route path={ROUTES.JOB_POSTING_CREATOR} component={JobPostingCreatorPage} />
-      <Route path={ROUTES.COMPANY_HOME} component={CompanyHomePage} />
+      <Route path={ROUTES.COMPANY_HOME} component={CompanyHome} />
 			{/* TODO make components for these */}
-      <Route path={ROUTES.VIEW_JOB} component={CompanyHomePage} />
-      <Route path={ROUTES.EDIT_JOB} component={CompanyHomePage} />
+      <Route path={ROUTES.VIEW_JOB} component={CompanyHome} />
+      <Route path={ROUTES.EDIT_JOB} component={CompanyHome} />
+      <Route path={ROUTES.HISTORY} component={HistoryPage} />
+      <Route path={ROUTES.CHAT} component={ChatPage} />
     </div>
   </Router>
 );
