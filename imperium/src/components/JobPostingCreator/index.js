@@ -29,7 +29,7 @@ class CreateJobPosting extends Component {
 	}
 
 	onClick = event => {
-		const { jobName, major, bio, location, jobType,northeast, west, south, midwest, start, end } = this.state;
+		const { jobName, wage, major, bio, location, jobType,northeast, west, south, midwest, start, end } = this.state;
 
 		fetch("http://localhost:3000/api/user/create-job", {
 			body: JSON.stringify({
@@ -37,6 +37,7 @@ class CreateJobPosting extends Component {
 				bio: bio,
 				major: major,
 				jobType: jobType,
+				wage: wage,
 				northeast: northeast,
 				west: west,
 				start: start,
