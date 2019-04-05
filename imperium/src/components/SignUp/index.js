@@ -122,8 +122,7 @@ class SignUpFormBase extends Component {
             if (persona == "student"){
               this.props.history.push(ROUTES.HOME);
               localStorage.setItem('token', res.token)
-            }
-            else if (persona == "employer") {
+            } else {
               this.props.history.push(ROUTES.COMPANY_HOME);
               localStorage.setItem('token', res.token)
             }
