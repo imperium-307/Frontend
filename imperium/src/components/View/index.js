@@ -3,33 +3,20 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
 import './index.css'; 
-
-const styles = {
-	fontFamily: "sans-serif",
-	textAlign: "center",
-	marginTop: "40px",
-	color: "#421CE8"
-};
-
-const View = () => (
-	<div style={styles}>
-	<style>{'body { background-color: #DBDAE1; }'}</style>
-	<h1>View user</h1>
-	<GetACard />
-	</div>
-);
+import { Container, Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	user: null,
 	error: null,
 };
 
-class GetACardBase extends Component{
+// This will either view a user or A SINGLE JOB. To view a company, use CompanyHome
+class ViewComponent extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
-		fetch("http://localhost:3000/api/user/view/"+this.props.match.params.email, {
+		fetch("http://localhost:3000/api/user/view/" + this.props.match.params.email, {
 			cache: 'no-cache',
 			credentials: 'same-origin',
 			headers: {
@@ -55,13 +42,15 @@ class GetACardBase extends Component{
 		if (!this.state || !this.state.user) {
 			return(
 				<div>
+				<Heading className="has-text-centered" size={1}>View Student</Heading>
 				<p>Loading...</p>
 				</div>
 			);
 		} else {
 			const { user } = this.state;
 			return(
-				<div style={styles}>
+				<div>
+				<Heading className="has-text-centered" size={1}>View Student</Heading>
 				{(() => {
 
 					if (user.jobType === "fullTime") {
@@ -123,10 +112,8 @@ class GetACardBase extends Component{
 	}
 }
 
-const GetACard = compose (
+const View = compose (
 	withRouter,
-)(GetACardBase);
+)(ViewComponent);
 
 export default View;
-
-export {GetACard};

@@ -25,6 +25,7 @@ const App = () => (
       <Navigation />
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
       <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+      <Route path={ROUTES.HOME_WITH_JOB_ID} component={HomePage} />
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.HOME} component={HomePage} />
@@ -36,6 +37,9 @@ const App = () => (
       <Route path={ROUTES.VIEW} component={ViewPage} />
       <Route path={ROUTES.JOB_POSTING_CREATOR} component={JobPostingCreatorPage} />
       <Route path={ROUTES.COMPANY_HOME} component={CompanyHomePage} />
+			{/* TODO make components for these */}
+      <Route path={ROUTES.VIEW_JOB} component={CompanyHomePage} />
+      <Route path={ROUTES.EDIT_JOB} component={CompanyHomePage} />
     </div>
   </Router>
 );

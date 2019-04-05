@@ -83,6 +83,7 @@ class SignInFormBase extends Component {
 				if (res.token) {
 					console.log("logged in with token" + res.token)
 					localStorage.setItem('token', res.token)
+					localStorage.setItem('persona', res.persona)
 
 
 					if (this.state.rememberEmail == "on") {

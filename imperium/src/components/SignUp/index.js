@@ -127,6 +127,8 @@ class SignUpFormBase extends Component {
               this.props.history.push(ROUTES.COMPANY_HOME);
               localStorage.setItem('token', res.token)
             }
+
+						localStorage.setItem('persona', persona)
 						console.log("signed up and logged in with token" + res.token)
 					} else if (res.err) {
 						console.log("sign up failed")

@@ -9,7 +9,6 @@ import { Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'r
 var INITIAL_STATE = {
 	cards: null,
 	index: 0,
-	photoFile: null,
 	likee: '',
 	isLoading: true,
 	error: null,
@@ -20,47 +19,105 @@ class Home extends Component{
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
-		fetch("http://localhost:3000/api/user/request-users", {
-			body: JSON.stringify({
-				token: localStorage.getItem('token')
-			}),
-			cache: 'no-cache',
-			credentials: 'same-origin',
-			headers: {
-				'content-type': 'application/json'
-			},
-			mode: 'cors',
-			method: 'POST'
-		})
-			.then((res) => {
-				return res.json()
-			})
-			.then((res) => {
-				if (res.users) {
-					this.setState({
-						photoFile: res.users[this.state.index].photo,
-						cards: res.users,
-						isLoading: false,
-					});
-				} else {
-					if (res.err) {
-						this.setState({ error: res.err });
-					}
+	}
 
-					this.setState({ isLoading: false });
-				}
+	componentDidMount = () => {
+		var requestURL = "http://localhost:3000/api/user";
+		if (localStorage.getItem('persona') === "student") {
+			requestURL += "/request-jobs";
+			fetch(requestURL, {
+				body: JSON.stringify({
+					token: localStorage.getItem('token')
+				}),
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors',
+				method: 'POST'
 			})
-			.catch(error => {
-				this.setState({ error });
-			});
+				.then((res) => {
+					return res.json()
+				})
+				.then((res) => {
+					if (res.users) {
+						this.setState({
+							cards: res.users,
+							isLoading: false,
+						});
+					} else {
+						if (res.err) {
+							this.setState({ error: res.err });
+						}
+
+						this.setState({ isLoading: false });
+					}
+				})
+				.catch(error => {
+					console.log(error)
+					this.setState({ error });
+				});
+		} else {
+			var creator = this.props.match.params.email
+			var id = this.props.match.params.id
+			console.log(creator, id)
+
+			if (!creator) {
+				this.props.history.push("/companyhome")
+			}
+			this.setState({ creator, id })
+
+			requestURL += "/request-students";
+			fetch(requestURL, {
+				body: JSON.stringify({
+					token: localStorage.getItem('token'),
+					job: creator + "/" + id
+				}),
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors',
+				method: 'POST'
+			})
+				.then((res) => {
+					return res.json()
+				})
+				.then((res) => {
+					if (res.users) {
+						this.setState({
+							cards: res.users,
+							isLoading: false,
+						});
+					} else {
+						if (res.err) {
+							this.setState({ error: res.err });
+						}
+
+						this.setState({ isLoading: false });
+					}
+				})
+				.catch(error => {
+					console.log(error)
+					this.setState({ error });
+				});
+		}
+
 	}
 
 	doAction = (action) => {
-		var email = this.state.cards[this.state.index].email
+		var likee;
+		if (localStorage.getItem('persona') == "student") {
+			likee = this.state.cards[this.state.index].creator + "/" + this.state.cards[this.state.index].id
+		} else {
+			likee = this.state.cards[this.state.index].email
+		}
 		fetch("http://localhost:3000/api/user/" + action, {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
-				likee: email
+				likee: likee
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
@@ -83,12 +140,13 @@ class Home extends Component{
 				}
 			})
 			.catch(error => {
+				console.log(error)
 				this.setState({ error });
 			});
 	}
 
 	render (){
-		const {cards, index, photoFile, error} = this.state;
+		const {cards, index, error} = this.state;
 		var hasCards = cards && index < cards.length;
 
 		return (
@@ -98,6 +156,8 @@ class Home extends Component{
 			<Card className="__user_card auto-margin is-centered">
 			{(() => {
 				if (hasCards) {
+					// NOTE user is a bad name for this variable, because it can
+					// be either a user or a job.
 					var user = cards[index]
 					var jobType = "";
 					switch(user.jobType) {
@@ -176,14 +236,9 @@ class Home extends Component{
 
 							<Content className="">
 							<i>{user.bio}</i>
-							<br/>
-							<a href={"http://localhost:3000/resumes/"+user.email+".pdf"}>View resume</a>
-							<br/>
 
 							<br/>
 							<span><b>Desired major:</b> {user.major}</span>
-							<br/>
-							<span><b>Minor:</b> {user.minor}</span>
 							<br/>
 							<span><b>Job type:</b> {jobType}</span>
 							<br/>

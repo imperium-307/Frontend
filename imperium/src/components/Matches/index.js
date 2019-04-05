@@ -23,7 +23,8 @@ class MatchesList extends React.Component {
 		super(props);
 
 		this.state = {
-			matches: []
+			matches: [],
+			persona: ""
 		}
 
 		fetch("http://localhost:3000/api/user/", {
@@ -42,8 +43,9 @@ class MatchesList extends React.Component {
 				return res.json()
 			})
 			.then((res) => {
-				var matches = res.matches
-				this.setState({ matches });
+				var matches = res.matches;
+				var persona = res.persona;
+				this.setState({ matches, persona });
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -100,10 +102,6 @@ class Card extends React.Component {
 			});
 	}
 
-	viewProfile = () => {
-
-	}
-
 	render() {
 		const email = this.props.email;
 
@@ -113,7 +111,19 @@ class Card extends React.Component {
 			<div className="user_contact">
 			<button onClick={this.unmatch}>Unmatch</button>
 			<button>Chat</button>
-			<Link to={"/view/" + email }>View profile</Link>
+			{(() => {
+				if (localStorage.getItem('persona') == "student") {
+
+					// TODO should we add a button to show them the company's profile?
+					return (
+						<Link to={"/jobs/" + email }>View Posting</Link>
+					);
+				} else {
+					return (
+						<Link to={"/view/" + email }>View Posting</Link>
+					);
+				}
+			})()}
 			</div>
 			</li>
 		);

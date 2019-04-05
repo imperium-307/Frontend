@@ -19,7 +19,7 @@ export default ({ close }) => (
       <li onClick={close}>
         <Link to={ROUTES.LANDING}>Landing</Link>
       </li>
-			{ localStorage.getItem('token') != null &&
+			{ localStorage.getItem('token') !== null && localStorage.getItem('persona') === "employer" &&
 				<li onClick={close}>
 					<Link to={ROUTES.COMPANY_HOME}>My Company</Link>
 				</li>
