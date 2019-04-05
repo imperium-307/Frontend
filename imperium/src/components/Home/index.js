@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import * as ROUTES from '../../constants/routes';
 import "./index.css";
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
+import { Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	cards: null,
@@ -109,7 +108,7 @@ class Home extends Component{
 
 	doAction = (action) => {
 		var likee;
-		if (localStorage.getItem('persona') == "student") {
+		if (localStorage.getItem('persona') === "student") {
 			likee = this.state.cards[this.state.index].creator + "/" + this.state.cards[this.state.index].id
 		} else {
 			likee = this.state.cards[this.state.index].email
@@ -175,7 +174,7 @@ class Home extends Component{
 							break;
 					}
 
-					if (user.persona == "student") {
+					if (user.persona === "student") {
 						return (
 							<Card.Content className="auto-margin">
 							<Media className="">
@@ -281,7 +280,7 @@ class Home extends Component{
 						}}
 						/>
 					)
-				} else if(error == null) {
+				} else if(error === null) {
 					return <p>There are no profiles available</p>
 				}
 			})()}

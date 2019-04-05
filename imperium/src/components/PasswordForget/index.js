@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { BrowserRouter, Route,  } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-
-
 import * as ROUTES from '../../constants/routes';
+
 const styles = {
   fontFamily: "arial",
   textAlign: "center",

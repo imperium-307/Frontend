@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import logo from './logo.jpg'
-import logo2 from './logo2.jpg'
-import logo3 from './logo3.jpg'
-import "./logo.css"
-import "./logo2.css"
-import "./logo3.css"
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import * as ROUTES from '../../constants/routes';
@@ -17,14 +11,7 @@ const styles = {
 	marginTop: "40px",
 	color: "#421CE8",
 };
-const buttonText = {
-	fontSize: 40,
-	fontWeight: '400',
-	color: "#fff"
-}
-const formStyle = {
 
-}
 const buttonStyle = {
 	fontSize: 20,
 	fontWeight: '400',
@@ -34,9 +21,9 @@ const buttonStyle = {
 	paddingVertical: 5,
 	borderRadius: 30
 }
+
 const SignInPage = () => (
 	<div style={styles}>
-	<style>{'body { background-color: #DBDAE1; }'}</style>
 	<h1>Welcome to Imperium!</h1>
 	<SignInForm />
 	<PasswordForgetLink />
@@ -62,7 +49,6 @@ class SignInFormBase extends Component {
 
 	onSubmit = event => {
 		const { email, password } = this.state;
-		var x = 1;
 		fetch("http://localhost:3000/api/user/login", {
 			body: JSON.stringify({
 				email: email,
@@ -86,7 +72,7 @@ class SignInFormBase extends Component {
 					localStorage.setItem('persona', res.persona)
 
 
-					if (this.state.rememberEmail == "on") {
+					if (this.state.rememberEmail === "on") {
 						localStorage.setItem('email', email)
 						console.log("signed in and logged in with token" + res.token)
 					} else {
@@ -94,7 +80,7 @@ class SignInFormBase extends Component {
 						this.setState({ error: res.err });
 					}
 
-					if (res.persona == "student"){
+					if (res.persona === "student"){
 						this.props.history.push(ROUTES.HOME);
 						localStorage.setItem('token', res.token)
 					} else {
@@ -123,7 +109,7 @@ class SignInFormBase extends Component {
 		const isInvalid = password === '' || email === '';
 
 		return (
-			<form style={formStyle} onSubmit={this.onSubmit}>
+			<form onSubmit={this.onSubmit}>
 			<input
 			name="email"
 			value={email}

@@ -16,6 +16,8 @@ var INITIAL_STATE = {
   major: '',
   bio:'',
   wage:'',
+	start: '',
+	end: '',
 	error: ''
 };
 
@@ -84,34 +86,34 @@ class CreateJobPosting extends Component {
 	}
 
 	render(){
-		const {error, jobType, location, west, south, midwest, northeast, major, bio, wage} = this.state;
+		const {error, jobType, start, end, location, west, jobName, south, midwest, northeast, major, bio, wage} = this.state;
 
 		return(
 			<div>
 			<h1>Job Posting Creator</h1>
 			<div>
-			<input name="jobName" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Name of Job"/>
+			<input name="jobName" value={jobName} onChange={this.handleInputChange} type="text" placeholder="Name of Job"/>
 			<br/>
-			<input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>
+			<input name="bio" value={bio} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>
 			<br/>
-			<input name="location" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Exact Location"/>
+			<input name="location" value={location} onChange={this.handleInputChange} type="text" placeholder="Exact Location"/>
 			<br/>
-			<p1>Please select what reigon that the positon will be in</p1>
+			<p>Please select what reigon that the positon will be in</p>
 			<br/>
-			<input name="northeast" value={"northeast"} onChange={this.handleInputChange} type="checkbox"/>
-			<p1>Northeast</p1>
+			<input name="northeast" value={northeast} onChange={this.handleInputChange} type="checkbox"/>
+			<p>Northeast</p>
 			<br/>
-			<input name="west" value={"west"} onChange={this.handleInputChange} type="checkbox"/>
-			<p1>West</p1>
+			<input name="west" value={west} onChange={this.handleInputChange} type="checkbox"/>
+			<p>West</p>
 			<br/>
-			<input name="south" value={"south"} onChange={this.handleInputChange} type="checkbox"/>
-			<p1>South</p1>
+			<input name="south" value={south} onChange={this.handleInputChange} type="checkbox"/>
+			<p>South</p>
 			<br/>
-			<input name="midwest" value={"midwest"} onChange={this.handleInputChange} type="checkbox"/>
-			<p1>Midwest</p1>
+			<input name="midwest" value={midwest} onChange={this.handleInputChange} type="checkbox"/>
+			<p>Midwest</p>
 			<br/>
 			<br/>
-			<input name="major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Related Major"/>
+			<input name="major" value={major} onChange={this.handleInputChange} type="text" placeholder="Related Major"/>
 			<br/>
 			<br/>
 			<select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
@@ -124,10 +126,10 @@ class CreateJobPosting extends Component {
 			<br/>
 			<p2>Please enter when the postiton will start and end</p2>
 			<br/>
-			<input name="start" value={this.state.text} onChange={this.handleInputChange} type="date"/>
-			<input name="end" value={this.state.text} onChange={this.handleInputChange} type="date"/>
+			<input name="start" value={start} onChange={this.handleInputChange} type="date"/>
+			<input name="end" value={end} onChange={this.handleInputChange} type="date"/>
 			<br/>
-			<input name="wage" value={this.state.text} onChange={this.handleInputChange} type="number" step=".1" placeholder="Salary of Job"/>
+			<input name="wage" value={wage} onChange={this.handleInputChange} type="number" step=".1" placeholder="Salary of Job"/>
 			<br/>
 			<button type="submit" onClick={this.onClick}>
 			Create Posting

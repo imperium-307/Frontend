@@ -1,5 +1,4 @@
 import React from 'react';
-import BurgerMenu from '../BurgerMenu';
 
 const styles = {
   fontFamily: "arial",
@@ -10,7 +9,6 @@ const styles = {
 
 const Landing = () => (
   <div style={styles}>
-  <style>{'body { background-color: #DBDAE1; }'}</style>
     <h1>Landing</h1>
   </div>
 );

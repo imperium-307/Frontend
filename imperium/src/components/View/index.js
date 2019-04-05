@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import * as ROUTES from '../../constants/routes';
 import './index.css'; 
-import { Container, Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
+import { Heading } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	user: null,
@@ -65,43 +64,43 @@ class ViewComponent extends Component {
 					if (user.persona === "student") {
 
 						return [
-							<img id="photoData" src= { user.photo }/>,
+							<img alt="profile" id="photoData" src= { user.photo }/>,
 							<br/>,
-							<p1>Name: {user.username}</p1>,
+							<p>Name: {user.username}</p>,
 							<br/>,
-							<p1>University: {user.university}</p1>,
+							<p>University: {user.university}</p>,
 							<br/>,
-							<p1>Major: {user.major}</p1>,
+							<p>Major: {user.major}</p>,
 							<br/>,
-							<p1>Minor: {user.minor}</p1>,
+							<p>Minor: {user.minor}</p>,
 							<br/>,
-							<p1>Bio: {user.bio}</p1>,
+							<p>Bio: {user.bio}</p>,
 							<br/>,
 							<a href={"http://localhost:3000/resumes/"+user.email+".pdf"}>View resume</a>,
 							<br/>,
-							<p1>Looking for {user.jobType}</p1>,
+							<p>Looking for {user.jobType}</p>,
 							<br/>,
-							<p1>Start: {user.start} End: {user.end}</p1>,
+							<p>Start: {user.start} End: {user.end}</p>,
 							<br/>,
-							<p1>Prefered Wage: {user.wage}</p1>,
+							<p>Prefered Wage: {user.wage}</p>,
 							<br/>,
 						]
 					}
 					else {
 						return[
-							<img id="photoData" src= { user.photo }/>,
+							<img alt="profile" id="photoData" src= { user.photo }/>,
 							<br/>,
-							<p1>Compnay: {user.company}</p1>,
+							<p>Compnay: {user.company}</p>,
 							<br/>,
-							<p1>Major: {user.major}</p1>,
+							<p>Major: {user.major}</p>,
 							<br/>,
-							<p1>Job Description: {user.bio}</p1>,
+							<p>Job Description: {user.bio}</p>,
 							<br/>,
-							<p1>Type of job is {user.jobType}</p1>,
+							<p>Type of job is {user.jobType}</p>,
 							<br/>,
-							<p1>Start: {user.start} End: {user.end}</p1>,
+							<p>Start: {user.start} End: {user.end}</p>,
 							<br/>,
-							<p1>Wage: {user.wage}</p1>,
+							<p>Wage: {user.wage}</p>,
 							<br/>,
 						]
 					}

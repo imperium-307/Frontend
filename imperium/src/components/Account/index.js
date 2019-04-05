@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import './index.css';
 
-var pdf = false;
-var jpeg = false;
-
 const styles = {
-  fontFamily: "arial",
-  textAlign: "center",
-  marginTop: "40px",
+	fontFamily: "arial",
+	textAlign: "center",
+	marginTop: "40px",
 	color: "#421CE8"
 };
 
@@ -25,39 +22,35 @@ const buttonStyle = {
 	borderRadius: 30
 };
 
-const Account = () => (
-		<AccountPreferences />
-);
-
 const INITIAL_STATE = {
-  username: '',
-  email: '',
+	username: '',
+	email: '',
 	bio: '',
-  passwordOne: '',
-  passwordTwo: '',
-  minor: '',
-  major: '',
-  resume: '',
+	passwordOne: '',
+	passwordTwo: '',
+	minor: '',
+	major: '',
+	resume: '',
 	jobType: '',
-  photo: '',
-  wage: '',
-  northeast: '',
-  west: '',
-  south: '',
-  midwest: '',
-  start: '',
-  end: '',
-  hide: '',
-  photoFile: null,
-  resumeFile: null,
-  error: null,
+	photo: '',
+	wage: '',
+	northeast: '',
+	west: '',
+	south: '',
+	midwest: '',
+	start: '',
+	end: '',
+	hide: '',
+	photoFile: null,
+	resumeFile: null,
+	error: null,
 };
 
 class AccountPreferences extends Component {
 	constructor(props) {
 		super(props);
 
-    this.state = { ...INITIAL_STATE };
+		this.state = { ...INITIAL_STATE };
 
 		fetch("http://localhost:3000/api/user", {
 			body: JSON.stringify({
@@ -79,18 +72,18 @@ class AccountPreferences extends Component {
 					username: res.username,
 					email: res.email,
 					bio: res.bio,
-          minor: res.minor,
-          major: res.major,
-          photoFile: res.photo,
-          wage: res.wage,
-          jobType: res.jobType,
-          northeast: res.northeast,
-          west: res.west,
-          south: res.south,
-          midwest: res.midwest,
-          start: res.start,
-          end: res.end,
-          hide: res.hide,
+					minor: res.minor,
+					major: res.major,
+					photoFile: res.photo,
+					wage: res.wage,
+					jobType: res.jobType,
+					northeast: res.northeast,
+					west: res.west,
+					south: res.south,
+					midwest: res.midwest,
+					start: res.start,
+					end: res.end,
+					hide: res.hide,
 				});
 			})
 			.catch(error => {
@@ -99,22 +92,21 @@ class AccountPreferences extends Component {
 	}
 
 	onChange = event => {
-    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-//event.target.value
+		const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
 		this.setState({ [event.target.name]: value });
 
-		if (event.target.name == "resume") {
+		if (event.target.name === "resume") {
 			this.setState({
-				["resumeFile"]: event.target.files[0]
+				resumeFile: event.target.files[0]
 			});
 		}
 
-		if (event.target.name == "photo") {
+		if (event.target.name === "photo") {
 			var f = event.target.files[0];
 			var r = new FileReader();
 			r.onloadend = ()=> {
 				this.setState({
-					["photoFile"]: r.result
+					photoFile: r.result
 				});
 			}
 			r.readAsDataURL(f);
@@ -123,8 +115,8 @@ class AccountPreferences extends Component {
 
 	onSubmit = event => {
 		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile,
-      resumeFile, wage, jobType, midwest, northeast,
-      west, south, start, end, hide } = this.state;
+			resumeFile, wage, jobType, midwest, northeast,
+			west, south, start, end, hide } = this.state;
 		const data = new FormData();
 		data.append('file', resumeFile);
 
@@ -141,17 +133,17 @@ class AccountPreferences extends Component {
 				passwordConfirm: passwordTwo,
 				jobType: jobType,
 				bio: bio,
-        minor: minor,
-        major: major,
-        photo: photoFile,
-        wage: wage,
-        northeast: northeast,
-        west: west,
-        south: south,
-        midwest: midwest,
-        start: start,
-        end: end,
-        hide: hide,
+				minor: minor,
+				major: major,
+				photo: photoFile,
+				wage: wage,
+				northeast: northeast,
+				west: west,
+				south: south,
+				midwest: midwest,
+				start: start,
+				end: end,
+				hide: hide,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -182,7 +174,7 @@ class AccountPreferences extends Component {
 					start: res.user.start,
 					jobType: res.user.jobType,
 					end: res.user.end,
-          hide: res.user.hide,
+					hide: res.user.hide,
 				});
 			})
 			.catch(error => {
@@ -243,7 +235,7 @@ class AccountPreferences extends Component {
 			midwest,
 			start,
 			end,
-      hide,
+			hide,
 			error,
 		} = this.state;
 		console.log("render:" + jobType)
@@ -317,7 +309,7 @@ class AccountPreferences extends Component {
 			placeholder="Minor"
 			/>
 			<br/>
-			<p1>Upload your resume as a .pdf</p1>
+			<p>Upload your resume as a .pdf</p>
 			<br/>
 			<input
 			type="file"
@@ -327,10 +319,10 @@ class AccountPreferences extends Component {
 			onChange={this.onChange}
 			placeholder="resume" />
 			<div>
-			<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank">View your current resume</a>
+			<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
 			</div>
 			<br/>
-			<p1>Please upload a photo of yourself as a .png</p1>
+			<p>Please upload a photo of yourself as a .png</p>
 			<br/>
 			<input
 			type="file"
@@ -338,7 +330,7 @@ class AccountPreferences extends Component {
 			name="photo"
 			id="photo"
 			onChange={this.onChange}/>
-			<a href={ photoFile } target="_blank"><img id="photoData" src={ photoFile }/></a>
+			<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
 			<br/>
 
 			<select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
@@ -351,19 +343,19 @@ class AccountPreferences extends Component {
 			<br/>
 			<input name="wage" value={wage} onChange={this.onChange} type="number" step=".1" placeholder="Salary of Job"/>
 			<br/>
-			<p1>Please select what reigons you would be interested in working on</p1>
+			<p>Please select what reigons you would be interested in working on</p>
 			<br/>
 			<input name="northeast" checked={northeast} onChange={this.onChange} type="checkbox"/>
-			<p1>Northeast</p1>
+			<p>Northeast</p>
 			<br/>
 			<input name="west" checked={west} onChange={this.onChange} type="checkbox"/>
-			<p1>West</p1>
+			<p>West</p>
 			<br/>
 			<input name="south" checked={south} onChange={this.onChange} type="checkbox"/>
-			<p1>South</p1>
+			<p>South</p>
 			<br/>
 			<input name="midwest" checked={midwest} onChange={this.onChange} type="checkbox"/>
-			<p1>Midwest</p1>
+			<p>Midwest</p>
 			<br/>
 
 			<p2>Please enter which days you will be able start and end</p2>
@@ -372,10 +364,10 @@ class AccountPreferences extends Component {
 			<input name="end" value={end} onChange={this.onChange} type="date"/>
 			<br/>
 			<input name="hide" checked={hide} onChange={this.onChange} type="checkbox"/>
-			<p1>Hide My Account</p1>
-      <br/>
+			<p>Hide My Account</p>
 			<br/>
-			<button style={buttonStyle} type="button" type="submit" disabled={isInvalid}>
+			<br/>
+			<button style={buttonStyle} type="submit" disabled={isInvalid}>
 			Save Preferences
 			</button>
 

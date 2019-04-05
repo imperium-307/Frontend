@@ -1,12 +1,6 @@
 import React from 'react';
 import './matches.css';
 import { Link } from 'react-router-dom';
-import * as ROUTES from '../../constants/routes';
-import {
-  BrowserRouter as Router,
-  Route,
-  withRouter,
-} from 'react-router-dom';
 
 const styles = {
   fontFamily: "arial",
@@ -121,7 +115,7 @@ class Card extends React.Component {
 			<button onClick={this.unmatch}>Unmatch</button>
 			<button>Chat</button>
 			{(() => {
-				if (localStorage.getItem('persona') == "student") {
+				if (localStorage.getItem('persona') === "student") {
 
 					// TODO this needs lots of work
 					// TODO should we add a button to show them the company's profile?

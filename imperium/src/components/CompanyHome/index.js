@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
-import { Container, Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
+import { Heading, Columns } from 'react-bulma-components';
 
 const INITIAL_STATE = {
   jobs: null,
@@ -48,7 +48,7 @@ class CompanyHome extends Component {
 		const {company, jobs, error} = this.state;
 
 		return (
-			<div style={{'max-width': '960px', 'margin': 'auto'}}>
+			<div style={{'maxWidth': '960px', 'margin': 'auto'}}>
 			<Heading className="has-text-centered" size={1}>TODO set this to company name</Heading>
 			<Columns className="is-multiline is-centered">
 			{(() => {
