@@ -108,9 +108,10 @@ class Home extends Component{
 		// iam is the job id, only used when employer is liking a student (as a job)
 		var likee, iam;
 		if (localStorage.getItem('persona') === "student") {
-			likee = this.state.cards[this.state.index].email + "-" + this.state.cards[this.state.index].id;
+			likee = this.state.cards[this.state.index].email;
 		} else {
 			likee = this.state.cards[this.state.index].email
+			iam = this.props.match.params.jobid;
 		}
 		fetch("http://localhost:3000/api/user/" + action, {
 			body: JSON.stringify({
