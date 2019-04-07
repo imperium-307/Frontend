@@ -41,6 +41,8 @@ const INITIAL_STATE = {
 	start: '',
 	end: '',
 	hide: '',
+	emailNotifcation: '',
+	desktop: '',
 	photoFile: null,
 	resumeFile: null,
 	error: null,
@@ -84,6 +86,8 @@ class AccountPreferences extends Component {
 					start: res.start,
 					end: res.end,
 					hide: res.hide,
+					emailNotifcation: res.emailNotifcation,
+					desktop: res.desktop,
 				});
 			})
 			.catch(error => {
@@ -115,7 +119,7 @@ class AccountPreferences extends Component {
 
 	onSubmit = event => {
 		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile,
-			resumeFile, wage, jobType, midwest, northeast,
+			resumeFile, wage, jobType, midwest, northeast, emailNotifcation, desktop,
 			west, south, start, end, hide } = this.state;
 		const data = new FormData();
 		data.append('file', resumeFile);
@@ -144,6 +148,8 @@ class AccountPreferences extends Component {
 				start: start,
 				end: end,
 				hide: hide,
+				emailNotifcation: emailNotifcation,
+				desktop: desktop,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -175,6 +181,8 @@ class AccountPreferences extends Component {
 					jobType: res.user.jobType,
 					end: res.user.end,
 					hide: res.user.hide,
+					desktop: res.user.desktop,
+					emailNotifcation: res.user.emailNotifcation,
 				});
 			})
 			.catch(error => {
@@ -236,6 +244,8 @@ class AccountPreferences extends Component {
 			start,
 			end,
 			hide,
+			emailNotifcation,
+			desktop,
 			error,
 		} = this.state;
 		console.log("render:" + jobType)
@@ -365,6 +375,13 @@ class AccountPreferences extends Component {
 			<br/>
 			<input name="hide" checked={hide} onChange={this.onChange} type="checkbox"/>
 			<p>Hide My Account</p>
+			<br/>
+			<input name="emailNotifcation" checked={emailNotifcation} onChange={this.onChange} type="checkbox"/>
+			<p>Email Notifications</p>
+			<br/>
+			<input name="desktop" checked={desktop} onChange={this.onChange} type="checkbox"/>
+			<p>Desktop Notifications</p>
+			<br/>
 			<br/>
 			<br/>
 			<button style={buttonStyle} type="submit" disabled={isInvalid}>

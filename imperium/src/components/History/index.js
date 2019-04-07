@@ -75,7 +75,7 @@ class HistoryList extends Component{
     else{
       const { history, peronsa } = this.state;
       if (this.state.persona === "student") {
-        let body;
+        let body = "You have no history";
         if (this.state.history){
           body = this.state.history.map((d,i) => {
             return (<p>You {this.state.history[i].action}d {this.state.history[i].data} on {this.state.history[i].date}</p>)
