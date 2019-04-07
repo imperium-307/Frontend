@@ -43,6 +43,8 @@ const INITIAL_STATE = {
 	hide: '',
 	emailNotifcation: '',
 	desktop: '',
+	persona: '',
+	company: '',
 	photoFile: null,
 	resumeFile: null,
 	error: null,
@@ -88,6 +90,9 @@ class AccountPreferences extends Component {
 					hide: res.hide,
 					emailNotifcation: res.emailNotifcation,
 					desktop: res.desktop,
+					persona: res.persona,
+					company: res.company,
+
 				});
 			})
 			.catch(error => {
@@ -120,7 +125,7 @@ class AccountPreferences extends Component {
 	onSubmit = event => {
 		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile,
 			resumeFile, wage, jobType, midwest, northeast, emailNotifcation, desktop,
-			west, south, start, end, hide } = this.state;
+			west, south, start, end, hide, company } = this.state;
 		const data = new FormData();
 		data.append('file', resumeFile);
 
@@ -130,6 +135,7 @@ class AccountPreferences extends Component {
 		})
 
 		fetch("http://localhost:3000/api/user/ch-settings", {
+			//can you send everything like this for employers
 			body: JSON.stringify({
 				username: username,
 				email: email,
@@ -150,6 +156,7 @@ class AccountPreferences extends Component {
 				hide: hide,
 				emailNotifcation: emailNotifcation,
 				desktop: desktop,
+				company: company,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -183,6 +190,7 @@ class AccountPreferences extends Component {
 					hide: res.user.hide,
 					desktop: res.user.desktop,
 					emailNotifcation: res.user.emailNotifcation,
+					company: res.user.company,
 				});
 			})
 			.catch(error => {
@@ -245,19 +253,19 @@ class AccountPreferences extends Component {
 			end,
 			hide,
 			emailNotifcation,
+			persona,
 			desktop,
+			company,
 			error,
 		} = this.state;
 		console.log("render:" + jobType)
-
+//TODO update this 
 		const isInvalid =
 			passwordOne !== passwordTwo ||
 			email === '' ||
-			username === '' ||
-			bio === '' ||
-			minor === '' ||
-			major === '';
-
+			username === '';
+			console.log(this.state.persona);
+if (this.state.persona == "student"){
 		return (
 			<div style={styles}>
 			<style>{'body { background-color: #DBDAE1; }'}</style>
@@ -396,6 +404,94 @@ class AccountPreferences extends Component {
 			</button>
 			</div>
 		);
+	} else if (this.state.persona === "employer"){
+		return (
+			<div style={styles}>
+			<style>{'body { background-color: #DBDAE1; }'}</style>
+			<h1>Account</h1>
+			<form onSubmit={this.onSubmit}>
+			<input
+			name="username"
+			value={username}
+			onChange={this.onChange}
+			type="text"
+			placeholder="Full Name"
+			/>
+			<br/>
+			<input
+			name="email"
+			value={email}
+			onChange={this.onChange}
+			type="text"
+			placeholder="Email Address"
+			/>
+			<br/>
+			<input
+			name="passwordOne"
+			value={passwordOne}
+			onChange={this.onChange}
+			type="password"
+			placeholder="Password"
+			/>
+			<br/>
+			<input
+			name="passwordTwo"
+			value={passwordTwo}
+			onChange={this.onChange}
+			type="password"
+			placeholder="Confirm Password"
+			/>
+			<br/>
+			<input
+			name="company"
+			value={company}
+			onChange={this.onChange}
+			type="text"
+			placeholder="Company"
+			/>
+			<br/>
+			<p>Please upload a photo of yourself as a .png</p>
+			<br/>
+			<input
+			type="file"
+			value={ photo }
+			name="photo"
+			id="photo"
+			onChange={this.onChange}/>
+			<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
+			<br/>
+			<br/>
+			<input name="hide" checked={hide} onChange={this.onChange} type="checkbox"/>
+			<p>Hide My Account</p>
+			<br/>
+			<input name="emailNotifcation" checked={emailNotifcation} onChange={this.onChange} type="checkbox"/>
+			<p>Email Notifications</p>
+			<br/>
+			<input name="desktop" checked={desktop} onChange={this.onChange} type="checkbox"/>
+			<p>Desktop Notifications</p>
+			<br/>
+			<br/>
+			<br/>
+			<button style={buttonStyle} type="submit" disabled={isInvalid}>
+			Save Preferences
+			</button>
+
+			{error && <p>{error.message}</p>}
+			</form>
+			<br/>
+			<button style={buttonStyle} type="button" onClick={this.deleteAccount}>
+			Delete Account
+			</button>
+			</div>
+			);
+	}
+	else {
+		//add loading symbol
+		return (
+		<div>
+		</div>
+	);
+	}
 	}
 }
 
