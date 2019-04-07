@@ -9,8 +9,25 @@ import { compose } from 'recompose';
 //     <HistoryList />
 //   </div>
 // );
+
+const styles = {
+  fontFamily: "arial",
+  textAlign: "center",
+  marginTop: "40px",
+  color: "#421CE8"
+};
+
+const HistoryPage = () => (
+  <div style={styles}>
+  <style>{'body { background-color: #DBDAE1; }'}</style>
+    <h1>History</h1>
+		<HistoryList />
+  </div>
+)
+
 var INITIAL_STATE = {
 	history: null,
+  persona: null,
 	error: null,
 };
 
@@ -36,7 +53,8 @@ class HistoryList extends Component{
 			})
 			.then((res) => {
         this.setState({
-          history: res.history
+          history: res.history,
+          persona: res.persona,
         });
 			})
 			.catch(error => {
@@ -55,20 +73,25 @@ class HistoryList extends Component{
       );
     }
     else{
-      const { history } = this.state;
-      if (this.state.history) {
-        console.log(this.state.history[0].date);
+      const { history, peronsa } = this.state;
+      if (this.state.persona === "student") {
+        let body;
+        if (this.state.history){
+          body = this.state.history.map((d,i) => {
+            return (<p>You {this.state.history[i].action}d {this.state.history[i].data} on {this.state.history[i].date}</p>)
+          })
+        }
+        else {
+          body = <h1>sad pizza time</h1>
+          //should never print
+        }
+        return (
+          <h1>{body}</h1>
+        )
       }
-      return (
-        <div>
-          <h1>history time</h1>
-        </div>
-      )
+
     }
   }
 }
-const History = compose (
-  withRouter,
-)(HistoryList);
 
-export default History;
+export default HistoryPage;
