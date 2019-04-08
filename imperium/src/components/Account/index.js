@@ -23,7 +23,7 @@ const INITIAL_STATE = {
 	midwest: '',
 	start: '',
 	end: '',
-	hide: '',
+	isHidden: '',
 	emailNotifcation: '',
 	desktop: '',
 	persona: '',
@@ -70,7 +70,7 @@ class AccountPreferences extends Component {
 					midwest: res.midwest,
 					start: res.start,
 					end: res.end,
-					hide: res.hide,
+					isHidden: res.isHidden,
 					emailNotifcation: res.emailNotifcation,
 					desktop: res.desktop,
 					persona: res.persona,
@@ -108,7 +108,7 @@ class AccountPreferences extends Component {
 	onSubmit = event => {
 		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile,
 			resumeFile, wage, jobType, midwest, northeast, emailNotifcation, desktop,
-			west, south, start, end, hide, company } = this.state;
+			west, south, start, end, isHidden, company } = this.state;
 		const data = new FormData();
 		data.append('file', resumeFile);
 
@@ -136,7 +136,7 @@ class AccountPreferences extends Component {
 				midwest: midwest,
 				start: start,
 				end: end,
-				hide: hide,
+				isHidden: isHidden,
 				emailNotifcation: emailNotifcation,
 				desktop: desktop,
 				company: company,
@@ -170,7 +170,7 @@ class AccountPreferences extends Component {
 					start: res.user.start,
 					jobType: res.user.jobType,
 					end: res.user.end,
-					hide: res.user.hide,
+					isHidden: res.user.isHidden,
 					desktop: res.user.desktop,
 					emailNotifcation: res.user.emailNotifcation,
 					company: res.user.company,
@@ -234,7 +234,7 @@ class AccountPreferences extends Component {
 			midwest,
 			start,
 			end,
-			hide,
+			isHidden,
 			emailNotifcation,
 			persona,
 			desktop,
@@ -363,7 +363,7 @@ if (this.state.persona == "student"){
 			<input name="start" value={start} onChange={this.onChange} type="date"/>
 			<input name="end" value={end} onChange={this.onChange} type="date"/>
 			<br/>
-			<input name="hide" checked={hide} onChange={this.onChange} type="checkbox"/>
+			<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
 			<p>Hide My Account</p>
 			<br/>
 			<input name="emailNotifcation" checked={emailNotifcation} onChange={this.onChange} type="checkbox"/>
@@ -442,7 +442,7 @@ if (this.state.persona == "student"){
 			<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
 			<br/>
 			<br/>
-			<input name="hide" checked={hide} onChange={this.onChange} type="checkbox"/>
+			<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
 			<p>Hide My Account</p>
 			<br/>
 			<input name="emailNotifcation" checked={emailNotifcation} onChange={this.onChange} type="checkbox"/>
