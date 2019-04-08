@@ -12,6 +12,7 @@ import CompanyHome from '../CompanyHome';
 import JobPostingCreatorPage from '../JobPostingCreator';
 import HistoryPage from '../History';
 import ChatPage from '../Chat';
+import EditJobPage from '../EditJob';
 import * as ROUTES from '../../constants/routes';
 import {
   BrowserRouter as Router,
@@ -36,7 +37,7 @@ const App = () => (
       <Route path={ROUTES.JOB_POSTING_CREATOR} component={JobPostingCreatorPage} />
       <Route path={ROUTES.COMPANY_HOME} component={CompanyHome} />
 			{/* TODO make components for these */}
-      <Route path={ROUTES.EDIT_JOB} component={CompanyHome} />
+      <Route path={ROUTES.EDIT_JOB} component={EditJobPage} />
       <Route path={ROUTES.HISTORY} component={HistoryPage} />
       <Route path={ROUTES.CHAT} component={ChatPage} />
     </div>
