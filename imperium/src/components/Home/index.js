@@ -69,7 +69,7 @@ class Home extends Component{
 			fetch(requestURL, {
 				body: JSON.stringify({
 					token: localStorage.getItem('token'),
-					job: jobid
+					jobid: jobid
 				}),
 				cache: 'no-cache',
 				credentials: 'same-origin',
