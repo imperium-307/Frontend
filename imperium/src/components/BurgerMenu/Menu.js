@@ -37,6 +37,11 @@ export default ({ close }) => (
 					<Link to={ROUTES.MATCHES}>Matches</Link>
 				</li>
 			}
+			{ localStorage.getItem('token') !== null && localStorage.getItem('persona') === "student" &&
+				<li onClick={close}>
+					<Link to={ROUTES.FAVORITE}>Favorites</Link>
+				</li>
+			}
 			{ localStorage.getItem('token') != null && localStorage.getItem('persona') === "student" &&
 				<li onClick={close}>
 					<Link to={ROUTES.HISTORY}>History</Link>

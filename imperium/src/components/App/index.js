@@ -13,6 +13,7 @@ import JobPostingCreatorPage from '../JobPostingCreator';
 import HistoryPage from '../History';
 import ChatPage from '../Chat';
 import EditJobPage from '../EditJob';
+import FavoritePage from '../Favorite';
 import * as ROUTES from '../../constants/routes';
 import {
   BrowserRouter as Router,
@@ -40,7 +41,7 @@ const App = () => (
       <Route path={ROUTES.EDIT_JOB} component={EditJobPage} />
       <Route exact path={ROUTES.HISTORY} component={HistoryPage} />
       <Route path={ROUTES.HISTORY_WITH_JOB_ID} component={HistoryPage} />
-
+      <Route path={ROUTES.FAVORITE} component={FavoritePage} />
       <Route path={ROUTES.CHAT} component={ChatPage} />
     </div>
   </Router>
