@@ -176,14 +176,12 @@ class EditJobPreferences extends Component {
       location,
 			error,
 		} = this.state;
-		console.log("render:" + jobType)
 //TODO update this
 
 
 
 		//add loading symbol
-    console.log(jobType);
-    console.log(bio);
+    
 		return (
 		<div>
       <h1>Edit Job Posting</h1>
