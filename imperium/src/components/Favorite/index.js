@@ -42,6 +42,7 @@ class FavoritePage extends Component{
 				this.setState({ error });
 			});
 	}
+	//<p>You {this.state.history[i].action}d {this.state.history[i].data} on {new Date(this.state.history[i].date).toLocaleDateString("en-US")} at {new Date(this.state.history[i].date).toLocaleTimeString("en-US")}</p>
   render() {
     return (
       <div>
@@ -57,14 +58,12 @@ class FavoritePage extends Component{
 					if (this.state.history) {
 						return this.state.history.map((d, i) => {
 							if (this.state.history[i].action === "favorite"){
-							return (
-								<p>You {this.state.history[i].action}d {this.state.history[i].data} on {new Date(this.state.history[i].date).toLocaleDateString("en-US")} at {new Date(this.state.history[i].date).toLocaleTimeString("en-US")}</p>
-							)
+							return (<Card data={this.state.history[i].data} />)
 						}
 						})
 					} else {
 						return (
-							<h1>You have no history</h1>
+							<h1>You have no favorites</h1>
 						)
 					}
 				}
@@ -72,6 +71,22 @@ class FavoritePage extends Component{
       </div>
     )
   }
+}
+
+class Card extends Component {
+	unfavorite = () => {
+    //TODO unfavorite
+	}
+	render(){
+		return(
+			<li className="user_details">
+			<p>{this.props.data}</p>
+			<div className="user_contact">
+			<button onClick={this.unfavorite}>Unfavorite</button>
+			</div>
+			</li>
+		)
+	}
 }
 
 export default compose(
