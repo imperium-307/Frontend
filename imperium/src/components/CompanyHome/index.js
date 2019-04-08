@@ -96,13 +96,14 @@ class CompanyHome extends Component {
 								<span><b>Estimated wage:</b> {job.wage}</span>
 								<br/>
 
-								{/* ok so this is just stupid.  I can't have this be /home/:email/:id because then the router matches the route without params (/home)? like what the heck? Maybe I'm missing something but that's seriously horrendous */}
 								{/* TODO should a student be able to browse a company's page? I think so */}
 								{(() => {
 									if (localStorage.getItem('persona') === "employer") {
 										return (
 											<div>
-											<Link to={"/homes/" + job.email}>Match within this job</Link>
+											<Link to={"/home/" + job.email}>Match within this job</Link>
+											<br/>
+											<Link to={"/history/" + job.email}>View job history</Link>
 											<br/>
 											<Link to={"/editjob/" + job.email}>Edit this job</Link>
 											</div>
