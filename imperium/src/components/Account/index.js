@@ -4,6 +4,8 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import './index.css';
+import 'react-bulma-components/dist/react-bulma-components.min.css';
+import { Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
 
 const INITIAL_STATE = {
 	username: '',
@@ -13,6 +15,7 @@ const INITIAL_STATE = {
 	passwordTwo: '',
 	minor: '',
 	major: '',
+	university: '',
 	resume: '',
 	jobType: '',
 	photo: '',
@@ -61,6 +64,7 @@ class AccountPreferences extends Component {
 					bio: res.bio,
 					minor: res.minor,
 					major: res.major,
+					university: res.university,
 					photoFile: res.photo,
 					wage: res.wage,
 					jobType: res.jobType,
@@ -106,7 +110,7 @@ class AccountPreferences extends Component {
 	};
 
 	onSubmit = event => {
-		const { username, email, bio, passwordOne, passwordTwo, minor, major, photoFile,
+		const { username, email, bio, passwordOne, passwordTwo, minor, major, university, photoFile,
 			resumeFile, wage, jobType, midwest, northeast, emailNotifcation, desktop,
 			west, south, start, end, isHidden, company } = this.state;
 		const data = new FormData();
@@ -128,6 +132,7 @@ class AccountPreferences extends Component {
 				bio: bio,
 				minor: minor,
 				major: major,
+				university: university,
 				photo: photoFile,
 				wage: wage,
 				northeast: northeast,
@@ -161,6 +166,7 @@ class AccountPreferences extends Component {
 					bio: res.user.bio,
 					minor: res.user.minor,
 					major: res.user.major,
+					university: res.user.university,
 					photoFile: res.user.photo,
 					wage: res.user.wage,
 					northeast: res.user.northeast,
@@ -224,6 +230,7 @@ class AccountPreferences extends Component {
 			bio,
 			minor,
 			major,
+			university,
 			resume,
 			photo,
 			photoFile,
@@ -291,6 +298,14 @@ if (this.state.persona == "student"){
 			onChange={this.onChange}
 			type="bio"
 			placeholder="Bio"
+			/>
+			<br/>
+			<input
+			name="university"
+			value={university}
+			onChange={this.onChange}
+			type="text"
+			placeholder="University"
 			/>
 			<br/>
 			<input
