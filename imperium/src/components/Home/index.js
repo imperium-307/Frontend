@@ -40,18 +40,13 @@ class Home extends Component{
 					return res.json()
 				})
 				.then((res) => {
-					if (res.users) {
-						this.setState({
-							cards: res.users,
-							isLoading: false,
-						});
-					} else {
-						if (res.err) {
-							this.setState({ error: res.err });
-						}
-
-						this.setState({ isLoading: false });
+					this.setState({ isLoading: false });
+					if (res.err) {
+						this.setState({ error: res.err });
+						return;
 					}
+
+					this.setState({ cards: res.jobs});
 				})
 				.catch(error => {
 					console.log(error)
@@ -83,25 +78,19 @@ class Home extends Component{
 					return res.json()
 				})
 				.then((res) => {
-					if (res.users) {
-						this.setState({
-							cards: res.users,
-							isLoading: false,
-						});
-					} else {
-						if (res.err) {
-							this.setState({ error: res.err });
-						}
-
-						this.setState({ isLoading: false });
+					this.setState({ isLoading: false });
+					if (res.err) {
+						this.setState({ error: res.err });
+						return;
 					}
+
+					this.setState({ cards: res.students});
 				})
 				.catch(error => {
 					console.log(error)
 					this.setState({ error });
 				});
 		}
-
 	}
 
 	doAction = (action) => {
