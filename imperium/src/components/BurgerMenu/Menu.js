@@ -32,12 +32,12 @@ export default ({ close }) => (
         	<Link to={ROUTES.ACCOUNT}>Account</Link>
       	</li>
 			}
-			{ localStorage.getItem('token') != null &&
+			{ localStorage.getItem('token') != null && localStorage.getItem('persona') === "student" &&
 				<li onClick={close}>
 					<Link to={ROUTES.MATCHES}>Matches</Link>
 				</li>
 			}
-			{ localStorage.getItem('token') != null &&
+			{ localStorage.getItem('token') != null && localStorage.getItem('persona') === "student" &&
 				<li onClick={close}>
 					<Link to={ROUTES.HISTORY}>History</Link>
 				</li>

@@ -29,7 +29,7 @@ const App = () => (
       <Route path={ROUTES.SIGN_IN} component={SignInPage} />
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.HOME_WITH_JOB_ID} component={HomePage} />
-      <Route path={ROUTES.HOME} component={HomePage} />
+      <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
       <Route path={ROUTES.MATCHES} component={MatchesPage} />
@@ -39,6 +39,8 @@ const App = () => (
 			{/* TODO make components for these */}
       <Route path={ROUTES.EDIT_JOB} component={EditJobPage} />
       <Route path={ROUTES.HISTORY} component={HistoryPage} />
+      <Route path={ROUTES.HISTORY_WITH_JOB_ID} component={HistoryPage} />
+
       <Route path={ROUTES.CHAT} component={ChatPage} />
     </div>
   </Router>

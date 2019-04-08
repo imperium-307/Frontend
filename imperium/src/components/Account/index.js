@@ -5,23 +5,6 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import './index.css';
 
-const styles = {
-	fontFamily: "arial",
-	textAlign: "center",
-	marginTop: "40px",
-	color: "#421CE8"
-};
-
-const buttonStyle = {
-	fontSize: 20,
-	fontWeight: '400',
-	color: "#fff",
-	backgroundColor: "#421CE8",
-	paddingHorizontal: 30,
-	paddingVertical: 5,
-	borderRadius: 30
-};
-
 const INITIAL_STATE = {
 	username: '',
 	email: '',
@@ -267,8 +250,7 @@ class AccountPreferences extends Component {
 			console.log(this.state.persona);
 if (this.state.persona == "student"){
 		return (
-			<div style={styles}>
-			<style>{'body { background-color: #DBDAE1; }'}</style>
+			<div>
 			<h1>Account</h1>
 			<form onSubmit={this.onSubmit}>
 			<input
@@ -392,22 +374,21 @@ if (this.state.persona == "student"){
 			<br/>
 			<br/>
 			<br/>
-			<button style={buttonStyle} type="submit" disabled={isInvalid}>
+			<button type="submit" disabled={isInvalid}>
 			Save Preferences
 			</button>
 
 			{error && <p>{error.message}</p>}
 			</form>
 			<br/>
-			<button style={buttonStyle} type="button" onClick={this.deleteAccount}>
+			<button type="button" onClick={this.deleteAccount}>
 			Delete Account
 			</button>
 			</div>
 		);
 	} else if (this.state.persona === "employer"){
 		return (
-			<div style={styles}>
-			<style>{'body { background-color: #DBDAE1; }'}</style>
+			<div>
 			<h1>Account</h1>
 			<form onSubmit={this.onSubmit}>
 			<input
@@ -472,14 +453,14 @@ if (this.state.persona == "student"){
 			<br/>
 			<br/>
 			<br/>
-			<button style={buttonStyle} type="submit" disabled={isInvalid}>
+			<button type="submit" disabled={isInvalid}>
 			Save Preferences
 			</button>
 
 			{error && <p>{error.message}</p>}
 			</form>
 			<br/>
-			<button style={buttonStyle} type="button" onClick={this.deleteAccount}>
+			<button type="button" onClick={this.deleteAccount}>
 			Delete Account
 			</button>
 			</div>
