@@ -242,7 +242,7 @@ class AccountPreferences extends Component {
 			error,
 		} = this.state;
 		console.log("render:" + jobType)
-//TODO update this 
+//TODO update this
 		const isInvalid =
 			passwordOne !== passwordTwo ||
 			email === '' ||
