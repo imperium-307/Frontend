@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import './index.css'; 
+import './index.css';
 import { Heading } from 'react-bulma-components';
 
 var INITIAL_STATE = {
@@ -88,6 +88,7 @@ class ViewComponent extends Component {
 					}
 					else {
 						return[
+							<p>job profile</p>,
 							<img alt="profile" id="photoData" src= { user.photo }/>,
 							<br/>,
 							<p>Compnay: {user.company}</p>,
