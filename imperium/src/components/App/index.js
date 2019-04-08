@@ -38,7 +38,7 @@ const App = () => (
       <Route path={ROUTES.COMPANY_HOME} component={CompanyHome} />
 			{/* TODO make components for these */}
       <Route path={ROUTES.EDIT_JOB} component={EditJobPage} />
-      <Route path={ROUTES.HISTORY} component={HistoryPage} />
+      <Route exact path={ROUTES.HISTORY} component={HistoryPage} />
       <Route path={ROUTES.HISTORY_WITH_JOB_ID} component={HistoryPage} />
 
       <Route path={ROUTES.CHAT} component={ChatPage} />
