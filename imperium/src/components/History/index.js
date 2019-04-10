@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
+import { Heading } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	history: {},
@@ -79,7 +80,7 @@ class HistoryPage extends Component{
 
 		return (
 			<div>
-			<h1>History</h1>
+			<Heading className="text-center" size={1}>Your History</Heading>
 			{(() => {
 				if (this.state.isLoading) {
 					return (

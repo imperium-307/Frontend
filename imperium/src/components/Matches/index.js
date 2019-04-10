@@ -1,20 +1,13 @@
 import React from 'react';
 import './matches.css';
 import { Link } from 'react-router-dom';
-
-const styles = {
-  fontFamily: "arial",
-  textAlign: "center",
-  marginTop: "40px",
-  color: "#421CE8"
-};
+import { Heading } from 'react-bulma-components';
 
 const Matches = () => (
-  <div style={styles}>
-  <style>{'body { background-color: #DBDAE1; }'}</style>
-    <h1>Matches</h1>
-		<MatchesList />
-  </div>
+	<div>
+	<Heading className="text-center" size={1}>Your Matches</Heading>
+	<MatchesList />
+	</div>
 );
 
 class MatchesList extends React.Component {
@@ -101,8 +94,8 @@ class Card extends React.Component {
 			});
 	}
 
-  GoToChat = () => {
-    //TODO route to chat
+	GoToChat = () => {
+		//TODO route to chat
 	}
 
 	render() {

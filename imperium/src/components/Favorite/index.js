@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-
+import { Heading } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	history: "",
@@ -42,11 +42,11 @@ class FavoritePage extends Component{
 				this.setState({ error });
 			});
 	}
-	//<p>You {this.state.history[i].action}d {this.state.history[i].data} on {new Date(this.state.history[i].date).toLocaleDateString("en-US")} at {new Date(this.state.history[i].date).toLocaleTimeString("en-US")}</p>
-  render() {
-    return (
-      <div>
-			<h1>My Favorites</h1>
+
+	render() {
+		return (
+			<div>
+			<Heading className="text-center" size={1}>Your Matches</Heading>
 			{(() => {
 				if (this.state.isLoading) {
 					return (
@@ -58,8 +58,8 @@ class FavoritePage extends Component{
 					if (this.state.history) {
 						return this.state.history.map((d, i) => {
 							if (this.state.history[i].action === "favorite"){
-							return (<Card data={this.state.history[i].data} />)
-						}
+								return (<Card data={this.state.history[i].data} />)
+							}
 						})
 					} else {
 						return (
@@ -68,14 +68,14 @@ class FavoritePage extends Component{
 					}
 				}
 			})()}
-      </div>
-    )
-  }
+			</div>
+		)
+	}
 }
 
 class Card extends Component {
 	unfavorite = () => {
-    //TODO unfavorite
+		//TODO unfavorite
 	}
 	render(){
 		return(
@@ -90,5 +90,5 @@ class Card extends Component {
 }
 
 export default compose(
-  withRouter,
+	withRouter,
 )(FavoritePage);
