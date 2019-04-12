@@ -1,22 +1,15 @@
 import React from 'react';
 import './matches.css';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
 import { Heading } from 'react-bulma-components';
 
-const Matches = () => (
-	<div>
-	<Heading className="text-center" size={1}>Your Matches</Heading>
-	<MatchesList />
-	</div>
-);
-
-class MatchesList extends React.Component {
+class Matches extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			matches: [],
-			persona: ""
+			matches: []
 		}
 
 		fetch("http://localhost:3000/api/user/", {
@@ -36,8 +29,7 @@ class MatchesList extends React.Component {
 			})
 			.then((res) => {
 				var matches = res.matches;
-				var persona = res.persona;
-				this.setState({ matches, persona });
+				this.setState({ matches });
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -50,30 +42,11 @@ class MatchesList extends React.Component {
 		this.setState({ matches });
 	}
 
-	render() {
-		let body;
-		if (this.state.matches) {
-			body = this.state.matches.map((d, i) => {
-				return (<Card email={d} removeChild={this.removeChild} />)
-			})
-		} else {
-			body = <h2>No matches yet</h2>
-		}
-
-		return (
-			<ul className="card_container">
-			{body}
-			</ul>
-		)
-	}
-}
-
-class Card extends React.Component {
-	unmatch = () => {
+	unmatch = (email) => {
 		fetch("http://localhost:3000/api/user/dislike", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
-				likee: this.props.email
+				likee: email
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
@@ -87,45 +60,61 @@ class Card extends React.Component {
 				return res.json()
 			})
 			.then((res) => {
-				this.props.removeChild(this.props.email);
+				//this.props.removeChild(email);
 			})
 			.catch(error => {
 				this.setState({ error });
 			});
 	}
 
-	GoToChat = () => {
-		//TODO route to chat
+	GoToChat = (email) => {
+		this.props.history.push("/chat/" + email)
 	}
 
 	render() {
-		const email = this.props.email;
+		let body;
+		if (this.state.matches) {
+			body = this.state.matches.map((d, i) => {
+				return (
+					<li className="user_details">
+					<p>{d}</p>
+					<div className="user_contact">
+					<button onClick={this.unmatch}>Unmatch</button>
+					<button>Chat</button>
+					{(() => {
+						if (localStorage.getItem('persona') === "student") {
+
+							// TODO this needs lots of work
+							// TODO should we add a button to show them the company's profile?
+							return (
+								<Link to={"/jobs/" + d }>View Posting</Link>
+							);
+						} else {
+							return (
+								<Link to={"/view/" + d }>View Profile</Link>
+							);
+						}
+					})()}
+					<button onClick={() => {this.GoToChat(d)}}>Chat</button>
+					</div>
+					</li>
+				)
+			})
+		} else {
+			body = <h2>No matches yet</h2>
+		}
 
 		return (
-			<li className="user_details">
-			<p>{email}</p>
-			<div className="user_contact">
-			<button onClick={this.unmatch}>Unmatch</button>
-			<button>Chat</button>
-			{(() => {
-				if (localStorage.getItem('persona') === "student") {
-
-					// TODO this needs lots of work
-					// TODO should we add a button to show them the company's profile?
-					return (
-						<Link to={"/jobs/" + email }>View Posting</Link>
-					);
-				} else {
-					return (
-						<Link to={"/view/" + email }>View Profile</Link>
-					);
-				}
-			})()}
-			<button onClick={this.GoToChat}>Chat</button>
+			<div>
+			<Heading className="text-center" size={1}>Your Matches</Heading>
+			<ul className="card_container">
+			{body}
+			</ul>
 			</div>
-			</li>
-		);
+		)
 	}
 }
 
-export default Matches;
+export default compose(
+	withRouter,
+)(Matches);

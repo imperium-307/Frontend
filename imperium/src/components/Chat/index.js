@@ -75,6 +75,7 @@ var test_chat = {
 var INITIAL_STATE = {
 	error: null,
 	chatMessage: "",
+	lastRefresh: 0,
 	messages: test_chat.messages
 };
 
@@ -86,9 +87,10 @@ class ChatPage extends Component{
 
 		// TODO set get chat endpoint
 		// TODO set body as needed by backend
-		fetch("http://localhost:3000/api/user/noop" , {
+		fetch("http://localhost:3000/api/user/messages-since" , {
 			body: JSON.stringify({
-				token: localStorage.getItem('token')
+				token: localStorage.getItem('token'),
+				since: this.state.lastRefresh
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
@@ -119,11 +121,11 @@ class ChatPage extends Component{
 			});
 
 		setInterval(() => {
-			// TODO set get chat endpoint
 			// TODO set body as needed by backend
-			fetch("http://localhost:3000/api/user/noop" , {
+			fetch("http://localhost:3000/api/user/messages-since" , {
 				body: JSON.stringify({
-					token: localStorage.getItem('token')
+					token: localStorage.getItem('token'),
+					since: this.state.lastRefresh
 				}),
 				cache: 'no-cache',
 				credentials: 'same-origin',
@@ -141,14 +143,14 @@ class ChatPage extends Component{
 					if (res.err) {
 						this.setState({ error: res.err });
 					} else {
-						// TODO set messages we recieved
+						console.log(res)
 					}
 				})
 				.catch(error => {
 					console.log(error)
 					this.setState({ error });
 				});
-		}, 1000);
+		}, 500);
 
 	}
 
@@ -173,11 +175,6 @@ class ChatPage extends Component{
 				messages: oldMessages,
 				chatMessage: ""
 			})
-
-			setTimeout(() => {
-				var el = document.getElementById("chat-messages");
-				el.scrollTop = el.scrollHeight;
-			}, 10)
 
 			// TODO actually send message, depending on what backend does
 		}
