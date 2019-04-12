@@ -103,6 +103,8 @@ class CompanyHome extends Component {
 											<div>
 											<Link to={"/home/" + job.email}>Match within this job</Link>
 											<br/>
+											<Link to={"/matches/" + job.email}>View Matches within this job</Link>
+											<br/>
 											<Link to={"/history/" + job.email}>View job history</Link>
 											<br/>
 											<Link to={"/editjob/" + job.email}>Edit this job</Link>
