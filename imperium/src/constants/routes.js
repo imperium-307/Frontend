@@ -13,5 +13,5 @@ export const JOB_POSTING_CREATOR = '/jobpostingcreator'
 export const EDIT_JOB = '/editjob/:jobid'
 export const HISTORY = '/history';
 export const HISTORY_WITH_JOB_ID = '/history/:jobid';
-export const CHAT = '/chat';
+export const CHAT = '/chat/:id';
 export const FAVORITE = '/favorite';
