@@ -31,6 +31,7 @@ const INITIAL_STATE = {
 	desktop: '',
 	persona: '',
 	company: '',
+	favoritenot: '',
 	photoFile: null,
 	resumeFile: null,
 	error: null,
@@ -79,6 +80,7 @@ class AccountPreferences extends Component {
 					desktop: res.desktop,
 					persona: res.persona,
 					company: res.company,
+					favoritenot: res.favoritenot,
 
 				});
 			})
@@ -111,7 +113,7 @@ class AccountPreferences extends Component {
 
 	onSubmit = event => {
 		const { username, email, bio, passwordOne, passwordTwo, minor, major, university, photoFile,
-			resumeFile, wage, jobType, midwest, northeast, emailNotifcation, desktop,
+			resumeFile, wage, jobType, midwest, northeast, emailNotifcation, desktop, favoritenot,
 			west, south, start, end, isHidden, company } = this.state;
 		const data = new FormData();
 		data.append('file', resumeFile);
@@ -145,6 +147,7 @@ class AccountPreferences extends Component {
 				emailNotifcation: emailNotifcation,
 				desktop: desktop,
 				company: company,
+				favoritenot: favoritenot,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -180,6 +183,7 @@ class AccountPreferences extends Component {
 					desktop: res.user.desktop,
 					emailNotifcation: res.user.emailNotifcation,
 					company: res.user.company,
+					favoritenot: res.useer.favoritenot,
 				});
 			})
 			.catch(error => {
@@ -246,6 +250,7 @@ class AccountPreferences extends Component {
 			persona,
 			desktop,
 			company,
+			favoritenot,
 			error,
 		} = this.state;
 		console.log("render:" + jobType)
@@ -465,6 +470,9 @@ if (this.state.persona == "student"){
 			<br/>
 			<input name="desktop" checked={desktop} onChange={this.onChange} type="checkbox"/>
 			<p>Desktop Notifications</p>
+			<br/>
+			<input name="favoritenot" checked={favoritenot} onChange={this.onChange} type="checkbox"/>
+			<p>Favorite Notifiactions</p>
 			<br/>
 			<br/>
 			<br/>
