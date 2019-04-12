@@ -112,9 +112,8 @@ if (localStorage.getItem('persona') === "student"){
 					<li className="user_details">
 					<p>{d}</p>
 					<div className="user_contact">
+					<button onClick={this.unmatch}>Unmatch</button>
 					<button onClick={() => {this.GoToChat(d)}}>Chat</button>
-					{/*<button onClick={this.unmatch}>Unmatch</button>
-					<button>Chat</button>*/}
 					{(() => {
 						if (localStorage.getItem('persona') === "student") {
 
