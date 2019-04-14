@@ -5,6 +5,8 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { Tag, Heading, Button, Footer, Loader, Media } from 'react-bulma-components';
 import Popup from "reactjs-popup";
+import AddToCalendar from 'react-add-to-calendar';
+
 
 var INITIAL_STATE = {
 	error: null,
@@ -16,6 +18,7 @@ var INITIAL_STATE = {
 	startTime: "",
 	endTime: "",
 	date: "",
+	event: "",
 	messages: []
 };
 
@@ -126,7 +129,7 @@ class ChatPage extends Component{
 				text: this.state.chatMessage,
 				sender: localStorage.getItem('myemail'),
 				date: Date.now(),
-				isEvent: false
+				isEvent: false,
 			}
 
 			var oldMessages = this.state.messages
@@ -174,13 +177,67 @@ class ChatPage extends Component{
 				});
 		}
 	}
+
 	createEvent = () => {
-		console.log();
-		console.log(this.state.description);
+		var eventString = this.state.title + ";" + this.state.description +
+		 ";" + this.state.location + ";" + this.state.date + ";" + this.state.startTime + ";" + this.state.endTime;
+		 console.log(eventString);
+			var newMessage = {
+				text: eventString,
+				sender: localStorage.getItem('myemail'),
+				date: Date.now(),
+				isEvent: true,
+				etitle: this.state.title,
+				edesc: this.state.description,
+				eloc: this.state.location,
+				estart: this.state.startTime,
+				eend: this.state.endTime,
+				edate: this.state.date,
+			}
+
+			var oldMessages = this.state.messages
+			oldMessages.push(newMessage);
+
+			this.setState({
+				messages: oldMessages,
+				chatMessage: ""
+			})
+
+			fetch("http://localhost:3000/api/user/message" , {
+				body: JSON.stringify({
+					token: localStorage.getItem('token'),
+					message: newMessage,
+					iam: this.props.match.params.jobid,
+					recipient: this.props.match.params.id
+				}),
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors',
+				method: 'POST'
+			})
+				.then((res) => {
+					return res.json()
+				})
+				.then((res) => {
+					console.log(res)
+					if (res.err) {
+						this.setState({ error: res.err });
+					} else {
+						console.log(res)
+					}
+				})
+				.catch(error => {
+					console.log(error)
+					this.setState({ error });
+				});
 	}
 
+
 	render() {
-		const { chatMessage, messages, title, description, location, startTime, endTime } = this.state;
+		const { chatMessage, messages, title, description, location, startTime, endTime, event } = this.state;
 
 		return (
 			<div>
@@ -195,17 +252,49 @@ class ChatPage extends Component{
 				if (messages) {
 					return messages.map((d, i) => {
 						if (d.sender === localStorage.getItem('myemail')) {
-							return (
-								<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
-								<Tag className="is-medium is-info">{d.text}</Tag>
+							if (!d.isEvent) {
+								return (
+									<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
+									<Tag className="is-medium is-info">{d.text}</Tag>
+									</p>
+								)
+						}
+						else {
+									this.state.event = {
+						      title: d.etitle,
+						      description: d.edesc,
+						      location: d.eloc,
+						      startTime: '2016-09-16T20:15:00-04:00',
+						      endTime: '2016-09-16T21:45:00-04:00'
+						    }
+								return (
+									<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
+								<AddToCalendar  className="is-medium is-info" event={this.state.event}/>
 								</p>
 							)
+						}
 						} else {
-							return (
-								<p style={{ padding: '5px', textAlign: 'left', overflowWrap: 'normal', 'margin-right': '35%'}}>
-								<Tag className="is-medium">{d.text}</Tag>
-								</p>
-							)
+							if (!d.isEvent){
+								return (
+									<p style={{ padding: '5px', textAlign: 'left', overflowWrap: 'normal', 'margin-right': '35%'}}>
+									<Tag className="is-medium">{d.text}</Tag>
+									</p>
+								)
+							}
+							else {
+								this.state.event = {
+									title: d.etitle,
+						      description: d.edesc,
+						      location: d.eloc,
+						      startTime: '2016-09-16T20:15:00-04:00',
+						      endTime: '2016-09-16T21:45:00-04:00'
+						    }
+								return(
+									<p style={{ padding: '5px', textAlign: 'left', overflowWrap: 'normal', 'margin-right': '35%'}}>
+									<AddToCalendar className="is-medium is-info" event={this.state.event}/>
+									</p>
+								)
+							}
 						}
 					})
 				} else {

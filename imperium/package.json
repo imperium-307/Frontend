@@ -6,6 +6,7 @@
     "bootstrap": "^3.4.1",
     "firebase": "^5.8.3",
     "react": "^16.8.1",
+    "react-add-to-calendar": "^0.1.5",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-bulma-components": "^2.3.0",
     "react-dom": "^16.8.1",
