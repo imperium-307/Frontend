@@ -150,7 +150,7 @@ class ChatPage extends Component{
 					console.log(error)
 					this.setState({ error });
 				});
-		}, 500);
+		}, 30000);
 
 	}
 
