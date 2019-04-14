@@ -104,6 +104,9 @@ class SignUpFormBase extends Component {
 				west: west,
 				south: south,
 				midwest: midwest,
+				emailNotifications: true,
+				desktopNotifications: true,
+				favoriteNotifications: true
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',

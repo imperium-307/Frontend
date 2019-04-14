@@ -98,6 +98,11 @@ class ChatPage extends Component{
 							lastRefresh: Date.now(),
 							messages: res.messages
 						});
+
+						setTimeout(() => {
+							var el = document.getElementById("chat-messages");
+							el.scrollTop = el.scrollHeight;
+						}, 25)
 					} else if (res.err) {
 						this.setState({ error: res.err });
 					}
@@ -109,8 +114,6 @@ class ChatPage extends Component{
 	}
 
 	componentWillUnmount() {
-		console.log("unmounting")
-		console.log(this.mesTimer)
 		clearInterval(this.mesTimer);
 	}
 
@@ -136,6 +139,11 @@ class ChatPage extends Component{
 				messages: oldMessages,
 				chatMessage: ""
 			})
+
+			setTimeout(() => {
+				var el = document.getElementById("chat-messages");
+				el.scrollTop = el.scrollHeight;
+			}, 25)
 
 			fetch("http://localhost:3000/api/user/message" , {
 				body: JSON.stringify({

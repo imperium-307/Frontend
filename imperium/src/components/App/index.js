@@ -33,7 +33,8 @@ const App = () => (
       <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
-      <Route path={ROUTES.MATCHES} component={MatchesPage} />
+      <Route exact path={ROUTES.MATCHES} component={MatchesPage} />
+      <Route path={ROUTES.MATCHES_WITH_JOBID} component={MatchesPage} />
       <Route path={ROUTES.VIEW} component={ViewPage} />
       <Route path={ROUTES.JOB_POSTING_CREATOR} component={JobPostingCreatorPage} />
       <Route path={ROUTES.COMPANY_HOME} component={CompanyHome} />

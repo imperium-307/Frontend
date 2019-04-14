@@ -27,11 +27,11 @@ const INITIAL_STATE = {
 	start: '',
 	end: '',
 	isHidden: '',
-	emailNotification: '',
-	desktop: '',
+	emailNotifications: '',
+	desktopNotifications: '',
 	persona: '',
 	company: '',
-	favoritenot: '',
+	favoriteNotifications: '',
 	photoFile: null,
 	resumeFile: null,
 	error: null,
@@ -76,11 +76,11 @@ class AccountPreferences extends Component {
 					start: res.start,
 					end: res.end,
 					isHidden: res.isHidden,
-					emailNotification: res.emailNotification,
-					desktop: res.desktop,
+					emailNotifications: res.emailNotifications,
+					desktopNotifications: res.desktopNotifications,
 					persona: res.persona,
 					company: res.company,
-					favoritenot: res.favoritenot,
+					favoriteNotifications: res.favoriteNotifications,
 
 				});
 			})
@@ -113,7 +113,7 @@ class AccountPreferences extends Component {
 
 	onSubmit = event => {
 		const { username, email, bio, passwordOne, passwordTwo, minor, major, university, photoFile,
-			resumeFile, wage, jobType, midwest, northeast, emailNotification, desktop, favoritenot,
+			resumeFile, wage, jobType, midwest, northeast, emailNotifications, desktopNotifications, favoriteNotifications,
 			west, south, start, end, isHidden, company } = this.state;
 		const data = new FormData();
 		data.append('file', resumeFile);
@@ -144,10 +144,10 @@ class AccountPreferences extends Component {
 				start: start,
 				end: end,
 				isHidden: isHidden,
-				emailNotification: emailNotification,
-				desktop: desktop,
+				emailNotifications: emailNotifications,
+				desktopNotifications: desktopNotifications,
 				company: company,
-				favoritenot: favoritenot,
+				favoriteNotifications: favoriteNotifications,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -180,10 +180,10 @@ class AccountPreferences extends Component {
 					jobType: res.user.jobType,
 					end: res.user.end,
 					isHidden: res.user.isHidden,
-					desktop: res.user.desktop,
-					emailNotification: res.user.emailNotification,
+					desktopNotifications: res.user.desktopNotifications,
+					emailNotifications: res.user.emailNotifications,
 					company: res.user.company,
-					favoritenot: res.useer.favoritenot,
+					favoriteNotifications: res.useer.favoriteNotifications,
 				});
 			})
 			.catch(error => {
@@ -246,11 +246,11 @@ class AccountPreferences extends Component {
 			start,
 			end,
 			isHidden,
-			emailNotification,
+			emailNotifications,
 			persona,
-			desktop,
+			desktopNotifications,
 			company,
-			favoritenot,
+			favoriteNotifications,
 			error,
 		} = this.state;
 		console.log("render:" + jobType)
@@ -386,11 +386,11 @@ class AccountPreferences extends Component {
 				<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
 				<p>Hide My Account</p>
 				<br/>
-				<input name="emailNotification" checked={emailNotification} onChange={this.onChange} type="checkbox"/>
-				<p>Email Notifications</p>
+				<input name="emailNotifications" checked={emailNotifications} onChange={this.onChange} type="checkbox"/>
+				<p>Email emailNotifications</p>
 				<br/>
-				<input name="desktop" checked={desktop} onChange={this.onChange} type="checkbox"/>
-				<p>Desktop Notifications</p>
+				<input name="desktopNotifications" checked={desktopNotifications} onChange={this.onChange} type="checkbox"/>
+				<p>Desktop emailNotifications</p>
 				<br/>
 				<br/>
 				<br/>
@@ -465,13 +465,13 @@ class AccountPreferences extends Component {
 				<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
 				<p>Hide My Account</p>
 				<br/>
-				<input name="emailNotification" checked={emailNotification} onChange={this.onChange} type="checkbox"/>
-				<p>Email Notifications</p>
+				<input name="emailNotifications" checked={emailNotifications} onChange={this.onChange} type="checkbox"/>
+				<p>Email emailNotifications</p>
 				<br/>
-				<input name="desktop" checked={desktop} onChange={this.onChange} type="checkbox"/>
-				<p>Desktop Notifications</p>
+				<input name="desktopNotifications" checked={desktopNotifications} onChange={this.onChange} type="checkbox"/>
+				<p>Desktop emailNotifications</p>
 				<br/>
-				<input name="favoritenot" checked={favoritenot} onChange={this.onChange} type="checkbox"/>
+				<input name="favoriteNotifications" checked={favoriteNotifications} onChange={this.onChange} type="checkbox"/>
 				<p>Favorite Notifiactions</p>
 				<br/>
 				<br/>
