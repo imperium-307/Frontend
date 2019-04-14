@@ -4,11 +4,18 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { Tag, Heading, Button, Footer, Loader, Media } from 'react-bulma-components';
+import Popup from "reactjs-popup";
 
 var INITIAL_STATE = {
 	error: null,
 	chatMessage: "",
 	lastRefresh: 0,
+	title: "",
+	description: "",
+	location: "",
+	startTime: "",
+	endTime: "",
+	date: "",
 	messages: []
 };
 
@@ -44,12 +51,12 @@ class ChatPage extends Component{
 						messages: res.messages
 					});
 				} else if (res.err) {
-					this.setState({ 
+					this.setState({
 						error: res.err,
 						lastRefresh: 1
 					});
 				} else {
-					this.setState({ 
+					this.setState({
 						lastRefresh: 1
 					});
 				}
@@ -116,9 +123,10 @@ class ChatPage extends Component{
 	sendMessage = () => {
 		if (this.state.chatMessage != "") {
 			var newMessage = {
-				text: this.state.chatMessage, 
-				sender: localStorage.getItem('myemail'), 
-				date: Date.now()
+				text: this.state.chatMessage,
+				sender: localStorage.getItem('myemail'),
+				date: Date.now(),
+				isEvent: false
 			}
 
 			var oldMessages = this.state.messages
@@ -166,9 +174,13 @@ class ChatPage extends Component{
 				});
 		}
 	}
+	createEvent = () => {
+		console.log();
+		console.log(this.state.description);
+	}
 
 	render() {
-		const { chatMessage, messages } = this.state;
+		const { chatMessage, messages, title, description, location, startTime, endTime } = this.state;
 
 		return (
 			<div>
@@ -211,6 +223,23 @@ class ChatPage extends Component{
 			</div>
 			<div className="control">
 			<a onClick={this.sendMessage} className="button is-info">Send</a>
+			<Popup trigger={<button className="button is-info">+</button>} modal closeOnDocumentClick>
+    		<div>Schedule an interview</div>
+				<br/>
+				<input className="input" onChange={this.onChange} type="text" name="title" placeholder="Title of Event" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="text" name="description" placeholder="Description of the Event" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="text" name="location" placeholder="Location of Event" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="date" name="date" placeholder="Date of Event" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="time" name="startTime" placeholder="Start Time" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="time" name="endTime" placeholder="End Time" value={this.state.text}/>
+				<br/>
+				<button className="button is-info" onClick={this.createEvent}>Create Calendar Event</button>
+  		</Popup>
 			</div>
 			</div>
 			</div>
