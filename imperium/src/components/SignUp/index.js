@@ -75,10 +75,12 @@ class SignUpFormBase extends Component {
 		const data = new FormData();
 		data.append('file', resumeFile);
 
-		fetch('http://localhost:3000/api/user/ch-resume/' + email, {
-			method: 'POST',
-			body: data,
-		})
+		if (persona == 'student') {
+			fetch('http://localhost:3000/api/user/ch-resume/' + email, {
+				method: 'POST',
+				body: data,
+			})
+		}
 
 		fetch("http://localhost:3000/api/user/signup", {
 			body: JSON.stringify({
@@ -142,7 +144,6 @@ class SignUpFormBase extends Component {
 
 	onChange = event => {
 		this.setState({value: event.target.value});
-		//this.setState({ [event.target.name]: event.target.value });
 	};
 
 	handleInputChange(event) {

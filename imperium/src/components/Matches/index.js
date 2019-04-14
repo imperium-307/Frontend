@@ -11,62 +11,61 @@ class Matches extends React.Component {
 		this.state = {
 			matches: []
 		}
-if (localStorage.getItem('persona') === "student"){
-		fetch("http://localhost:3000/api/user/", {
-			body: JSON.stringify({
-				token: localStorage.getItem('token')
-			}),
-			cache: 'no-cache',
-			credentials: 'same-origin',
-			headers: {
-				'content-type': 'application/json'
-			},
-			mode: 'cors',
-			method: 'POST'
-		})
-			.then((res) => {
-				return res.json()
+
+		if (localStorage.getItem('persona') === "student"){
+			fetch("http://localhost:3000/api/user/", {
+				body: JSON.stringify({
+					token: localStorage.getItem('token')
+				}),
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors',
+				method: 'POST'
 			})
-			.then((res) => {
-				var matches = res.matches;
-				this.setState({ matches });
-			})
-			.catch(error => {
-				this.setState({ error });
-			});
-
-		}
-		else {
-
-			fetch("http://localhost:3000/api/user/get-job", {
-
-					body: JSON.stringify({
-						jobid: this.props.match.params.jobid,
-						token: localStorage.getItem('token')
-					}),
-					cache: 'no-cache',
-					credentials: 'same-origin',
-					headers: {
-						'content-type': 'application/json'
-					},
-					mode: 'cors',
-					method: 'POST'
+				.then((res) => {
+					return res.json()
 				})
-					.then((res) => {
-						return res.json()
-					})
-					.then((res) => {
-						var matches = res.matches;
-						console.log("your matches " + matches);
-						this.setState({ matches });
-					})
-					.catch(error => {
-						console.log("here");
-						console.log("jobid: " + this.state.jobid)
-						this.setState({ error });
-					});
+				.then((res) => {
+					var matches = res.matches;
+					this.setState({ matches });
+				})
+				.catch(error => {
+					this.setState({ error });
+				});
+
+		} else {
+			fetch("http://localhost:3000/api/user/get-job", {
+				body: JSON.stringify({
+					jobid: this.props.match.params.jobid,
+					token: localStorage.getItem('token')
+				}),
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors',
+				method: 'POST'
+			})
+				.then((res) => {
+					return res.json()
+				})
+				.then((res) => {
+					var matches = res.matches;
+					console.log("your matches " + matches);
+					this.setState({ matches });
+				})
+				.catch(error => {
+					console.log("here");
+					console.log("jobid: " + this.state.jobid)
+					this.setState({ error });
+				});
 		}
 	}
+
 	removeChild = (email) => {
 		var matches = this.state.matches
 		matches = matches.filter(e => e !== email)
@@ -99,13 +98,17 @@ if (localStorage.getItem('persona') === "student"){
 	}
 
 	GoToChat = (email) => {
-		this.props.history.push("/chat/" + email)
+		if (localStorage.getItem('persona') === "student") {
+			this.props.history.push("/chat/" + email);
+		} else {
+			this.props.history.push("/chat/" + email + "/from/" + this.props.match.params.jobid);
+		}
 	}
 
 	render() {
 		let body;
 		if (this.state.matches) {
-		//	console.log("your matches " + this.state.matches);
+			//	console.log("your matches " + this.state.matches);
 
 			body = this.state.matches.map((d, i) => {
 				return (

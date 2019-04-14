@@ -5,78 +5,11 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { Tag, Heading, Button, Footer, Loader, Media } from 'react-bulma-components';
 
-var my_email = "student"
-var their_email = "them@them.com"
-var test_chat = {
-	messages: [
-		{
-			text: "message the first",
-			sender: their_email,
-			date: Date.now()
-		},
-		{
-			text: "message the second",
-			sender: my_email,
-			date: Date.now()
-		},
-		{
-			text: "message the third",
-			sender: their_email,
-			date: Date.now()
-		},
-		{
-			text: "message the first",
-			sender: their_email,
-			date: Date.now()
-		},
-		{
-			text: "message the second",
-			sender: my_email,
-			date: Date.now()
-		},
-		{
-			text: "message the third",
-			sender: their_email,
-			date: Date.now()
-		},
-		{
-			text: "message the first",
-			sender: their_email,
-			date: Date.now()
-		},
-		{
-			text: "message the second",
-			sender: my_email,
-			date: Date.now()
-		},
-		{
-			text: "message the third",
-			sender: their_email,
-			date: Date.now()
-		},
-		{
-			text: "message the first",
-			sender: their_email,
-			date: Date.now()
-		},
-		{
-			text: "message the second",
-			sender: my_email,
-			date: Date.now()
-		},
-		{
-			text: "message the third",
-			sender: their_email,
-			date: Date.now()
-		}
-	]
-}
-
 var INITIAL_STATE = {
 	error: null,
 	chatMessage: "",
 	lastRefresh: 0,
-	messages: test_chat.messages
+	messages: []
 };
 
 class ChatPage extends Component{
@@ -85,12 +18,14 @@ class ChatPage extends Component{
 
 		this.state = { ...INITIAL_STATE };
 
-		// TODO set get chat endpoint
-		// TODO set body as needed by backend
-		fetch("http://localhost:3000/api/user/messages-since" , {
+		console.log( this.props.match.params.jobid, this.props.match.params.id)
+
+		fetch("http://localhost:3000/api/user/messages-after" , {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
-				since: this.state.lastRefresh
+				after: this.state.lastRefresh,
+				iam: this.props.match.params.jobid,
+				recipient: this.props.match.params.id
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
@@ -104,28 +39,37 @@ class ChatPage extends Component{
 				return res.json()
 			})
 			.then((res) => {
-				console.log(res)
-				if (res.err) {
-					this.setState({ error: res.err });
+				if (res.messages) {
+					this.setState({
+						messages: res.messages
+					});
+				} else if (res.err) {
+					this.setState({ 
+						error: res.err,
+						lastRefresh: 1
+					});
 				} else {
-					// TODO set messages we recieved
-					setTimeout(() => {
-						var el = document.getElementById("chat-messages");
-						el.scrollTop = el.scrollHeight;
-					}, 25)
+					this.setState({ 
+						lastRefresh: 1
+					});
 				}
+
+				setTimeout(() => {
+					var el = document.getElementById("chat-messages");
+					el.scrollTop = el.scrollHeight;
+				}, 25)
 			})
 			.catch(error => {
-				console.log(error)
 				this.setState({ error });
 			});
 
-		setInterval(() => {
-			// TODO set body as needed by backend
-			fetch("http://localhost:3000/api/user/messages-since" , {
+		this.mesTimer = setInterval(() => {
+			fetch("http://localhost:3000/api/user/messages-after" , {
 				body: JSON.stringify({
 					token: localStorage.getItem('token'),
-					since: this.state.lastRefresh
+					after: this.state.lastRefresh,
+					iam: this.props.match.params.jobid,
+					recipient: this.props.match.params.id
 				}),
 				cache: 'no-cache',
 				credentials: 'same-origin',
@@ -139,19 +83,25 @@ class ChatPage extends Component{
 					return res.json()
 				})
 				.then((res) => {
-					console.log(res)
-					if (res.err) {
+					if (res.messages) {
+						this.setState({
+							lastRefresh: Date.now(),
+							messages: res.messages
+						});
+					} else if (res.err) {
 						this.setState({ error: res.err });
-					} else {
-						console.log(res)
 					}
 				})
 				.catch(error => {
-					console.log(error)
 					this.setState({ error });
 				});
-		}, 30000);
+		}, 1000);
+	}
 
+	componentWillUnmount() {
+		console.log("unmounting")
+		console.log(this.mesTimer)
+		clearInterval(this.mesTimer);
 	}
 
 	onChange = event => {
@@ -176,7 +126,36 @@ class ChatPage extends Component{
 				chatMessage: ""
 			})
 
-			// TODO actually send message, depending on what backend does
+			fetch("http://localhost:3000/api/user/message" , {
+				body: JSON.stringify({
+					token: localStorage.getItem('token'),
+					message: newMessage,
+					iam: this.props.match.params.jobid,
+					recipient: this.props.match.params.id
+				}),
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors',
+				method: 'POST'
+			})
+				.then((res) => {
+					return res.json()
+				})
+				.then((res) => {
+					console.log(res)
+					if (res.err) {
+						this.setState({ error: res.err });
+					} else {
+						console.log(res)
+					}
+				})
+				.catch(error => {
+					console.log(error)
+					this.setState({ error });
+				});
 		}
 	}
 
@@ -192,21 +171,27 @@ class ChatPage extends Component{
 			</div>
 			<div id="chat-messages" className="hero-body" style={{"height": 0, "overflow-y": "auto"}}>
 			<div style={{ 'width': '100%', 'height': '100%' }}>
-			{messages.map((d, i) => {
-				if (d.sender === localStorage.getItem('myemail')) {
-					return (
-						<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
-						<Tag className="is-medium is-info">{d.text}</Tag>
-						</p>
-					)
+			{(() => {
+				if (messages) {
+					return messages.map((d, i) => {
+						if (d.sender === localStorage.getItem('myemail')) {
+							return (
+								<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
+								<Tag className="is-medium is-info">{d.text}</Tag>
+								</p>
+							)
+						} else {
+							return (
+								<p style={{ padding: '5px', textAlign: 'left', overflowWrap: 'normal', 'margin-right': '35%'}}>
+								<Tag className="is-medium">{d.text}</Tag>
+								</p>
+							)
+						}
+					})
 				} else {
-					return (
-						<p style={{ padding: '5px', textAlign: 'left', overflowWrap: 'normal', 'margin-right': '35%'}}>
-						<Tag className="is-medium">{d.text}</Tag>
-						</p>
-					)
+					return <p style={{ padding: '5px', textAlign: 'center', overflowWrap: 'normal'}}>You have no messages yet</p>
 				}
-			})}
+			})()}
 			</div>
 			</div>
 

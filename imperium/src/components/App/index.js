@@ -37,12 +37,12 @@ const App = () => (
       <Route path={ROUTES.VIEW} component={ViewPage} />
       <Route path={ROUTES.JOB_POSTING_CREATOR} component={JobPostingCreatorPage} />
       <Route path={ROUTES.COMPANY_HOME} component={CompanyHome} />
-			{/* TODO make components for these */}
       <Route path={ROUTES.EDIT_JOB} component={EditJobPage} />
       <Route exact path={ROUTES.HISTORY} component={HistoryPage} />
       <Route path={ROUTES.HISTORY_WITH_JOB_ID} component={HistoryPage} />
       <Route path={ROUTES.FAVORITE} component={FavoritePage} />
-      <Route path={ROUTES.CHAT} component={ChatPage} />
+      <Route exact path={ROUTES.CHAT} component={ChatPage} />
+      <Route path={ROUTES.CHAT_WITH_JOB_ID} component={ChatPage} />
     </div>
   </Router>
 );
