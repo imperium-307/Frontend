@@ -120,7 +120,11 @@ class CompanyHome extends Component {
 					}
 				})()}
 				</Columns>
-				<Link to={ROUTES.JOB_POSTING_CREATOR}>Create a Job Posting</Link>
+				{(() => {
+					if (localStorage.getItem('myemail') === company.email) {
+						return (<Link to={ROUTES.JOB_POSTING_CREATOR}>Create a Job Posting</Link>)
+					}
+				})()}
 				{error && <p>{error}</p>}
 				</div>
 			);
