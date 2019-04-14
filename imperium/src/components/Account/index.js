@@ -27,7 +27,7 @@ const INITIAL_STATE = {
 	start: '',
 	end: '',
 	isHidden: '',
-	emailNotifcation: '',
+	emailNotification: '',
 	desktop: '',
 	persona: '',
 	company: '',
@@ -76,7 +76,7 @@ class AccountPreferences extends Component {
 					start: res.start,
 					end: res.end,
 					isHidden: res.isHidden,
-					emailNotifcation: res.emailNotifcation,
+					emailNotification: res.emailNotification,
 					desktop: res.desktop,
 					persona: res.persona,
 					company: res.company,
@@ -113,7 +113,7 @@ class AccountPreferences extends Component {
 
 	onSubmit = event => {
 		const { username, email, bio, passwordOne, passwordTwo, minor, major, university, photoFile,
-			resumeFile, wage, jobType, midwest, northeast, emailNotifcation, desktop, favoritenot,
+			resumeFile, wage, jobType, midwest, northeast, emailNotification, desktop, favoritenot,
 			west, south, start, end, isHidden, company } = this.state;
 		const data = new FormData();
 		data.append('file', resumeFile);
@@ -144,7 +144,7 @@ class AccountPreferences extends Component {
 				start: start,
 				end: end,
 				isHidden: isHidden,
-				emailNotifcation: emailNotifcation,
+				emailNotification: emailNotification,
 				desktop: desktop,
 				company: company,
 				favoritenot: favoritenot,
@@ -181,7 +181,7 @@ class AccountPreferences extends Component {
 					end: res.user.end,
 					isHidden: res.user.isHidden,
 					desktop: res.user.desktop,
-					emailNotifcation: res.user.emailNotifcation,
+					emailNotification: res.user.emailNotification,
 					company: res.user.company,
 					favoritenot: res.useer.favoritenot,
 				});
@@ -246,7 +246,7 @@ class AccountPreferences extends Component {
 			start,
 			end,
 			isHidden,
-			emailNotifcation,
+			emailNotification,
 			persona,
 			desktop,
 			company,
@@ -254,248 +254,248 @@ class AccountPreferences extends Component {
 			error,
 		} = this.state;
 		console.log("render:" + jobType)
-//TODO update this
+		//TODO update this
 		const isInvalid =
 			passwordOne !== passwordTwo ||
 			email === '' ||
 			username === '';
-			console.log(this.state.persona);
-if (this.state.persona == "student"){
-		return (
-			<div>
-			<h1>Account</h1>
-			<form onSubmit={this.onSubmit}>
-			<input
-			name="username"
-			value={username}
-			onChange={this.onChange}
-			type="text"
-			placeholder="Full Name"
-			/>
-			<br/>
-			<input
-			name="email"
-			value={email}
-			onChange={this.onChange}
-			type="text"
-			placeholder="Email Address"
-			/>
-			<br/>
-			<input
-			name="passwordOne"
-			value={passwordOne}
-			onChange={this.onChange}
-			type="password"
-			placeholder="Password"
-			/>
-			<br/>
-			<input
-			name="passwordTwo"
-			value={passwordTwo}
-			onChange={this.onChange}
-			type="password"
-			placeholder="Confirm Password"
-			/>
-			<br/>
-			<input
-			name="bio"
-			value={bio}
-			onChange={this.onChange}
-			type="bio"
-			placeholder="Bio"
-			/>
-			<br/>
-			<input
-			name="university"
-			value={university}
-			onChange={this.onChange}
-			type="text"
-			placeholder="University"
-			/>
-			<br/>
-			<input
-			name="major"
-			value={major}
-			onChange={this.onChange}
-			type="text"
-			placeholder="Major"
-			/>
-			<br/>
-			<input
-			name="minor"
-			value={minor}
-			onChange={this.onChange}
-			type="text"
-			placeholder="Minor"
-			/>
-			<br/>
-			<p>Upload your resume as a .pdf</p>
-			<br/>
-			<input
-			type="file"
-			value={resume}
-			name="resume"
-			id="resume"
-			onChange={this.onChange}
-			placeholder="resume" />
-			<div>
-			<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
-			</div>
-			<br/>
-			<p>Please upload a photo of yourself as a .png</p>
-			<br/>
-			<input
-			type="file"
-			value={ photo }
-			name="photo"
-			id="photo"
-			onChange={this.onChange}/>
-			<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
-			<br/>
+		console.log(this.state.persona);
+		if (this.state.persona == "student"){
+			return (
+				<div>
+				<h1>Account</h1>
+				<form onSubmit={this.onSubmit}>
+				<input
+				name="username"
+				value={username}
+				onChange={this.onChange}
+				type="text"
+				placeholder="Full Name"
+				/>
+				<br/>
+				<input
+				name="email"
+				value={email}
+				onChange={this.onChange}
+				type="text"
+				placeholder="Email Address"
+				/>
+				<br/>
+				<input
+				name="passwordOne"
+				value={passwordOne}
+				onChange={this.onChange}
+				type="password"
+				placeholder="Password"
+				/>
+				<br/>
+				<input
+				name="passwordTwo"
+				value={passwordTwo}
+				onChange={this.onChange}
+				type="password"
+				placeholder="Confirm Password"
+				/>
+				<br/>
+				<input
+				name="bio"
+				value={bio}
+				onChange={this.onChange}
+				type="bio"
+				placeholder="Bio"
+				/>
+				<br/>
+				<input
+				name="university"
+				value={university}
+				onChange={this.onChange}
+				type="text"
+				placeholder="University"
+				/>
+				<br/>
+				<input
+				name="major"
+				value={major}
+				onChange={this.onChange}
+				type="text"
+				placeholder="Major"
+				/>
+				<br/>
+				<input
+				name="minor"
+				value={minor}
+				onChange={this.onChange}
+				type="text"
+				placeholder="Minor"
+				/>
+				<br/>
+				<p>Upload your resume as a .pdf</p>
+				<br/>
+				<input
+				type="file"
+				value={resume}
+				name="resume"
+				id="resume"
+				onChange={this.onChange}
+				placeholder="resume" />
+				<div>
+				<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
+				</div>
+				<br/>
+				<p>Please upload a photo of yourself as a .png</p>
+				<br/>
+				<input
+				type="file"
+				value={ photo }
+				name="photo"
+				id="photo"
+				onChange={this.onChange}/>
+				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
+				<br/>
 
-			<select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
-			<option value="" disabled selected hidden>What type of job are you posting?</option>
-			<option value="fullTime">Full Time</option>
-			<option value="parttime">Part Time</option>
-			<option value="internship">Internship</option>
-			<option value="coop">Co-op</option>
-			</select>
-			<br/>
-			<input name="wage" value={wage} onChange={this.onChange} type="number" step=".1" placeholder="Salary of Job"/>
-			<br/>
-			<p>Please select what reigons you would be interested in working on</p>
-			<br/>
-			<input name="northeast" checked={northeast} onChange={this.onChange} type="checkbox"/>
-			<p>Northeast</p>
-			<br/>
-			<input name="west" checked={west} onChange={this.onChange} type="checkbox"/>
-			<p>West</p>
-			<br/>
-			<input name="south" checked={south} onChange={this.onChange} type="checkbox"/>
-			<p>South</p>
-			<br/>
-			<input name="midwest" checked={midwest} onChange={this.onChange} type="checkbox"/>
-			<p>Midwest</p>
-			<br/>
+				<select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
+				<option value="" disabled selected hidden>What type of job are you posting?</option>
+				<option value="fullTime">Full Time</option>
+				<option value="parttime">Part Time</option>
+				<option value="internship">Internship</option>
+				<option value="coop">Co-op</option>
+				</select>
+				<br/>
+				<input name="wage" value={wage} onChange={this.onChange} type="number" step=".1" placeholder="Salary of Job"/>
+				<br/>
+				<p>Please select what reigons you would be interested in working on</p>
+				<br/>
+				<input name="northeast" checked={northeast} onChange={this.onChange} type="checkbox"/>
+				<p>Northeast</p>
+				<br/>
+				<input name="west" checked={west} onChange={this.onChange} type="checkbox"/>
+				<p>West</p>
+				<br/>
+				<input name="south" checked={south} onChange={this.onChange} type="checkbox"/>
+				<p>South</p>
+				<br/>
+				<input name="midwest" checked={midwest} onChange={this.onChange} type="checkbox"/>
+				<p>Midwest</p>
+				<br/>
 
-			<p2>Please enter which days you will be able start and end</p2>
-			<br/>
-			<input name="start" value={start} onChange={this.onChange} type="date"/>
-			<input name="end" value={end} onChange={this.onChange} type="date"/>
-			<br/>
-			<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
-			<p>Hide My Account</p>
-			<br/>
-			<input name="emailNotifcation" checked={emailNotifcation} onChange={this.onChange} type="checkbox"/>
-			<p>Email Notifications</p>
-			<br/>
-			<input name="desktop" checked={desktop} onChange={this.onChange} type="checkbox"/>
-			<p>Desktop Notifications</p>
-			<br/>
-			<br/>
-			<br/>
-			<button type="submit" disabled={isInvalid}>
-			Save Preferences
-			</button>
+				<p2>Please enter which days you will be able start and end</p2>
+				<br/>
+				<input name="start" value={start} onChange={this.onChange} type="date"/>
+				<input name="end" value={end} onChange={this.onChange} type="date"/>
+				<br/>
+				<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
+				<p>Hide My Account</p>
+				<br/>
+				<input name="emailNotification" checked={emailNotification} onChange={this.onChange} type="checkbox"/>
+				<p>Email Notifications</p>
+				<br/>
+				<input name="desktop" checked={desktop} onChange={this.onChange} type="checkbox"/>
+				<p>Desktop Notifications</p>
+				<br/>
+				<br/>
+				<br/>
+				<button type="submit" disabled={isInvalid}>
+				Save Preferences
+				</button>
 
-			{error && <p>{error.message}</p>}
-			</form>
-			<br/>
-			<button type="button" onClick={this.deleteAccount}>
-			Delete Account
-			</button>
-			</div>
-		);
-	} else if (this.state.persona === "employer"){
-		return (
-			<div>
-			<h1>Account</h1>
-			<form onSubmit={this.onSubmit}>
-			<input
-			name="username"
-			value={username}
-			onChange={this.onChange}
-			type="text"
-			placeholder="Full Name"
-			/>
-			<br/>
-			<input
-			name="email"
-			value={email}
-			onChange={this.onChange}
-			type="text"
-			placeholder="Email Address"
-			/>
-			<br/>
-			<input
-			name="passwordOne"
-			value={passwordOne}
-			onChange={this.onChange}
-			type="password"
-			placeholder="Password"
-			/>
-			<br/>
-			<input
-			name="passwordTwo"
-			value={passwordTwo}
-			onChange={this.onChange}
-			type="password"
-			placeholder="Confirm Password"
-			/>
-			<br/>
-			<input
-			name="company"
-			value={company}
-			onChange={this.onChange}
-			type="text"
-			placeholder="Company"
-			/>
-			<br/>
-			<p>Please upload a photo of yourself as a .png</p>
-			<br/>
-			<input
-			type="file"
-			value={ photo }
-			name="photo"
-			id="photo"
-			onChange={this.onChange}/>
-			<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
-			<br/>
-			<br/>
-			<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
-			<p>Hide My Account</p>
-			<br/>
-			<input name="emailNotifcation" checked={emailNotifcation} onChange={this.onChange} type="checkbox"/>
-			<p>Email Notifications</p>
-			<br/>
-			<input name="desktop" checked={desktop} onChange={this.onChange} type="checkbox"/>
-			<p>Desktop Notifications</p>
-			<br/>
-			<input name="favoritenot" checked={favoritenot} onChange={this.onChange} type="checkbox"/>
-			<p>Favorite Notifiactions</p>
-			<br/>
-			<br/>
-			<br/>
-			<button type="submit" disabled={isInvalid}>
-			Save Preferences
-			</button>
-
-			{error && <p>{error.message}</p>}
-			</form>
-			<br/>
-			<button type="button" onClick={this.deleteAccount}>
-			Delete Account
-			</button>
-			</div>
+				{error && <p>{error.message}</p>}
+				</form>
+				<br/>
+				<button type="button" onClick={this.deleteAccount}>
+				Delete Account
+				</button>
+				</div>
 			);
-	}
-	else {
-		//add loading symbol
-		return (
-		<div>
-		</div>
-	);
-	}
+		} else if (this.state.persona === "employer"){
+			return (
+				<div>
+				<h1>Account</h1>
+				<form onSubmit={this.onSubmit}>
+				<input
+				name="username"
+				value={username}
+				onChange={this.onChange}
+				type="text"
+				placeholder="Full Name"
+				/>
+				<br/>
+				<input
+				name="email"
+				value={email}
+				onChange={this.onChange}
+				type="text"
+				placeholder="Email Address"
+				/>
+				<br/>
+				<input
+				name="passwordOne"
+				value={passwordOne}
+				onChange={this.onChange}
+				type="password"
+				placeholder="Password"
+				/>
+				<br/>
+				<input
+				name="passwordTwo"
+				value={passwordTwo}
+				onChange={this.onChange}
+				type="password"
+				placeholder="Confirm Password"
+				/>
+				<br/>
+				<input
+				name="company"
+				value={company}
+				onChange={this.onChange}
+				type="text"
+				placeholder="Company"
+				/>
+				<br/>
+				<p>Please upload a photo of yourself as a .png</p>
+				<br/>
+				<input
+				type="file"
+				value={ photo }
+				name="photo"
+				id="photo"
+				onChange={this.onChange}/>
+				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
+				<br/>
+				<br/>
+				<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
+				<p>Hide My Account</p>
+				<br/>
+				<input name="emailNotification" checked={emailNotification} onChange={this.onChange} type="checkbox"/>
+				<p>Email Notifications</p>
+				<br/>
+				<input name="desktop" checked={desktop} onChange={this.onChange} type="checkbox"/>
+				<p>Desktop Notifications</p>
+				<br/>
+				<input name="favoritenot" checked={favoritenot} onChange={this.onChange} type="checkbox"/>
+				<p>Favorite Notifiactions</p>
+				<br/>
+				<br/>
+				<br/>
+				<button type="submit" disabled={isInvalid}>
+				Save Preferences
+				</button>
+
+				{error && <p>{error.message}</p>}
+				</form>
+				<br/>
+				<button type="button" onClick={this.deleteAccount}>
+				Delete Account
+				</button>
+				</div>
+			);
+		}
+		else {
+			//add loading symbol
+			return (
+				<div>
+				</div>
+			);
+		}
 	}
 }
 
