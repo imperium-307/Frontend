@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
-import { Heading, Columns, Loader } from 'react-bulma-components';
+import { Content, Media, Image, Heading, Columns, Loader, Button } from 'react-bulma-components';
 
 const INITIAL_STATE = {
 	company: {},
@@ -70,8 +70,35 @@ class CompanyHome extends Component {
 		} else {
 			return (
 				<div style={{'maxWidth': '960px', 'margin': 'auto'}}>
-				<Heading className="has-text-centered" size={1}>{company.company}'s home</Heading>
 				<Columns className="is-multiline is-centered">
+				<Columns.Column size={12} className="has-text-centered">
+				<div className="custom-card" style={{padding: "16px"}}>
+				<Media>
+				<Media.Item position="left">
+				<Image style={{width: 150, height: 150}}  alt={"profile"} src={company.photo} />
+				</Media.Item>
+				<Media.Item>
+				<Content>
+				<Heading className="has-text-left" size={1}>{company.company}</Heading>
+				{(() => {
+					if (localStorage.getItem('myemail') === company.email) {
+						return (
+							<div className="buttons has-addons">
+							<Button to={"/account"} renderAs={Link}>Edit your company</Button>
+							</div>
+						)
+					} else {
+						return (
+							<Button href={"mailto:" + company.email} renderAs="a">Contact {company.company}</Button>
+						)
+					}
+
+				})()}
+				</Content>
+				</Media.Item>
+				</Media>
+				</div>
+				</Columns.Column>
 				{(() => {
 					if (jobs) {
 						return jobs.map((job) => {
@@ -98,16 +125,16 @@ class CompanyHome extends Component {
 
 								{/* TODO should a student be able to browse a company's page? I think so */}
 								{(() => {
-									if (localStorage.getItem('persona') === "employer") {
+									if (localStorage.getItem('myemail') === company.email) {
 										return (
-											<div>
-											<Link to={"/home/" + job.email}>Match within this job</Link>
+											<div style={{padding: "16px"}}>
+											<Button to={"/home/" + job.email} renderAs={Link} className="is-info is-fullwidth">Match within this job</Button>
 											<br/>
-											<Link to={"/matches/" + job.email}>View Matches within this job</Link>
-											<br/>
-											<Link to={"/history/" + job.email}>View job history</Link>
-											<br/>
-											<Link to={"/editjob/" + job.email}>Edit this job</Link>
+											<div className="buttons has-addons is-centered">
+											<Button to={"/matches/" + job.email} renderAs={Link}>Matches</Button>
+											<Button to={"/history/" + job.email} renderAs={Link}>History</Button>
+											<Button to={"/editjob/" + job.email} renderAs={Link}>Edit</Button>
+											</div>
 											</div>
 										)
 									}
