@@ -237,7 +237,7 @@ class ChatPage extends Component{
 
 
 	render() {
-		const { chatMessage, messages, title, description, location, startTime, endTime, event } = this.state;
+		const { chatMessage, messages, title, description, location, startTime, endTime, date,event } = this.state;
 
 		return (
 			<div>
@@ -264,8 +264,8 @@ class ChatPage extends Component{
 						      title: d.etitle,
 						      description: d.edesc,
 						      location: d.eloc,
-						      startTime: '2016-09-16T20:15:00-04:00',
-						      endTime: '2016-09-16T21:45:00-04:00'
+									startTime: date+"T"+startTime,
+						      endTime: date+"T"+endTime,
 						    }
 								return (
 									<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
@@ -286,8 +286,8 @@ class ChatPage extends Component{
 									title: d.etitle,
 						      description: d.edesc,
 						      location: d.eloc,
-						      startTime: '2016-09-16T20:15:00-04:00',
-						      endTime: '2016-09-16T21:45:00-04:00'
+									startTime: date+"T"+startTime,
+						      endTime: date+"T"+endTime,
 						    }
 								return(
 									<p style={{ padding: '5px', textAlign: 'left', overflowWrap: 'normal', 'margin-right': '35%'}}>
