@@ -67,15 +67,18 @@ class Matches extends React.Component {
 	}
 
 	removeChild = (email) => {
+		console.log(email)
 		var matches = this.state.matches
 		matches = matches.filter(e => e !== email)
+		console.log(matches)
 		this.setState({ matches });
 	}
 
 	unmatch = (email) => {
-		fetch("http://localhost:3000/api/user/dislike", {
+		fetch("http://localhost:3000/api/user/unmatch", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
+				iam: this.props.match.params.jobid,
 				likee: email
 			}),
 			cache: 'no-cache',
@@ -90,7 +93,7 @@ class Matches extends React.Component {
 				return res.json()
 			})
 			.then((res) => {
-				//this.props.removeChild(email);
+				this.removeChild(email);
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -107,7 +110,7 @@ class Matches extends React.Component {
 
 	render() {
 		let body;
-		if (this.state.matches) {
+		if (this.state.matches && this.state.matches.length > 0) {
 			//	console.log("your matches " + this.state.matches);
 
 			body = this.state.matches.map((d, i) => {
@@ -115,13 +118,10 @@ class Matches extends React.Component {
 					<li className="user_details">
 					<p>{d}</p>
 					<div className="user_contact">
-					<button onClick={this.unmatch}>Unmatch</button>
+					<button onClick={() => {this.unmatch(d)}}>Unmatch</button>
 					<button onClick={() => {this.GoToChat(d)}}>Chat</button>
 					{(() => {
 						if (localStorage.getItem('persona') === "student") {
-
-							// TODO this needs lots of work
-							// TODO should we add a button to show them the company's profile?
 							return (
 								<Link to={"/jobs/" + d }>View Posting</Link>
 							);

@@ -183,7 +183,7 @@ class AccountPreferences extends Component {
 					desktopNotifications: res.user.desktopNotifications,
 					emailNotifications: res.user.emailNotifications,
 					company: res.user.company,
-					favoriteNotifications: res.useer.favoriteNotifications,
+					favoriteNotifications: res.user.favoriteNotifications,
 				});
 			})
 			.catch(error => {
