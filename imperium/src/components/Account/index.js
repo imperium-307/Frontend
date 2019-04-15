@@ -253,13 +253,21 @@ class AccountPreferences extends Component {
 			favoriteNotifications,
 			error,
 		} = this.state;
-		console.log("render:" + jobType)
-		//TODO update this
-		const isInvalid =
-			passwordOne !== passwordTwo ||
-			email === '' ||
-			username === '';
-		console.log(this.state.persona);
+
+		var isInvalid = false;
+		if (((passwordOne !== '' || passwordTwo !== '') && passwordOne !== passwordTwo) || username === '' || bio === '') {
+			isInvalid = true;
+		}
+		if (this.state.persona == "student") {
+			if (start === '' || end === '' || university === '' || jobType === '' || (!south && !midwest && !northeast && !west) || wage === '' || major === '') {
+				isInvalid = true;
+			}
+		} else {
+			if (company === '') {
+				isInvalid = true;
+			}
+		}
+
 		if (this.state.persona == "student"){
 			return (
 				<div>
@@ -276,6 +284,7 @@ class AccountPreferences extends Component {
 				<input
 				name="email"
 				value={email}
+				disabled={true}
 				onChange={this.onChange}
 				type="text"
 				placeholder="Email Address"
@@ -422,6 +431,7 @@ class AccountPreferences extends Component {
 				<input
 				name="email"
 				value={email}
+				disabled={true}
 				onChange={this.onChange}
 				type="text"
 				placeholder="Email Address"
