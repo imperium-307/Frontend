@@ -55,7 +55,6 @@ class Matches extends React.Component {
 				})
 				.then((res) => {
 					var matches = res.matches;
-					console.log("your matches " + matches);
 					this.setState({ matches });
 				})
 				.catch(error => {
@@ -67,10 +66,8 @@ class Matches extends React.Component {
 	}
 
 	removeChild = (email) => {
-		console.log(email)
 		var matches = this.state.matches
 		matches = matches.filter(e => e !== email)
-		console.log(matches)
 		this.setState({ matches });
 	}
 
@@ -111,8 +108,6 @@ class Matches extends React.Component {
 	render() {
 		let body;
 		if (this.state.matches && this.state.matches.length > 0) {
-			//	console.log("your matches " + this.state.matches);
-
 			body = this.state.matches.map((d, i) => {
 				return (
 					<li className="user_details">

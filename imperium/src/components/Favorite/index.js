@@ -34,9 +34,40 @@ class FavoritePage extends Component{
 			})
 			.then((res) => {
 				this.setState({
-					history: res.history,
+					favorites: res.favorites,
 					isLoading: false,
 				});
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+	}
+
+	removeChild = (email) => {
+		var favorites = this.state.favorites
+		favorites = favorites.filter(e => e !== email)
+		this.setState({ favorites });
+	}
+
+	unfavorite = (email) => {
+		fetch("http://localhost:3000/api/user/unfavorite", {
+			body: JSON.stringify({
+				token: localStorage.getItem('token'),
+				likee: email
+			}),
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors',
+			method: 'POST'
+		})
+			.then((res) => {
+				return res.json()
+			})
+			.then((res) => {
+				this.removeChild(email);
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -46,7 +77,7 @@ class FavoritePage extends Component{
 	render() {
 		return (
 			<div>
-			<Heading className="text-center" size={1}>Your Matches</Heading>
+			<Heading className="text-center" size={1}>Your Favorites</Heading>
 			{(() => {
 				if (this.state.isLoading) {
 					return (
@@ -55,11 +86,16 @@ class FavoritePage extends Component{
 						</div>
 					);
 				} else {
-					if (this.state.history) {
-						return this.state.history.map((d, i) => {
-							if (this.state.history[i].action === "favorite"){
-								return (<Card data={this.state.history[i].data} />)
-							}
+					if (this.state.favorites && this.state.favorites.length > 0) {
+						return this.state.favorites.map((d, i) => {
+							return (
+								<li className="user_details">
+								<p>{d}</p>
+								<div className="user_contact">
+								<button onClick={() => {this.unfavorite(d)}}>Unfavorite</button>
+								</div>
+								</li>
+							)
 						})
 					} else {
 						return (
@@ -69,22 +105,6 @@ class FavoritePage extends Component{
 				}
 			})()}
 			</div>
-		)
-	}
-}
-
-class Card extends Component {
-	unfavorite = () => {
-		//TODO unfavorite
-	}
-	render(){
-		return(
-			<li className="user_details">
-			<p>{this.props.data}</p>
-			<div className="user_contact">
-			<button onClick={this.unfavorite}>Unfavorite</button>
-			</div>
-			</li>
 		)
 	}
 }
