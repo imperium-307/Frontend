@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import './index.css';
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
+import { Notification, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
 
 const INITIAL_STATE = {
 	username: '',
@@ -34,6 +33,7 @@ const INITIAL_STATE = {
 	favoriteNotifications: '',
 	photoFile: null,
 	resumeFile: null,
+	savedPrefPopup: false,
 	error: null,
 };
 
@@ -184,7 +184,14 @@ class AccountPreferences extends Component {
 					emailNotifications: res.user.emailNotifications,
 					company: res.user.company,
 					favoriteNotifications: res.user.favoriteNotifications,
+					savedPrefPopup: true
 				});
+
+				setTimeout(() => {
+					this.setState({
+						savedPrefPopup: false
+					});
+				}, 5000)
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -252,6 +259,7 @@ class AccountPreferences extends Component {
 			company,
 			favoriteNotifications,
 			error,
+			savedPrefPopup,
 		} = this.state;
 
 		var isInvalid = false;
@@ -272,6 +280,16 @@ class AccountPreferences extends Component {
 			return (
 				<div>
 				<h1>Account</h1>
+				{(() => {
+					if (savedPrefPopup) {
+						return (
+							<Notification color="success">
+							Your settings have been saved
+							<Button remove onClick={() => {this.setState({savedPrefPopup: false})}}/>	
+							</Notification>
+						)
+					}
+				})()}
 				<form onSubmit={this.onSubmit}>
 				<input
 				name="username"
@@ -414,6 +432,16 @@ class AccountPreferences extends Component {
 			return (
 				<div>
 				<h1>Account</h1>
+				{(() => {
+					if (savedPrefPopup) {
+						return (
+							<Notification color="success">
+							Your settings have been saved
+							<Button remove onClick={() => {this.setState({savedPrefPopup: false})}}/>	
+							</Notification>
+						)
+					}
+				})()}
 				<form onSubmit={this.onSubmit}>
 				<input
 				name="username"
@@ -512,7 +540,6 @@ class AccountPreferences extends Component {
 
 const AccountPage = compose(
 	withRouter,
-	withFirebase,
 )(AccountPreferences)
 
 export default AccountPage;
