@@ -387,10 +387,10 @@ class AccountPreferences extends Component {
 				<p>Hide My Account</p>
 				<br/>
 				<input name="emailNotifications" checked={emailNotifications} onChange={this.onChange} type="checkbox"/>
-				<p>Email emailNotifications</p>
+				<p>Email Notifications</p>
 				<br/>
 				<input name="desktopNotifications" checked={desktopNotifications} onChange={this.onChange} type="checkbox"/>
-				<p>Desktop emailNotifications</p>
+				<p>Desktop Notifications</p>
 				<br/>
 				<br/>
 				<br/>
@@ -466,10 +466,10 @@ class AccountPreferences extends Component {
 				<p>Hide My Account</p>
 				<br/>
 				<input name="emailNotifications" checked={emailNotifications} onChange={this.onChange} type="checkbox"/>
-				<p>Email emailNotifications</p>
+				<p>Email Notifications</p>
 				<br/>
 				<input name="desktopNotifications" checked={desktopNotifications} onChange={this.onChange} type="checkbox"/>
-				<p>Desktop emailNotifications</p>
+				<p>Desktop Notifications</p>
 				<br/>
 				<input name="favoriteNotifications" checked={favoriteNotifications} onChange={this.onChange} type="checkbox"/>
 				<p>Favorite Notifiactions</p>
