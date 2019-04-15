@@ -4,30 +4,6 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
-// const EditJobPage = () => (
-//   <div>
-//     <h1>Edit Job</h1>
-//     <EditJobPreferences />
-//   </div>
-// );
-
-const styles = {
-	fontFamily: "arial",
-	textAlign: "center",
-	marginTop: "40px",
-	color: "#421CE8"
-};
-
-const buttonStyle = {
-	fontSize: 20,
-	fontWeight: '400',
-	color: "#fff",
-	backgroundColor: "#421CE8",
-	paddingHorizontal: 30,
-	paddingVertical: 5,
-	borderRadius: 30
-};
-
 const INITIAL_STATE = {
   jobName: '',
 	bio: '',
@@ -107,7 +83,6 @@ class EditJobPreferences extends Component {
 			west, south, start, end, jobName, location } = this.state;
 
 		fetch("http://localhost:3000/api/user/ch-job", {
-			//can you send everything like this for employers
 			body: JSON.stringify({
 				jobType: jobType,
 				bio: bio,

@@ -3,26 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
 
-const styles = {
-  fontFamily: "arial",
-  textAlign: "center",
-  marginTop: "40px",
-  color: "#421CE8"
-};
-
-const buttonStyle = {
-	fontSize: 20,
-	fontWeight: '400',
-	color: "#fff",
-	backgroundColor: "#421CE8",
-	paddingHorizontal: 30,
-	paddingVertical: 5,
-	borderRadius: 30
-};
-
 const PasswordForgetPage = () => (
-  <div style={styles}>
-  <style>{'body { background-color: #DBDAE1; }'}</style>
+  <div>
     <h1>Forgot Password</h1>
     <PasswordForgetForm />
   </div>
@@ -93,7 +75,7 @@ class PasswordForgetFormBase extends Component {
         />
         <br/>
         <br/>
-        <button style={buttonStyle} disabled={isInvalid} type="submit">
+        <button disabled={isInvalid} type="submit">
           Reset My Password
         </button>
 

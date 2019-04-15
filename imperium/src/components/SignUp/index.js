@@ -2,31 +2,15 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import './Button.css';
-
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+
 var pdf = false;
 var jpeg = false;
 var sub = true;
-const styles = {
-	fontFamily: "arial",
-	textAlign: "center",
-	marginTop: "40px",
-	color: "#421CE8"
-};
-const buttonStyle = {
-	fontSize: 20,
-	fontWeight: '400',
-	color: "#fff",
-	backgroundColor: "#421CE8",
-	paddingHorizontal: 30,
-	paddingVertical: 5,
-	borderRadius: 30
-};
 
 const SignUpPage = () => (
-	<div style={styles}>
-	<style>{'body { background-color: #DBDAE1; }'}</style>
+	<div>
 	<h1>Sign Up</h1>
 	<SignUpForm />
 	</div>
@@ -384,7 +368,7 @@ class SignUpFormBase extends Component {
 
 			</div>
 			<br/>
-			<button style={buttonStyle} disabled={sub} type="submit">
+			<button disabled={sub} type="submit">
 			Sign Up
 			</button>
 

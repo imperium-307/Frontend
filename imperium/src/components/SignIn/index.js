@@ -5,25 +5,8 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import * as ROUTES from '../../constants/routes';
 
-const styles = {
-	fontFamily: "arial",
-	textAlign: "center",
-	marginTop: "40px",
-	color: "#421CE8",
-};
-
-const buttonStyle = {
-	fontSize: 20,
-	fontWeight: '400',
-	color: "#fff",
-	backgroundColor: "#421CE8",
-	paddingHorizontal: 30,
-	paddingVertical: 5,
-	borderRadius: 30
-}
-
 const SignInPage = () => (
-	<div style={styles}>
+	<div>
 	<h1>Welcome to Imperium!</h1>
 	<SignInForm />
 	<PasswordForgetLink />
@@ -130,9 +113,9 @@ class SignInFormBase extends Component {
 			checked={this.state.rememberEmail}
 			onChange={this.onChange}
 			/>
-			<span>Remember email?</span>
+			<span> Remember email?</span>
 			<br/>
-			<button style={buttonStyle}  disabled={isInvalid} type="submit">
+			<button disabled={isInvalid} type="submit">
 			Sign In
 			</button>
 
