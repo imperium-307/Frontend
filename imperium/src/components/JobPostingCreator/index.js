@@ -6,23 +6,23 @@ import * as ROUTES from '../../constants/routes';
 //TODO make it so you cant click the create posting button without entering all the fields
 
 var INITIAL_STATE = {
-  jobName: '',
-  jobType: '',
-  location: '',
-  west: '',
-  south: '',
-  midwest: '',
-  northeast: '',
-  major: '',
-  bio:'',
-  wage:'',
+	jobName: '',
+	jobType: '',
+	location: '',
+	west: '',
+	south: '',
+	midwest: '',
+	northeast: '',
+	major: '',
+	bio:'',
+	wage:'',
 	start: '',
 	end: '',
 	error: ''
 };
 
 class CreateJobPosting extends Component {
-  constructor(props) {
+	constructor(props) {
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
@@ -87,6 +87,11 @@ class CreateJobPosting extends Component {
 	render(){
 		const {error, jobType, start, end, location, west, jobName, south, midwest, northeast, major, bio, wage} = this.state;
 
+		var isDisabled = false;
+		if (jobType === '' || start === '' || end === '' || location === '' || jobName === '' || (!south && !midwest && !northeast && !west) || major === '' || bio === '' || wage === '') {
+			isDisabled = true;
+		}
+
 		return(
 			<div>
 			<h1>Job Posting Creator</h1>
@@ -130,7 +135,7 @@ class CreateJobPosting extends Component {
 			<br/>
 			<input name="wage" value={wage} onChange={this.handleInputChange} type="number" step=".1" placeholder="Salary of Job"/>
 			<br/>
-			<button type="submit" onClick={this.onClick}>
+			<button type="submit" disabled={isDisabled} onClick={this.onClick}>
 			Create Posting
 			</button>
 			<Link to={"/company/" + localStorage.getItem('myemail')}>Cancel</Link>
