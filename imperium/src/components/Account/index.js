@@ -451,6 +451,14 @@ class AccountPreferences extends Component {
 				placeholder="Company"
 				/>
 				<br/>
+				<input
+				name="bio"
+				value={bio}
+				onChange={this.onChange}
+				type="bio"
+				placeholder="Bio"
+				/>
+				<br/>
 				<p>Please upload a photo of yourself as a .png</p>
 				<br/>
 				<input

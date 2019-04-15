@@ -80,6 +80,7 @@ class CompanyHome extends Component {
 				<Media.Item>
 				<Content>
 				<Heading className="has-text-left" size={1}>{company.company}</Heading>
+				<p>{company.bio}</p>
 				{(() => {
 					if (localStorage.getItem('myemail') === company.email) {
 						return (

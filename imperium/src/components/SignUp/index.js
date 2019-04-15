@@ -311,6 +311,7 @@ class SignUpFormBase extends Component {
 					case "employer": return [
 						<input name="company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>,
 						<br/>,
+						<input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>,
 						<p>Please upload a photo of your company as a .PNG</p>,
 						<br/>,
 						<input type="file" value={photo} name="photo" id="photo" onChange={this.handleInputChange} />,
@@ -367,7 +368,7 @@ class SignUpFormBase extends Component {
 					}
 				}
 				else if (persona === "employer") {
-					if (company === '') {
+					if (company === '' || bio === '') {
 						sub = true;
 					}
 					else {
