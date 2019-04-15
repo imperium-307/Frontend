@@ -338,8 +338,9 @@ class AccountPreferences extends Component {
 				placeholder="Minor"
 				/>
 				<br/>
-				<p>Upload your resume as a .pdf</p>
-				<br/>
+				<div>
+				<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
+				</div>
 				<input
 				type="file"
 				value={resume}
@@ -347,20 +348,14 @@ class AccountPreferences extends Component {
 				id="resume"
 				onChange={this.onChange}
 				placeholder="resume" />
-				<div>
-				<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
-				</div>
 				<br/>
-				<p>Please upload a photo of yourself as a .png</p>
-				<br/>
+				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
 				<input
 				type="file"
 				value={ photo }
 				name="photo"
 				id="photo"
 				onChange={this.onChange}/>
-				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
-				<br/>
 
 				<select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
 				<option value="" disabled selected hidden>What type of job are you posting?</option>
@@ -469,15 +464,13 @@ class AccountPreferences extends Component {
 				placeholder="Bio"
 				/>
 				<br/>
-				<p>Please upload a photo of yourself as a .png</p>
-				<br/>
+				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
 				<input
 				type="file"
 				value={ photo }
 				name="photo"
 				id="photo"
 				onChange={this.onChange}/>
-				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
 				<br/>
 				<br/>
 				<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>

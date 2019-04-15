@@ -33,3 +33,12 @@ code {
 	margin-left: 16px;
 	margin-right: 16px;
 }
+
+.custom-card__heading {
+	background-color: #209cee;
+	border-radius: 5px;
+}
+
+.custom-card__heading-text {
+	color: white !important;
+}

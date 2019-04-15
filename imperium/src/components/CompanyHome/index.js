@@ -85,6 +85,7 @@ class CompanyHome extends Component {
 					if (localStorage.getItem('myemail') === company.email) {
 						return (
 							<div className="buttons has-addons">
+							<Button to={ROUTES.JOB_POSTING_CREATOR} renderAs={Link} className="is-info">New Job Posting</Button>
 							<Button to={"/account"} renderAs={Link}>Edit your company</Button>
 							</div>
 						)
@@ -106,9 +107,11 @@ class CompanyHome extends Component {
 							return (
 								<Columns.Column size={4} className="has-text-centered">
 								<div className="custom-card">
+								<div className="custom-card__heading">
 								<br/>
-								<Heading className="has-text-centered" size={3}>{job.jobName}</Heading>
+								<Heading className="has-text-centered custom-card__heading-text" size={3}>{job.jobName}</Heading>
 								<hr/>
+								</div>
 								<span><b>Desired major:</b> {job.major}</span>
 								<br/>
 								<span><b>Job type:</b> {job.jobType}</span>
@@ -148,11 +151,6 @@ class CompanyHome extends Component {
 					}
 				})()}
 				</Columns>
-				{(() => {
-					if (localStorage.getItem('myemail') === company.email) {
-						return (<Link to={ROUTES.JOB_POSTING_CREATOR}>Create a Job Posting</Link>)
-					}
-				})()}
 				{error && <p>{error}</p>}
 				</div>
 			);
