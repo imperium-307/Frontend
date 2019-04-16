@@ -42,6 +42,15 @@ code {
 	padding: 16px 8px;
 }
 
+.custom-card__heading-gradient {
+	background: rgb(73,65,204);
+	background: linear-gradient(90deg, rgba(73,65,204,1) 0%, rgba(62,62,198,1) 27%, rgba(0,212,255,1) 100%);
+	border-radius: 5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	padding: 16px 8px;
+}
+
 .custom-card__heading-text {
 	color: white !important;
 }

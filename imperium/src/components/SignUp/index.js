@@ -205,7 +205,7 @@ class SignUpFormBase extends Component {
 			<Columns className="is-multiline is-centered">
 			<Columns.Column size={6}>
 			<div className="custom-card" >
-			<div className="custom-card__heading">
+			<div className="custom-card__heading-gradient">
 			<Heading size={3} className="has-text-centered custom-card__heading-text">Sign Up</Heading>
 			</div>
 			<form onSubmit={this.onSubmit} style={{padding: 16}}>

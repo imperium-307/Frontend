@@ -110,7 +110,7 @@ class Matches extends React.Component {
 			<Columns className="is-multiline is-centered">
 			<Columns.Column size={8}>
 			<div className="custom-card" >
-			<div className="custom-card__heading">
+			<div className="custom-card__heading-gradient">
 			<Heading className="text-center custom-card__heading-text" size={1}>Your Matches</Heading>
 			</div>
 			<br/>
