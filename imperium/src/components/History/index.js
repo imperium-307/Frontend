@@ -117,15 +117,6 @@ class HistoryPage extends Component{
 										<td>{new Date(this.state.history[i].date).toLocaleTimeString("en-US")}</td>
 										</tr>
 									)
-									/*
-										<div className="flex" style={{padding: 16, "justify-content": "space-between", "background-color": bgcolor}}>
-										<p>hi</p>
-										<p>hi</p>
-										<p>hi</p>
-										<p>hi</p>
-										<p>You {this.state.history[i].action}d {this.state.history[i].data} on {new Date(this.state.history[i].date).toLocaleDateString("en-US")} at {new Date(this.state.history[i].date).toLocaleTimeString("en-US")}</p>
-										</div>
-										*/
 								})
 							})()}
 							</tbody>

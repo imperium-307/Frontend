@@ -19,6 +19,8 @@ var INITIAL_STATE = {
 	endTime: "",
 	date: "",
 	event: "",
+	job: null,
+	student: null,
 	messages: []
 };
 
@@ -27,8 +29,6 @@ class ChatPage extends Component{
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
-
-		console.log( this.props.match.params.jobid, this.props.match.params.id)
 
 		fetch("http://localhost:3000/api/user/messages-after" , {
 			body: JSON.stringify({
@@ -72,6 +72,66 @@ class ChatPage extends Component{
 			.catch(error => {
 				this.setState({ error });
 			});
+
+		if (localStorage.getItem("persona") === "student") {
+			fetch("http://localhost:3000/api/user/get-job" , {
+				body: JSON.stringify({
+					token: localStorage.getItem('token'),
+					jobid: this.props.match.params.id
+				}),
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors',
+				method: 'POST'
+			})
+				.then((res) => {
+					return res.json()
+				})
+				.then((res) => {
+					if (res.err) {
+
+					} else {
+						this.setState({
+							job: res
+						});
+					}
+				})
+				.catch(error => {
+					this.setState({ error });
+				});
+		} else {
+			fetch("http://localhost:3000/api/user/post-view", {
+				body: JSON.stringify({
+					token: localStorage.getItem('token'),
+					email: this.props.match.params.id
+				}),
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors',
+				method: 'POST'
+			})
+				.then((res) => {
+					return res.json()
+				})
+				.then((res) => {
+					if (res.err) {
+
+					} else {
+						this.setState({
+							student: res
+						});
+					}
+				})
+				.catch(error => {
+					this.setState({ error });
+				});
+		}
 
 		this.mesTimer = setInterval(() => {
 			fetch("http://localhost:3000/api/user/messages-after" , {
@@ -180,71 +240,87 @@ class ChatPage extends Component{
 
 	createEvent = () => {
 		var eventString = this.state.title + ";" + this.state.description +
-		 ";" + this.state.location + ";" + this.state.date + ";" + this.state.startTime + ";" + this.state.endTime;
-		 console.log(eventString);
-			var newMessage = {
-				text: eventString,
-				sender: localStorage.getItem('myemail'),
-				date: Date.now(),
-				isEvent: true,
-				etitle: this.state.title,
-				edesc: this.state.description,
-				eloc: this.state.location,
-				estart: this.state.startTime,
-				eend: this.state.endTime,
-				edate: this.state.date,
-			}
+			";" + this.state.location + ";" + this.state.date + ";" + this.state.startTime + ";" + this.state.endTime;
+		console.log(eventString);
+		var newMessage = {
+			text: eventString,
+			sender: localStorage.getItem('myemail'),
+			date: Date.now(),
+			isEvent: true,
+			etitle: this.state.title,
+			edesc: this.state.description,
+			eloc: this.state.location,
+			estart: this.state.startTime,
+			eend: this.state.endTime,
+			edate: this.state.date,
+		}
 
-			var oldMessages = this.state.messages
-			oldMessages.push(newMessage);
+		var oldMessages = this.state.messages
+		oldMessages.push(newMessage);
 
-			this.setState({
-				messages: oldMessages,
-				chatMessage: ""
+		this.setState({
+			messages: oldMessages,
+			chatMessage: ""
+		})
+
+		fetch("http://localhost:3000/api/user/message" , {
+			body: JSON.stringify({
+				token: localStorage.getItem('token'),
+				message: newMessage,
+				iam: this.props.match.params.jobid,
+				recipient: this.props.match.params.id
+			}),
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors',
+			method: 'POST'
+		})
+			.then((res) => {
+				return res.json()
 			})
-
-			fetch("http://localhost:3000/api/user/message" , {
-				body: JSON.stringify({
-					token: localStorage.getItem('token'),
-					message: newMessage,
-					iam: this.props.match.params.jobid,
-					recipient: this.props.match.params.id
-				}),
-				cache: 'no-cache',
-				credentials: 'same-origin',
-				headers: {
-					'content-type': 'application/json'
-				},
-				mode: 'cors',
-				method: 'POST'
-			})
-				.then((res) => {
-					return res.json()
-				})
-				.then((res) => {
+			.then((res) => {
+				console.log(res)
+				if (res.err) {
+					this.setState({ error: res.err });
+				} else {
 					console.log(res)
-					if (res.err) {
-						this.setState({ error: res.err });
-					} else {
-						console.log(res)
-					}
-				})
-				.catch(error => {
-					console.log(error)
-					this.setState({ error });
-				});
+				}
+			})
+			.catch(error => {
+				console.log(error)
+				this.setState({ error });
+			});
 	}
 
 
 	render() {
-		const { chatMessage, messages, title, description, location, startTime, endTime, date,event } = this.state;
+		const { chatMessage, messages, title, description, location, startTime, endTime, date,event, job, student } = this.state;
 
 		return (
 			<div>
 
 			<section className="hero" style={{height: "calc(100vh - 40px)"}}>
 			<div className="hero-head">
-			<Heading className="text-center" size={1}>Chat</Heading>
+			{(() => {
+				if (job) {
+					return (
+						<div className="text-center" style={{display:"flex", "align-items":"center", "justify-content":"center"}}>
+						<img style={{width: 75, height: 75, "margin-right": 16, "border-radius":"100%"}} src={job.photo}/>
+						<Heading className="text-center" size={1} style={{display: "inline"}}>Chatting with {job.jobName}</Heading>
+						</div>
+					)
+				} else if (student) {
+					return (
+						<div className="text-center" style={{display:"flex", "align-items":"center", "justify-content":"center"}}>
+						<img style={{width: 75, height: 75, "margin-right": 16, "border-radius":"100%"}} src={student.photo}/>
+						<Heading className="text-center" size={1} style={{display: "inline"}}>Chatting with {student.username}</Heading>
+						</div>
+					)
+				}
+			})()}
 			</div>
 			<div id="chat-messages" className="hero-body" style={{"height": 0, "overflow-y": "auto"}}>
 			<div style={{ 'width': '100%', 'height': '100%' }}>
@@ -258,21 +334,21 @@ class ChatPage extends Component{
 									<Tag className="is-medium is-info">{d.text}</Tag>
 									</p>
 								)
-						}
-						else {
-									this.state.event = {
-						      title: d.etitle,
-						      description: d.edesc,
-						      location: d.eloc,
+							}
+							else {
+								this.state.event = {
+									title: d.etitle,
+									description: d.edesc,
+									location: d.eloc,
 									startTime: date+"T"+startTime,
-						      endTime: date+"T"+endTime,
-						    }
+									endTime: date+"T"+endTime,
+								}
 								return (
 									<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
-								<AddToCalendar  className="is-medium is-info" event={this.state.event}/>
-								</p>
-							)
-						}
+									<AddToCalendar  className="is-medium is-info" event={this.state.event}/>
+									</p>
+								)
+							}
 						} else {
 							if (!d.isEvent){
 								return (
@@ -284,11 +360,11 @@ class ChatPage extends Component{
 							else {
 								this.state.event = {
 									title: d.etitle,
-						      description: d.edesc,
-						      location: d.eloc,
+									description: d.edesc,
+									location: d.eloc,
 									startTime: date+"T"+startTime,
-						      endTime: date+"T"+endTime,
-						    }
+									endTime: date+"T"+endTime,
+								}
 								return(
 									<p style={{ padding: '5px', textAlign: 'left', overflowWrap: 'normal', 'margin-right': '35%'}}>
 									<AddToCalendar className="is-medium is-info" event={this.state.event}/>
@@ -313,22 +389,22 @@ class ChatPage extends Component{
 			<div className="control">
 			<a onClick={this.sendMessage} className="button is-info">Send</a>
 			<Popup trigger={<button className="button is-info">+</button>} modal closeOnDocumentClick>
-    		<div>Schedule an interview</div>
-				<br/>
-				<input className="input" onChange={this.onChange} type="text" name="title" placeholder="Title of Event" value={this.state.text}/>
-				<br/>
-				<input className="input" onChange={this.onChange} type="text" name="description" placeholder="Description of the Event" value={this.state.text}/>
-				<br/>
-				<input className="input" onChange={this.onChange} type="text" name="location" placeholder="Location of Event" value={this.state.text}/>
-				<br/>
-				<input className="input" onChange={this.onChange} type="date" name="date" placeholder="Date of Event" value={this.state.text}/>
-				<br/>
-				<input className="input" onChange={this.onChange} type="time" name="startTime" placeholder="Start Time" value={this.state.text}/>
-				<br/>
-				<input className="input" onChange={this.onChange} type="time" name="endTime" placeholder="End Time" value={this.state.text}/>
-				<br/>
-				<button className="button is-info" onClick={this.createEvent}>Create Calendar Event</button>
-  		</Popup>
+			<div>Schedule an interview</div>
+			<br/>
+			<input className="input" onChange={this.onChange} type="text" name="title" placeholder="Title of Event" value={this.state.text}/>
+			<br/>
+			<input className="input" onChange={this.onChange} type="text" name="description" placeholder="Description of the Event" value={this.state.text}/>
+			<br/>
+			<input className="input" onChange={this.onChange} type="text" name="location" placeholder="Location of Event" value={this.state.text}/>
+			<br/>
+			<input className="input" onChange={this.onChange} type="date" name="date" placeholder="Date of Event" value={this.state.text}/>
+			<br/>
+			<input className="input" onChange={this.onChange} type="time" name="startTime" placeholder="Start Time" value={this.state.text}/>
+			<br/>
+			<input className="input" onChange={this.onChange} type="time" name="endTime" placeholder="End Time" value={this.state.text}/>
+			<br/>
+			<button className="button is-info" onClick={this.createEvent}>Create Calendar Event</button>
+			</Popup>
 			</div>
 			</div>
 			</div>
