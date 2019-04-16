@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
-import { Columns, Button, Heading } from 'react-bulma-components';
+import { Loader, Columns, Button, Heading } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	history: {},
@@ -90,9 +90,19 @@ class HistoryPage extends Component{
 			{(() => {
 				if (this.state.isLoading) {
 					return (
-						<div>
-						<p>Loading...</p>
-						</div>
+						<span>
+						<br/>
+						<Loader className="auto-margin"
+						style={{
+							width: 100,
+								height: 100,
+								border: '4px solid',
+								borderTopColor: 'transparent',
+								borderRightColor: 'transparent',
+						}}
+						/>
+						<br/>
+						</span>
 					);
 				} else {
 					if (this.state.history) {
@@ -122,6 +132,30 @@ class HistoryPage extends Component{
 							</tbody>
 							</table>
 						)
+					} else {
+						if (localStorage.getItem('persona') === "student") {
+							return (
+								<div className="has-text-centered">
+								<br/>
+								<br/>
+								<Heading className="text-center" size={3}>You don't have any history!</Heading>
+								<Button className="is-info" to={"/home"} renderAs={Link}>Make some‽</Button>
+								<br/>
+								<br/>
+								</div>
+							)
+						} else {
+							return (
+								<div className="has-text-centered">
+								<br/>
+								<br/>
+								<Heading className="text-center" size={3}>You don't have any history!</Heading>
+								<Button className="is-info" to={"/home/" + this.props.match.params.jobid} renderAs={Link}>Make some‽</Button>
+								<br/>
+								<br/>
+								</div>
+							)
+						}
 					}
 				}
 			})()}

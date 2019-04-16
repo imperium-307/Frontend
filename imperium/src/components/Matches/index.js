@@ -2,14 +2,15 @@ import React from 'react';
 import './matches.css';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { Columns, Button, Heading } from 'react-bulma-components';
+import { Loader, Columns, Button, Heading } from 'react-bulma-components';
 
 class Matches extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			matches: []
+			matches: [],
+			isLoading: true
 		}
 
 		if (localStorage.getItem('persona') === "student"){
@@ -30,7 +31,8 @@ class Matches extends React.Component {
 				})
 				.then((res) => {
 					this.setState({ 
-						matches: res.matchesObject
+						matches: res.matchesObject,
+						isLoading: false
 					});
 				})
 				.catch(error => {
@@ -56,7 +58,8 @@ class Matches extends React.Component {
 				})
 				.then((res) => {
 					this.setState({ 
-						matches: res.matchesObject
+						matches: res.matchesObject,
+						isLoading: false
 					});
 				})
 				.catch(error => {
@@ -147,8 +150,46 @@ class Matches extends React.Component {
 							</div>
 						)
 					})
+				} else if (this.state.isLoading) {
+					return (
+						<span>
+						<br/>
+						<Loader className="auto-margin"
+						style={{
+							width: 100,
+								height: 100,
+								border: '4px solid',
+								borderTopColor: 'transparent',
+								borderRightColor: 'transparent',
+						}}
+						/>
+						<br/>
+						</span>
+					);
 				} else {
-
+					if (localStorage.getItem('persona') === "student") {
+						return (
+							<div className="has-text-centered">
+							<br/>
+							<br/>
+							<Heading className="text-center" size={3}>You don't have any matches!</Heading>
+							<Button className="is-info" to={"/home"} renderAs={Link}>Find some‽</Button>
+							<br/>
+							<br/>
+							</div>
+						)
+					} else {
+						return (
+							<div className="has-text-centered">
+							<br/>
+							<br/>
+							<Heading className="text-center" size={3}>You don't have any matches!</Heading>
+							<Button className="is-info" to={"/home/" + this.props.match.params.jobid} renderAs={Link}>Find some‽</Button>
+							<br/>
+							<br/>
+							</div>
+						)
+					}
 				}
 			})()}
 			</div>

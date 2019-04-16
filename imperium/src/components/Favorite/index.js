@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import { Heading, Columns, Button } from 'react-bulma-components';
+import { Loader, Heading, Columns, Button } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	history: "",
@@ -87,9 +87,19 @@ class FavoritePage extends Component{
 			{(() => {
 				if (this.state.isLoading) {
 					return (
-						<div>
-						<p>Loading...</p>
-						</div>
+						<span>
+						<br/>
+						<Loader className="auto-margin"
+						style={{
+							width: 100,
+								height: 100,
+								border: '4px solid',
+								borderTopColor: 'transparent',
+								borderRightColor: 'transparent',
+						}}
+						/>
+						<br/>
+						</span>
 					);
 				} else {
 					if (this.state.favorites && this.state.favorites.length > 0) {
@@ -112,7 +122,14 @@ class FavoritePage extends Component{
 						})
 					} else {
 						return (
-							<h1>You have no favorites</h1>
+							<div className="has-text-centered">
+							<br/>
+							<br/>
+							<Heading className="text-center" size={3}>You don't have any favorites!</Heading>
+							<Button className="is-info" to={"/home"} renderAs={Link}>Find some‽</Button>
+							<br/>
+							<br/>
+							</div>
 						)
 					}
 				}

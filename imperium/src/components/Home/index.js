@@ -320,25 +320,45 @@ class Home extends Component{
 						</span>
 					)
 				} else if(error === null || error === "There are no more profiles available, check back later") {
-					return (
-						<div>
-						<br/>
-						<br/>
-						<br/>
-						<br/>
-						<br/>
-						<Heading className="text-center" size={3}>Fresh out of users, check back later!</Heading>
-						<br/>
-						<br/>
-						<br/>
-						<br/>
-						<br/>
-						</div>
-					)
+					if (localStorage.getItem('persona') === "student") {
+						return (
+							<div className="has-text-centered">
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<Heading className="text-center" size={3}>Fresh out of users, check back later!</Heading>
+							<Button className="is-info" to={"/matches"} renderAs={Link}>View matches?</Button>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							</div>
+						)
+					} else {
+						return (
+							<div className="has-text-centered">
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<Heading className="text-center" size={3}>Fresh out of users, check back later!</Heading>
+							<Button className="is-info" to={"/matches/" + this.props.match.params.jobid} renderAs={Link}>View matches?</Button>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							</div>
+						)
+					}
 				}
-				console.log(error)
 			})()}
-
 			</div>
 			</div>
 			</Columns.Column>
