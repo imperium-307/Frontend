@@ -107,6 +107,7 @@ class HistoryPage extends Component{
 				} else {
 					if (this.state.history) {
 						return (
+							<div style={{"overflow-x": "auto"}}>
 							<table className="table">
 							<thead>
 							<tr>
@@ -131,6 +132,7 @@ class HistoryPage extends Component{
 							})()}
 							</tbody>
 							</table>
+							</div>
 						)
 					} else {
 						if (localStorage.getItem('persona') === "student") {
