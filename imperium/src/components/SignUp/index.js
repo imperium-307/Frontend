@@ -276,8 +276,17 @@ class SignUpFormBase extends Component {
 						</div>
 						<div className="field">
 						<label className="label">Major</label>
-						<div className="control">
-						<input className="input" name="major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Major"/>
+						<div className="select is-fullwidth">
+						<select name="major" id="major" value={major} onChange={this.handleInputChange}>
+						<option value="" disabled selected hidden>What type of Major are you in?</option>
+						<option value="art">Art</option>
+						<option value="biology">Biology</option>
+						<option value="com">Communications</option>
+						<option value="cs">Computer Science</option>
+						<option value="cm">Construction Management</option>
+						<option value="ps">Political Science</option>
+						<option value="ubw">Underwater Basket Weaving</option>
+						</select>
 						</div>
 						</div>
 						<div className="field">
