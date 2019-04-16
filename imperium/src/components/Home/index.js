@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import "./index.css";
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
+import { Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	cards: null,
@@ -181,10 +181,14 @@ class Home extends Component{
 		}
 
 		return (
+			<Columns className="is-multiline is-centered">
+			<Columns.Column size={6}>
+			<div className="custom-card" >
+			<div className="custom-card__heading-gradient">
+			<Heading className="text-center custom-card__heading-text" size={1}>Home</Heading>
+			</div>
+			<br/>
 			<div>
-			<Heading className="text-center" size={1}>Home</Heading>
-			<div className="flex">
-			<Card className="__user_card auto-margin is-centered">
 			{(() => {
 				if (hasCards) {
 					// NOTE user is a bad name for this variable, because it can
@@ -318,9 +322,10 @@ class Home extends Component{
 			})()}
 
 			{error && <p>{error}</p>}
-			</Card>
 			</div>
 			</div>
+			</Columns.Column>
+			</Columns>
 		)
 	}
 }

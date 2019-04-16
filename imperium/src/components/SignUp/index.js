@@ -314,7 +314,11 @@ class SignUpFormBase extends Component {
 						</div>
 						<br/>
 						<div className="flex">
-						<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin: "auto"}}><img id="photoData" src={ photoFile }/></a>
+						{ photoFile ? (
+						<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin:"auto"}}><img style={{height:200,width:200,"border-radius":"100%"}}id="photoData" src={ photoFile }/></a>
+						) : (
+							null
+						)}
 						</div>
 						<br/>
 						<div className={"file is-centered" + (photo ? " is-success": "")}>
@@ -377,7 +381,11 @@ class SignUpFormBase extends Component {
 						</div>
 						</div>
 						<div className="flex">
-						<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin:"auto"}}><img id="photoData" src={ photoFile }/></a>
+						{ photoFile ? (
+						<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin:"auto"}}><img style={{height:200,width:200,"border-radius":"100%"}}id="photoData" src={ photoFile }/></a>
+						) : (
+							null
+						)}
 						</div>
 						<br/>
 						<div className={"file is-centered" + (photo ? " is-success": "")}>
