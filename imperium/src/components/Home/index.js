@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import "./index.css";
 import 'react-bulma-components/dist/react-bulma-components.min.css';
@@ -212,27 +212,32 @@ class Home extends Component{
 
 					if (user.persona === "student") {
 						return (
-							<Card.Content className="auto-margin">
-							<Media className="">
-							<Media.Item renderAs="figure" position="left">
-							<Image renderAs="p" style={{width:200}} size={200} alt={user.username + "'s profile picture"} src={user.photo} />
-							</Media.Item>
-							<Media.Item style={{'margin-top': 'auto'}}> 
-							<Heading size={3}>{user.username}</Heading>
-							<Heading subtitle size={6}>{user.university}</Heading>
-							</Media.Item>
-							</Media>
+							<div className="has-text-centered">
+							<div className="flex" style={{"justify-content":"center"}}>
+							<img style={{width: 200, height: 200, "margin-right": 16, "border-radius":"100%"}} src={user.photo}/>
+							</div>
+							<br/>
+							<Heading size={2}>{user.username}</Heading>
 
-							<Content className="">
+							<Button>
+							<a target="_blank" href={"http://localhost:3000/resumes/"+user.email+".pdf"}>View resume</a>
+							</Button>
+							<br/>
+							<br/>
+
 							<i>{user.bio}</i>
 							<br/>
-							<a href={"http://localhost:3000/resumes/"+user.email+".pdf"}>View resume</a>
-							<br/>
-							<br/>
 
-							<span><b>Major:</b> {user.major}</span>
 							<br/>
-							<span><b>Minor:</b> {user.minor}</span>
+							<span><b>Major:</b> {user.major}</span>
+							{ (user.minor !== '' && user.minor !== 'none') ? (
+								<span>
+								<br/>
+								<span><b>Minor:</b> {user.minor}</span>
+								</span>
+							) : (
+								null
+							)}
 							<br/>
 							<span><b>Looking for:</b> {jobType}</span>
 							<br/>
@@ -254,24 +259,20 @@ class Home extends Component{
 							Dislike
 							</Button>
 							</div>
-							</Content>
-							</Card.Content>
+							</div>
 						);
 					} else {
 						return (
-							<Card.Content className="auto-margin">
-							<Media className="">
-							<Media.Item renderAs="figure" position="left">
-							<Image renderAs="p" style={{width:200}} size={200} alt={user.username + "'s profile picture"} src={user.photo} />
-							</Media.Item>
-							<Media.Item style={{'margin-top': 'auto'}}> 
-							<Heading size={3}>{user.username}</Heading>
-							</Media.Item>
-							</Media>
+							<div className="has-text-centered">
+							<div className="flex" style={{"justify-content":"center"}}>
+							<img style={{width: 200, height: 200, "margin-right": 16, "border-radius":"100%"}} src={user.photo}/>
+							</div>
+							<br/>
+							<Heading size={2}>{user.jobName}</Heading>
 
-							<Content className="">
 							<i>{user.bio}</i>
 
+							<br/>
 							<br/>
 							<span><b>Desired major:</b> {user.major}</span>
 							<br/>
@@ -288,7 +289,7 @@ class Home extends Component{
 							<span><b>Estimated wage:</b> {user.wage}</span>
 							<br/>
 
-							<br/>
+							<hr/>
 							<div className="buttons is-centered">
 							<Button className="is-success is-grouped" onClick={() => {this.doAction("like")}}>
 							Like
@@ -300,12 +301,12 @@ class Home extends Component{
 							Dislike
 							</Button>
 							</div>
-							</Content>
-							</Card.Content>
+							</div>
 						)
 					}
 				} else if (this.state.isLoading) {
 					return (
+						<span>
 						<Loader className="auto-margin"
 						style={{
 							width: 100,
@@ -315,26 +316,29 @@ class Home extends Component{
 								borderRightColor: 'transparent',
 						}}
 						/>
+						<br/>
+						</span>
 					)
-				} else if(error === null) {
-					return <p>There are no profiles available</p>
-				}
-			})()}
-
-			{(() => {
-				if (error && error != '' && typeof(error) === "string") {
-					setTimeout(() => {
-						this.setState({error: null})
-					}, 3000);
-
+				} else if(error === null || error === "There are no more profiles available, check back later") {
 					return (
-						<Notification color="danger" style={{margin: 16}}>
-						{error}
-						<Button remove onClick={() => {this.setState({error: null})}}/>	
-						</Notification>
+						<div>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<Heading className="text-center" size={3}>Fresh out of users, check back later!</Heading>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						</div>
 					)
 				}
+				console.log(error)
 			})()}
+
 			</div>
 			</div>
 			</Columns.Column>
