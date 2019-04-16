@@ -279,100 +279,84 @@ class AccountPreferences extends Component {
 		if (this.state.persona == "student"){
 			return (
 				<div>
-				<h1>Account</h1>
-				{(() => {
-					if (savedPrefPopup) {
-						return (
-							<Notification color="success">
-							Your settings have been saved
-							<Button remove onClick={() => {this.setState({savedPrefPopup: false})}}/>	
-							</Notification>
-						)
-					}
-				})()}
-				<form onSubmit={this.onSubmit}>
-				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
-				<div className="file">
-				<label className="file-label">
-				<input className="file-input" type="file" name="photo" value={photo} id="photo" onChange={this.onChange}/>
-				<span className="file-cta">
-				<span className="file-icon">📤</span>
-				<span className="file-label">
-				Change profile picture...
-				</span>
-				</span>
-				</label>
+				<div className="field">
+				<label className="label">Account Settings</label>
+				<div className="control">
+				<br/>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">Name</label>
+				<div className="control">
+				<input className="input" name="name" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Full Name" value={username}/>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">E-Mail</label>
+				<div className="control">
+				<input className="input" name="email" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="E-Mail" value={email} disabled={true}/>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">Password</label>
+				<div className="control">
+				<input className="input" name="passwordOne" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Password" value={"********"}/>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">Confirm Password</label>
+				<div className="control">
+				<input className="input" name="passwordTwo" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Confirm Password" value={"********"}/>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">University</label>
+				<div className="control">
+				<input className="input" name="university" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="University" value={university}/>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">Major</label>
+				<div className="select is-fullwidth">
+				<select name="major" id="major" value={major} onChange={this.handleInputChange}>
+				<option value="" disabled selected hidden>What type of Major are you in?</option>
+				<option value="art">Art</option>
+				<option value="biology">Biology</option>
+				<option value="com">Communications</option>
+				<option value="cs">Computer Science</option>
+				<option value="cm">Construction Management</option>
+				<option value="ps">Political Science</option>
+				<option value="ubw">Underwater Basket Weaving</option>
+				</select>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">Minor</label>
+				<div className="control">
+				<input className="input" name="minor" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Minor" value={minor}/>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">Bio</label>
+				<div className="control">
+				<textarea className="textarea" name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Tell us a little bit about yourself..." value={bio}/>
+				</div>
 				</div>
 				<br/>
-				<input
-				name="username"
-				value={username}
-				onChange={this.onChange}
-				type="text"
-				placeholder="Full Name"
-				/>
+				<Heading size={4} className="has-text-centered">Desired location</Heading>
+				<div className="buttons has-addons is-centered">
+				<span className={"button" + (this.state.northeast ? " is-info": "")} onClick={() => {this.flip("northeast")}}>Northeast</span>
+				<span className={"button" + (this.state.west ? " is-info": "")} onClick={() => {this.flip("west")}}>West</span>
+				<span className={"button" + (this.state.south ? " is-info": "")} onClick={() => {this.flip("south")}}>South</span>
+				<span className={"button" + (this.state.midwest ? " is-info": "")} onClick={() => {this.flip("midwest")}}>Midwest</span>
+				</div>
 				<br/>
-				<input
-				name="email"
-				value={email}
-				disabled={true}
-				onChange={this.onChange}
-				type="text"
-				placeholder="Email Address"
-				/>
-				<br/>
-				<input
-				name="passwordOne"
-				value={passwordOne}
-				onChange={this.onChange}
-				type="password"
-				placeholder="Password"
-				/>
-				<br/>
-				<input
-				name="passwordTwo"
-				value={passwordTwo}
-				onChange={this.onChange}
-				type="password"
-				placeholder="Confirm Password"
-				/>
-				<br/>
-				<input
-				name="bio"
-				value={bio}
-				onChange={this.onChange}
-				type="bio"
-				placeholder="Bio"
-				/>
-				<br/>
-				<input
-				name="university"
-				value={university}
-				onChange={this.onChange}
-				type="text"
-				placeholder="University"
-				/>
-				<br/>
-				<input
-				name="major"
-				value={major}
-				onChange={this.onChange}
-				type="text"
-				placeholder="Major"
-				/>
-				<br/>
-				<input
-				name="minor"
-				value={minor}
-				onChange={this.onChange}
-				type="text"
-				placeholder="Minor"
-				/>
-				<br/>
+
 				<a href={ROUTES.BASE_URL + "/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
-				<div className="file">
+
+				<div className={"file is-centered" + (resume ? " is-success": "")}>
 				<label className="file-label">
-				<input className="file-input" type="file" name="resume" value={resume} id="resume" onChange={this.onChange}/>
+				<input className={"file-input"} type="file" name="resume" value={resume} id="resume" onChange={this.handleInputChange}/>
 				<span className="file-cta">
 				<span className="file-icon">📤</span>
 				<span className="file-label">
@@ -381,35 +365,56 @@ class AccountPreferences extends Component {
 				</span>
 				</label>
 				</div>
-				<select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
-				<option value="" disabled selected hidden>What type of job are you posting?</option>
+				<br/>
+				<div className="flex">
+				{ photoFile ? (
+				<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin:"auto"}}><img style={{height:200,width:200,"border-radius":"100%"}}id="photoData" src={ photoFile }/></a>
+				) : (
+					null
+				)}
+				</div>
+				<br/>
+				<div className={"file is-centered" + (photo ? " is-success": "")}>
+				<label className="file-label">
+				<input className="file-input" type="file" name="photo" value={photo} id="photo" onChange={this.handleInputChange}/>
+				<span className="file-cta">
+				<span className="file-icon">📤</span>
+				<span className="file-label">
+				Change your profile picture...
+				</span>
+				</span>
+				</label>
+				</div>
+				<br/>
+				<div className="select is-fullwidth">
+				<select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
+				<option value="" disabled selected hidden>What type of job do you want?</option>
 				<option value="fullTime">Full Time</option>
 				<option value="parttime">Part Time</option>
 				<option value="internship">Internship</option>
 				<option value="coop">Co-op</option>
 				</select>
+				</div>
 				<br/>
-				<input name="wage" value={wage} onChange={this.onChange} type="number" step=".1" placeholder="Salary of Job"/>
 				<br/>
-				<p>Please select what reigons you would be interested in working on</p>
+				<div className="field">
+				<label className="label">Start Date</label>
+				<div className="control">
+				<input className="input" name="start" value={this.state.text} onChange={this.handleInputChange} type="date" value={start}/>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">End Date</label>
+				<div className="control">
+				<input className="input" name="end" value={this.state.text} onChange={this.handleInputChange} type="date" value={end}/>
+				</div>
+				</div>
+				<div className="field">
+				<label className="label">Desired wage</label>
+				<div className="control">
+				<input className="input" name="wage" value={this.state.text} onChange={this.handleInputChange} type="number" step=".1" placeholder="Desired Wage" value={wage}/>
 				<br/>
-				<input name="northeast" checked={northeast} onChange={this.onChange} type="checkbox"/>
-				<p>Northeast</p>
-				<br/>
-				<input name="west" checked={west} onChange={this.onChange} type="checkbox"/>
-				<p>West</p>
-				<br/>
-				<input name="south" checked={south} onChange={this.onChange} type="checkbox"/>
-				<p>South</p>
-				<br/>
-				<input name="midwest" checked={midwest} onChange={this.onChange} type="checkbox"/>
-				<p>Midwest</p>
-				<br/>
-
-				<p2>Please enter which days you will be able start and end</p2>
-				<br/>
-				<input name="start" value={start} onChange={this.onChange} type="date"/>
-				<input name="end" value={end} onChange={this.onChange} type="date"/>
+				</div>
 				<br/>
 				<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
 				<p>Hide My Account</p>
@@ -427,12 +432,170 @@ class AccountPreferences extends Component {
 				</button>
 
 				{error && <p>{error.message}</p>}
-				</form>
 				<br/>
 				<button type="button" onClick={this.deleteAccount}>
 				Delete Account
 				</button>
 				</div>
+				<br/>
+				<br/>
+				</div>
+
+				// <div>
+				// <h1>Account</h1>
+				// {(() => {
+				// 	if (savedPrefPopup) {
+				// 		return (
+				// 			<Notification color="success">
+				// 			Your settings have been saved
+				// 			<Button remove onClick={() => {this.setState({savedPrefPopup: false})}}/>
+				// 			</Notification>
+				// 		)
+				// 	}
+				// })()}
+				// <form onSubmit={this.onSubmit}>
+				// <a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
+				// <div className="file">
+				// <label className="file-label">
+				// <input className="file-input" type="file" name="photo" value={photo} id="photo" onChange={this.onChange}/>
+				// <span className="file-cta">
+				// <span className="file-icon">📤</span>
+				// <span className="file-label">
+				// Change profile picture...
+				// </span>
+				// </span>
+				// </label>
+				// </div>
+				// <br/>
+				// <input
+				// name="username"
+				// value={username}
+				// onChange={this.onChange}
+				// type="text"
+				// placeholder="Full Name"
+				// />
+				// <br/>
+				// <input
+				// name="email"
+				// value={email}
+				// disabled={true}
+				// onChange={this.onChange}
+				// type="text"
+				// placeholder="Email Address"
+				// />
+				// <br/>
+				// <input
+				// name="passwordOne"
+				// value={passwordOne}
+				// onChange={this.onChange}
+				// type="password"
+				// placeholder="Password"
+				// />
+				// <br/>
+				// <input
+				// name="passwordTwo"
+				// value={passwordTwo}
+				// onChange={this.onChange}
+				// type="password"
+				// placeholder="Confirm Password"
+				// />
+				// <br/>
+				// <input
+				// name="bio"
+				// value={bio}
+				// onChange={this.onChange}
+				// type="bio"
+				// placeholder="Bio"
+				// />
+				// <br/>
+				// <input
+				// name="university"
+				// value={university}
+				// onChange={this.onChange}
+				// type="text"
+				// placeholder="University"
+				// />
+				// <br/>
+				// <input
+				// name="major"
+				// value={major}
+				// onChange={this.onChange}
+				// type="text"
+				// placeholder="Major"
+				// />
+				// <br/>
+				// <input
+				// name="minor"
+				// value={minor}
+				// onChange={this.onChange}
+				// type="text"
+				// placeholder="Minor"
+				// />
+				// <br/>
+				// <a href={ROUTES.BASE_URL + "/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
+				// <div className="file">
+				// <label className="file-label">
+				// <input className="file-input" type="file" name="resume" value={resume} id="resume" onChange={this.onChange}/>
+				// <span className="file-cta">
+				// <span className="file-icon">📤</span>
+				// <span className="file-label">
+				// Change your resume...
+				// </span>
+				// </span>
+				// </label>
+				// </div>
+				// <select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
+				// <option value="" disabled selected hidden>What type of job are you posting?</option>
+				// <option value="fullTime">Full Time</option>
+				// <option value="parttime">Part Time</option>
+				// <option value="internship">Internship</option>
+				// <option value="coop">Co-op</option>
+				// </select>
+				// <br/>
+				// <input name="wage" value={wage} onChange={this.onChange} type="number" step=".1" placeholder="Salary of Job"/>
+				// <br/>
+				// <p>Please select what reigons you would be interested in working on</p>
+				// <br/>
+				// <input name="northeast" checked={northeast} onChange={this.onChange} type="checkbox"/>
+				// <p>Northeast</p>
+				// <br/>
+				// <input name="west" checked={west} onChange={this.onChange} type="checkbox"/>
+				// <p>West</p>
+				// <br/>
+				// <input name="south" checked={south} onChange={this.onChange} type="checkbox"/>
+				// <p>South</p>
+				// <br/>
+				// <input name="midwest" checked={midwest} onChange={this.onChange} type="checkbox"/>
+				// <p>Midwest</p>
+				// <br/>
+				//
+				// <p2>Please enter which days you will be able start and end</p2>
+				// <br/>
+				// <input name="start" value={start} onChange={this.onChange} type="date"/>
+				// <input name="end" value={end} onChange={this.onChange} type="date"/>
+				// <br/>
+				// <input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
+				// <p>Hide My Account</p>
+				// <br/>
+				// <input name="emailNotifications" checked={emailNotifications} onChange={this.onChange} type="checkbox"/>
+				// <p>Email Notifications</p>
+				// <br/>
+				// <input name="desktopNotifications" checked={desktopNotifications} onChange={this.onChange} type="checkbox"/>
+				// <p>Desktop Notifications</p>
+				// <br/>
+				// <br/>
+				// <br/>
+				// <button type="submit" disabled={isInvalid}>
+				// Save Preferences
+				// </button>
+				//
+				// {error && <p>{error.message}</p>}
+				// </form>
+				// <br/>
+				// <button type="button" onClick={this.deleteAccount}>
+				// Delete Account
+				// </button>
+				// </div>
 			);
 		} else if (this.state.persona === "employer"){
 			return (
@@ -443,7 +606,7 @@ class AccountPreferences extends Component {
 						return (
 							<Notification color="success">
 							Your settings have been saved
-							<Button remove onClick={() => {this.setState({savedPrefPopup: false})}}/>	
+							<Button remove onClick={() => {this.setState({savedPrefPopup: false})}}/>
 							</Notification>
 						)
 					}
@@ -539,7 +702,7 @@ class AccountPreferences extends Component {
 						return (
 							<Notification color="danger" style={{margin: 16}}>
 							{error}
-							<Button remove onClick={() => {this.setState({error: null})}}/>	
+							<Button remove onClick={() => {this.setState({error: null})}}/>
 							</Notification>
 						)
 					}
