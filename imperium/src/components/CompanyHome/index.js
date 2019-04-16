@@ -108,10 +108,9 @@ class CompanyHome extends Component {
 								<Columns.Column size={4} className="has-text-centered">
 								<div className="custom-card">
 								<div className="custom-card__heading">
-								<br/>
 								<Heading className="has-text-centered custom-card__heading-text" size={3}>{job.jobName}</Heading>
-								<hr/>
 								</div>
+								<br/>
 								<span><b>Desired major:</b> {job.major}</span>
 								<br/>
 								<span><b>Job type:</b> {job.jobType}</span>

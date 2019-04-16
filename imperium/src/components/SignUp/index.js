@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import './Button.css';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import { Button, Heading, Columns, Field, Label, Control, Input } from 'react-bulma-components';
 
 var pdf = false;
 var jpeg = false;
@@ -11,7 +12,6 @@ var sub = true;
 
 const SignUpPage = () => (
 	<div>
-	<h1>Sign Up</h1>
 	<SignUpForm />
 	</div>
 );
@@ -35,10 +35,10 @@ const INITIAL_STATE = {
 	start: '',
 	end: '',
 	wage: '',
-	northeast: '',
-	south: '',
-	west: '',
-	midwest: '',
+	northeast: false,
+	south: false,
+	west: false,
+	midwest: false,
 	error: null
 
 };
@@ -133,6 +133,11 @@ class SignUpFormBase extends Component {
 		this.setState({value: event.target.value});
 	};
 
+	flip = (region) => {
+		var toSet = !this.state[region]
+		this.setState({[region]: toSet})
+	}
+
 	handleInputChange(event) {
 		const target = event.target;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -197,110 +202,197 @@ class SignUpFormBase extends Component {
 
 
 		return (
-			<form onSubmit={this.onSubmit}>
-			<input
-			name="username"
-			value={username}
-			onChange={this.handleInputChange}
-			type="text"
-			placeholder="Full Name"
-			/>
-			<br/>
-			<input
-			name="email"
+			<Columns className="is-multiline is-centered">
+			<Columns.Column size={6}>
+			<div className="custom-card" >
+			<div className="custom-card__heading">
+			<Heading size={3} className="has-text-centered custom-card__heading-text">Sign Up</Heading>
+			</div>
+			<form onSubmit={this.onSubmit} style={{padding: 16}}>
+			<div className="field">
+			<label className="label">Full Name</label>
+			<div className="control">
+			<input name="username" value={username} className="input" onChange={this.handleInputChange} type="text" placeholder="Full Name"/>
+			</div>
+			</div>
+			<div className="field">
+			<label className="label">Email</label>
+			<div className="control">
+			<input className="input" name="email"
 			value={email}
+			className="input"
 			onChange={this.handleInputChange}
-			type="text"
+			type="email"
 			placeholder="Email Address"
 			/>
-			<br/>
+			</div>
+			</div>
+			<div className="field">
+			<label className="label">Password</label>
+			<div className="control">
 			<input
 			name="passwordOne"
 			value={passwordOne}
+			className="input"
 			onChange={this.handleInputChange}
 			type="password"
 			placeholder="Password"
 			/>
-			<br/>
+			</div>
+			</div>
+			<div className="field">
+			<label className="label">Confirm Password</label>
+			<div className="control">
 			<input
 			name="passwordTwo"
 			value={passwordTwo}
+			className="input"
 			onChange={this.handleInputChange}
 			type="password"
-			placeholder="Confirm Password"
+			placeholder="Just to make sure..."
 			/>
+			</div>
+			</div>
 			<br/>
+			<div className="select is-fullwidth">
 			<select name="persona" id="persona" value={persona} onChange={this.handleInputChange}>
-			<option value="" disabled selected hidden>Who are you?</option>
+			<option value="" disabled selected hidden>I am a...</option>
 			<option value="student">Student</option>
 			<option value="employer">Employer</option>
 			</select>
+			</div>
 			<br/>
 			<br/>
 			<div>
 			{(() => {
-				switch (persona) {
-					case "student":   return [
-						<input name="university" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="University"/>,
-						<br/>,
-						<input name="major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Major"/>,
-						<br/>,
-						<p>*if mulitple majors please seperate with a ","</p>,
-						<br/>,
-						<input name="minor" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Minor"/>,
-						<br/>,
-						<p>*if you don't have a minor say "none", mulitple minors please seperate with a ","</p>,
-						<br/>,
-						<input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>,
-						<br/>,
-						<p>Please select what reigons you would be interested in working on</p>,
-						<br/>,
-						<input name="northeast" value={northeast} onChange={this.handleInputChange} type="checkbox"/>,
-						<p>Northeast</p>,
-						<br/>,
-						<input name="west" value={west} onChange={this.handleInputChange} type="checkbox"/>,
-						<p>West</p>,
-						<br/>,
-						<input name="south" value={south} onChange={this.handleInputChange} type="checkbox"/>,
-						<p>South</p>,
-						<br/>,
-						<input name="midwest" value={midwest} onChange={this.handleInputChange} type="checkbox"/>,
-						<p>Midwest</p>,
-						<br/>,
-						<p>Upload your resume as a .pdf</p>,
-						<br/>,
-						<input type="file" value={resume} name="resume" id="resume" onChange={this.handleInputChange} placeholder="Resume Upload" />,
-						<br/>,
-						<p>Please upload a photo of yourself as a .PNG</p>,
-						<br/>,
-						<input type="file" value={photo} name="photo" id="photo" onChange={this.handleInputChange}/>,
-						<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>,
-						<br/>,
+				if (persona === "student") {
+					return (
+						<div>
+						<div className="field">
+						<label className="label">University</label>
+						<div className="control">
+						<input className="input" name="university" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="University"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Major</label>
+						<div className="control">
+						<input className="input" name="major" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Major"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Minor</label>
+						<div className="control">
+						<input className="input" name="minor" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Minor"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Bio</label>
+						<div className="control">
+						<textarea className="textarea" name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Tell us a little bit about yourself..."/>
+						</div>
+						</div>
+						<br/>
+						<Heading size={4} className="has-text-centered">Desired location</Heading>
+						<div className="buttons has-addons is-centered">
+						<span className={"button" + (this.state.northeast ? " is-info": "")} onClick={() => {this.flip("northeast")}}>Northeast</span>
+						<span className={"button" + (this.state.west ? " is-info": "")} onClick={() => {this.flip("west")}}>West</span>
+						<span className={"button" + (this.state.south ? " is-info": "")} onClick={() => {this.flip("south")}}>South</span>
+						<span className={"button" + (this.state.midwest ? " is-info": "")} onClick={() => {this.flip("midwest")}}>Midwest</span>
+						</div>
+						<br/>
+						<div className={"file is-centered" + (resume ? " is-success": "")}>
+						<label className="file-label">
+						<input className={"file-input"} type="file" name="resume" value={resume} id="resume" onChange={this.handleInputChange}/>
+						<span className="file-cta">
+						<span className="file-icon">📤</span>
+						<span className="file-label">
+						Upload your resume...
+						</span>
+						</span>
+						</label>
+						</div>
+						<br/>
+						<div className="flex">
+						<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin: "auto"}}><img id="photoData" src={ photoFile }/></a>
+						</div>
+						<br/>
+						<div className={"file is-centered" + (photo ? " is-success": "")}>
+						<label className="file-label">
+						<input className="file-input" type="file" name="photo" value={photo} id="photo" onChange={this.handleInputChange}/>
+						<span className="file-cta">
+						<span className="file-icon">📤</span>
+						<span className="file-label">
+						Upload a profile picture...
+						</span>
+						</span>
+						</label>
+						</div>
+						<br/>
+						<div className="select is-fullwidth">
 						<select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
-						<option value="" disabled selected hidden>What type of job are you looking for?</option>
+						<option value="" disabled selected hidden>What type of job do you want?</option>
 						<option value="fullTime">Full Time</option>
 						<option value="parttime">Part Time</option>
 						<option value="internship">Internship</option>
 						<option value="coop">Co-op</option>
-						</select>,
-						<br/>,
-						<p2>Please enter which days you will be able start and end</p2>,
-						<br/>,
-						<input name="start" value={this.state.text} onChange={this.handleInputChange} type="date"/>,
-						<input name="end" value={this.state.text} onChange={this.handleInputChange} type="date"/>,
-						<br/>,
-						<input name="wage" value={this.state.text} onChange={this.handleInputChange} type="number" step=".1" placeholder="Desired Wage"/>,
-					]
-
-					case "employer": return [
-						<input name="company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>,
-						<br/>,
-						<input name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Bio"/>,
-						<p>Please upload a photo of your company as a .PNG</p>,
-						<br/>,
-						<input type="file" value={photo} name="photo" id="photo" onChange={this.handleInputChange} />,
-						<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>,
-					]
+						</select>
+						</div>
+						<br/>
+						<br/>
+						<div className="field">
+						<label className="label">Start Date</label>
+						<div className="control">
+						<input className="input" name="start" value={this.state.text} onChange={this.handleInputChange} type="date"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">End Date</label>
+						<div className="control">
+						<input className="input" name="end" value={this.state.text} onChange={this.handleInputChange} type="date"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Desired wage</label>
+						<div className="control">
+						<input className="input" name="wage" value={this.state.text} onChange={this.handleInputChange} type="number" step=".1" placeholder="Desired Wage"/>
+						</div>
+						</div>
+						</div>
+					)
+				} else if (persona === "employer") {
+					return (
+						<div>
+						<div className="field">
+						<label className="label">Company Name</label>
+						<div className="control">
+						<input className="input" name="company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>
+						</div>
+						</div>
+						<br/>
+						<div className="field">
+						<label className="label">Bio</label>
+						<div className="control">
+						<textarea className="textarea" name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Tell us a little about your company..."/>
+						</div>
+						</div>
+						<div className="flex">
+						<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin:"auto"}}><img id="photoData" src={ photoFile }/></a>
+						</div>
+						<br/>
+						<div className={"file is-centered" + (photo ? " is-success": "")}>
+						<label className="file-label">
+						<input className="file-input" type="file" name="photo" value={photo} id="photo" onChange={this.handleInputChange}/>
+						<span className="file-cta">
+						<span className="file-icon">📤</span>
+						<span className="file-label">
+						Upload a profile picture...
+						</span>
+						</span>
+						</label>
+						</div>
+						</div>
+					)
 				}
 			})()}
 
@@ -342,7 +434,7 @@ class SignUpFormBase extends Component {
 
 			{(() => {
 				if (persona === "student"){
-					if (major === '' || university === '' || minor === '' || bio === '' || jobType === '' || start === '' || end === '' || wage === '') {
+					if (major === '' || university === '' || bio === '' || jobType === '' || start === '' || end === '' || wage === '') {
 						sub = true;
 					}
 					else {
@@ -368,12 +460,15 @@ class SignUpFormBase extends Component {
 
 			</div>
 			<br/>
-			<button disabled={sub} type="submit">
+			<Button className="is-fullwidth is-info" disabled={sub} type="submit">
 			Sign Up
-			</button>
+			</Button>
 
 			{error && <p>{error.err}</p>}
 			</form>
+			</div>
+			</Columns.Column>
+			</Columns>
 		);
 	}
 }

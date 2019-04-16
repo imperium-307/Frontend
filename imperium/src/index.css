@@ -28,7 +28,7 @@ code {
 }
 
 .custom-card {
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	box-shadow: 0 5px 10px 0 rgba(0,0,0,0.3);
 	border-radius: 5px;
 	margin-left: 16px;
 	margin-right: 16px;
@@ -37,6 +37,9 @@ code {
 .custom-card__heading {
 	background-color: #209cee;
 	border-radius: 5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	padding: 16px 8px;
 }
 
 .custom-card__heading-text {
