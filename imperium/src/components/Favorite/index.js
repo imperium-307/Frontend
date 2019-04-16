@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import { Heading } from 'react-bulma-components';
+import { Heading, Columns, Button } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	history: "",
@@ -34,7 +34,7 @@ class FavoritePage extends Component{
 			})
 			.then((res) => {
 				this.setState({
-					favorites: res.favorites,
+					favorites: res.favoritesObject,
 					isLoading: false,
 				});
 			})
@@ -45,7 +45,7 @@ class FavoritePage extends Component{
 
 	removeChild = (email) => {
 		var favorites = this.state.favorites
-		favorites = favorites.filter(e => e !== email)
+		favorites = favorites.filter(e => e.email !== email)
 		this.setState({ favorites });
 	}
 
@@ -76,8 +76,14 @@ class FavoritePage extends Component{
 
 	render() {
 		return (
+			<Columns className="is-multiline is-centered">
+			<Columns.Column size={8}>
+			<div className="custom-card" >
+			<div className="custom-card__heading">
+			<Heading className="text-center custom-card__heading-text" size={1}>Your Favorites</Heading>
+			</div>
+			<br/>
 			<div>
-			<Heading className="text-center" size={1}>Your Favorites</Heading>
 			{(() => {
 				if (this.state.isLoading) {
 					return (
@@ -88,13 +94,20 @@ class FavoritePage extends Component{
 				} else {
 					if (this.state.favorites && this.state.favorites.length > 0) {
 						return this.state.favorites.map((d, i) => {
+							var bgcolor = "#fff";
+							if (i%2 !== 0) {
+								bgcolor = "#f5f5f5";
+							}
 							return (
-								<li className="user_details">
-								<p>{d}</p>
-								<div className="user_contact">
-								<button onClick={() => {this.unfavorite(d)}}>Unfavorite</button>
+								<div className="flex" style={{padding: 16, "justify-content": "space-between", "background-color": bgcolor}}>
+								<div style={{display: "inherit"}}>
+								<img style={{width: 50, height: 50}} src={d.photo}/>
+								<span className="flex" style={{"align-items": "center", "padding-left": 10}}>{d.name}</span>
 								</div>
-								</li>
+								<div className="buttons is-right">
+								<Button onClick={() => {this.unfavorite(d.email)}} className="is-info">Unfavorite</Button>
+								</div>
+								</div>
 							)
 						})
 					} else {
@@ -105,6 +118,10 @@ class FavoritePage extends Component{
 				}
 			})()}
 			</div>
+			<br/>
+			</div>
+			</Columns.Column>
+			</Columns>
 		)
 	}
 }

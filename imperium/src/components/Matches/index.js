@@ -2,7 +2,7 @@ import React from 'react';
 import './matches.css';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { Heading } from 'react-bulma-components';
+import { Columns, Button, Heading } from 'react-bulma-components';
 
 class Matches extends React.Component {
 	constructor(props) {
@@ -29,8 +29,9 @@ class Matches extends React.Component {
 					return res.json()
 				})
 				.then((res) => {
-					var matches = res.matches;
-					this.setState({ matches });
+					this.setState({ 
+						matches: res.matchesObject
+					});
 				})
 				.catch(error => {
 					this.setState({ error });
@@ -54,12 +55,11 @@ class Matches extends React.Component {
 					return res.json()
 				})
 				.then((res) => {
-					var matches = res.matches;
-					this.setState({ matches });
+					this.setState({ 
+						matches: res.matchesObject
+					});
 				})
 				.catch(error => {
-					console.log("here");
-					console.log("jobid: " + this.state.jobid)
 					this.setState({ error });
 				});
 		}
@@ -67,7 +67,7 @@ class Matches extends React.Component {
 
 	removeChild = (email) => {
 		var matches = this.state.matches
-		matches = matches.filter(e => e !== email)
+		matches = matches.filter(e => e.email !== email)
 		this.setState({ matches });
 	}
 
@@ -106,41 +106,56 @@ class Matches extends React.Component {
 	}
 
 	render() {
-		let body;
-		if (this.state.matches && this.state.matches.length > 0) {
-			body = this.state.matches.map((d, i) => {
-				return (
-					<li className="user_details">
-					<p>{d}</p>
-					<div className="user_contact">
-					<button onClick={() => {this.unmatch(d)}}>Unmatch</button>
-					<button onClick={() => {this.GoToChat(d)}}>Chat</button>
-					{(() => {
-						if (localStorage.getItem('persona') === "student") {
-							return (
-								<Link to={"/jobs/" + d }>View Posting</Link>
-							);
-						} else {
-							return (
-								<Link to={"/view/" + d }>View Profile</Link>
-							);
-						}
-					})()}
-					</div>
-					</li>
-				)
-			})
-		} else {
-			body = <h2>No matches yet</h2>
-		}
-
 		return (
-			<div>
-			<Heading className="text-center" size={1}>Your Matches</Heading>
-			<ul className="card_container">
-			{body}
-			</ul>
+			<Columns className="is-multiline is-centered">
+			<Columns.Column size={8}>
+			<div className="custom-card" >
+			<div className="custom-card__heading">
+			<Heading className="text-center custom-card__heading-text" size={1}>Your Matches</Heading>
 			</div>
+			<br/>
+			<div>
+			{(() => {
+				if (this.state.matches && this.state.matches.length > 0) {
+					return this.state.matches.map((d, i) => {
+						var bgcolor = "#fff";
+						if (i%2 !== 0) {
+							bgcolor = "#f5f5f5";
+						}
+
+						return (
+							<div className="flex" style={{padding: 16, "justify-content": "space-between", "background-color": bgcolor}}>
+							<div style={{display: "inherit"}}>
+							<img style={{width: 50, height: 50}} src={d.photo}/>
+							<span className="flex" style={{"align-items": "center", "padding-left": 10}}>{d.name}</span>
+							</div>
+							<div className="buttons has-addons">
+							<Button onClick={() => {this.unmatch(d.email)}}>Unmatch</Button>
+							<Button onClick={() => {this.GoToChat(d.email)}}>Chat</Button>
+							{(() => {
+								if (localStorage.getItem('persona') === "student") {
+									return (
+										<Button to={"/jobs/" + d.email } renderAs={Link}>View</Button>
+									);
+								} else {
+									return (
+										<Button to={"/view/" + d.email } renderAs={Link}>View</Button>
+									);
+								}
+							})()}
+							</div>
+							</div>
+						)
+					})
+				} else {
+
+				}
+			})()}
+			</div>
+			<br/>
+			</div>
+			</Columns.Column>
+			</Columns>
 		)
 	}
 }
