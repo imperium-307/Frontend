@@ -530,7 +530,20 @@ class AccountPreferences extends Component {
 				Save Preferences
 				</button>
 
-				{error && <p>{error.message}</p>}
+				{(() => {
+					if (error && error != '' && typeof(error) === "string") {
+						setTimeout(() => {
+							this.setState({error: null})
+						}, 3000);
+
+						return (
+							<Notification color="danger" style={{margin: 16}}>
+							{error}
+							<Button remove onClick={() => {this.setState({error: null})}}/>	
+							</Notification>
+						)
+					}
+				})()}
 				</form>
 				<br/>
 				<button type="button" onClick={this.deleteAccount}>

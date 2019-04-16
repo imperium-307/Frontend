@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
-import { SignUpLink } from '../SignUp';
-import { PasswordForgetLink } from '../PasswordForget';
 import * as ROUTES from '../../constants/routes';
+import { Notification, Heading, Columns, Button } from 'react-bulma-components';
 
 const SignInPage = () => (
 	<div>
-	<h1>Welcome to Imperium!</h1>
 	<SignInForm />
-	<PasswordForgetLink />
-	<SignUpLink />
 	</div>
 );
 
@@ -90,23 +86,47 @@ class SignInFormBase extends Component {
 		const isInvalid = password === '' || email === '';
 
 		return (
-			<form onSubmit={this.onSubmit}>
+			<div>
+			<Columns className="is-multiline is-centered">
+			<Columns.Column size={6}>
+			<div className="custom-card">
+			<div className="custom-card__heading-gradient">
+			<Heading className="text-center custom-card__heading-text" size={3}>Sign in</Heading>
+			</div>
+			<br/>
+			<div>
+			<form onSubmit={this.onSubmit} style={{padding: 16}}>
+			<div className="field">
+			<label className="label">Email</label>
+			<div className="control">
 			<input
 			name="email"
+			className="input"
 			value={email}
 			onChange={this.onChange}
-			type="text"
+			type="email"
 			placeholder="Email Address"
 			/>
-			<br/>
+			</div>
+			</div>
+			<div className="field">
+			<label className="label">Password</label>
+			<div className="control">
 			<input
+			className="input"
 			name="password"
 			value={password}
 			onChange={this.onChange}
 			type="password"
 			placeholder="Password"
 			/>
-			<br/>
+			</div>
+			</div>
+			<div className="flex" style={{"justify-content":"space-between"}}>
+			<Link to={ROUTES.PASSWORD_FORGET}>
+			Forgot password?
+			</Link>
+			<div>
 			<input
 			type="checkbox"
 			name="rememberEmail"
@@ -114,13 +134,35 @@ class SignInFormBase extends Component {
 			onChange={this.onChange}
 			/>
 			<span> Remember email?</span>
+			</div>
+			</div>
 			<br/>
-			<button disabled={isInvalid} type="submit">
+			<Button className="is-fullwidth" disabled={isInvalid} type="submit">
 			Sign In
-			</button>
-
-			{error && <p>{error}</p>}
+			</Button>
+			<Button className="is-info is-fullwidth" to={ROUTES.SIGN_UP} renderAs={Link} style={{"margin-top":5}}>
+			Sign Up
+			</Button>
 			</form>
+			</div>
+			</div>
+			{(() => {
+				if (error && error != '' && typeof(error) === "string") {
+					setTimeout(() => {
+						this.setState({error: null})
+					}, 3000);
+
+					return (
+						<Notification color="danger" style={{margin: 16}}>
+						{error}
+						<Button remove onClick={() => {this.setState({error: null})}}/>	
+						</Notification>
+					)
+				}
+			})()}
+			</Columns.Column>
+			</Columns>
+			</div>
 		);
 	}
 }

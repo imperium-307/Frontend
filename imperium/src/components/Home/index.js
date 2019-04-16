@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import "./index.css";
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
+import { Notification, Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	cards: null,
@@ -321,7 +321,20 @@ class Home extends Component{
 				}
 			})()}
 
-			{error && <p>{error}</p>}
+			{(() => {
+				if (error && error != '' && typeof(error) === "string") {
+					setTimeout(() => {
+						this.setState({error: null})
+					}, 3000);
+
+					return (
+						<Notification color="danger" style={{margin: 16}}>
+						{error}
+						<Button remove onClick={() => {this.setState({error: null})}}/>	
+						</Notification>
+					)
+				}
+			})()}
 			</div>
 			</div>
 			</Columns.Column>

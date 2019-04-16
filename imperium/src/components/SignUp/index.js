@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 import './Button.css';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import { Button, Heading, Columns, Field, Label, Control, Input } from 'react-bulma-components';
+import { Notification, Button, Heading, Columns, Field, Label, Control, Input } from 'react-bulma-components';
 
 var pdf = false;
 var jpeg = false;
@@ -128,10 +128,6 @@ class SignUpFormBase extends Component {
 
 		event.preventDefault();
 	}
-
-	onChange = event => {
-		this.setState({value: event.target.value});
-	};
 
 	flip = (region) => {
 		var toSet = !this.state[region]
@@ -480,10 +476,22 @@ class SignUpFormBase extends Component {
 			<Button className="is-fullwidth is-info" disabled={sub} type="submit">
 			Sign Up
 			</Button>
-
-			{error && <p>{error.err}</p>}
 			</form>
 			</div>
+			{(() => {
+				if (error && error != '' && typeof(error) === "string") {
+					setTimeout(() => {
+						this.setState({error: null})
+					}, 3000);
+
+					return (
+						<Notification color="danger" style={{margin: 16}}>
+						{error}
+						<Button remove onClick={() => {this.setState({error: null})}}/>	
+						</Notification>
+					)
+				}
+			})()}
 			</Columns.Column>
 			</Columns>
 		);
