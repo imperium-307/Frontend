@@ -10,6 +10,7 @@ var INITIAL_STATE = {
 	index: 0,
 	likee: '',
 	isLoading: true,
+	favCount: 0,
 	error: null,
 };
 
@@ -47,6 +48,38 @@ class Home extends Component{
 					}
 
 					this.setState({ cards: res.jobs});
+				})
+				.catch(error => {
+					console.log(error)
+					this.setState({ error });
+				});
+
+			fetch("http://localhost:3000/api/user/post-view", {
+				body: JSON.stringify({
+					token: localStorage.getItem('token'),
+					email: localStorage.getItem('myemail')
+				}),
+				cache: 'no-cache',
+				credentials: 'same-origin',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors',
+				method: 'POST'
+			})
+				.then((res) => {
+					return res.json()
+				})
+				.then((res) => {
+					if (res.err) {
+
+					} else {
+						if (res.favorites) {
+							this.setState({
+								favCount: res.favorites.length 
+							});
+						}
+					}
 				})
 				.catch(error => {
 					console.log(error)
@@ -94,6 +127,9 @@ class Home extends Component{
 	}
 
 	doAction = (action) => {
+		if (action === "favorite") {
+			this.setState({ favCount: ++this.state.favCount });
+		}
 		// iam is the job id, only used when employer is liking a student (as a job)
 		var likee, iam;
 		if (localStorage.getItem('persona') === "student") {
@@ -135,8 +171,14 @@ class Home extends Component{
 	}
 
 	render (){
-		const {cards, index, error} = this.state;
+		const {cards, index, error, favCount} = this.state;
 		var hasCards = cards && index < cards.length;
+
+		var isFavoriteDisabled = false;
+			console.log(favCount)
+		if (favCount >= 3) {
+			isFavoriteDisabled = true;
+		}
 
 		return (
 			<div>
@@ -247,7 +289,7 @@ class Home extends Component{
 							<Button className="is-success is-grouped" onClick={() => {this.doAction("like")}}>
 							Like
 							</Button>
-							<Button className="is-warning is-grouped" onClick={() => {this.doAction("favorite")}}>
+							<Button className="is-warning is-grouped" onClick={() => {this.doAction("favorite")}} disabled={isFavoriteDisabled}>
 							Favorite
 							</Button>
 							<Button className="is-danger is-grouped" onClick={() => {this.doAction("dislike")}}>
