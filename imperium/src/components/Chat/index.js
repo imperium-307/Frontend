@@ -387,24 +387,28 @@ class ChatPage extends Component{
 			<input className="input" onChange={this.onChange} type="text" name="chatMessage" placeholder="Type a message..." value={chatMessage}/>
 			</div>
 			<div className="control">
-			<a onClick={this.sendMessage} className="button is-info">Send</a>
-			<Popup trigger={<button className="button is-info">+</button>} modal closeOnDocumentClick>
-			<div>Schedule an interview</div>
-			<br/>
-			<input className="input" onChange={this.onChange} type="text" name="title" placeholder="Title of Event" value={this.state.text}/>
-			<br/>
-			<input className="input" onChange={this.onChange} type="text" name="description" placeholder="Description of the Event" value={this.state.text}/>
-			<br/>
-			<input className="input" onChange={this.onChange} type="text" name="location" placeholder="Location of Event" value={this.state.text}/>
-			<br/>
-			<input className="input" onChange={this.onChange} type="date" name="date" placeholder="Date of Event" value={this.state.text}/>
-			<br/>
-			<input className="input" onChange={this.onChange} type="time" name="startTime" placeholder="Start Time" value={this.state.text}/>
-			<br/>
-			<input className="input" onChange={this.onChange} type="time" name="endTime" placeholder="End Time" value={this.state.text}/>
-			<br/>
-			<button className="button is-info" onClick={this.createEvent}>Create Calendar Event</button>
-			</Popup>
+			<a onClick={this.sendMessage} className="button is-info" style={{"border-radius":0}}>Send</a>
+			{ localStorage.getItem('persona') === 'employer' ? (
+				<Popup trigger={<button className="button is-info">📅</button>} modal closeOnDocumentClick>
+				<div>Schedule an interview</div>
+				<br/>
+				<input className="input" onChange={this.onChange} type="text" name="title" placeholder="Title of Event" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="text" name="description" placeholder="Description of the Event" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="text" name="location" placeholder="Location of Event" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="date" name="date" placeholder="Date of Event" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="time" name="startTime" placeholder="Start Time" value={this.state.text}/>
+				<br/>
+				<input className="input" onChange={this.onChange} type="time" name="endTime" placeholder="End Time" value={this.state.text}/>
+				<br/>
+				<button className="button is-info" onClick={this.createEvent}>Create Calendar Event</button>
+				</Popup>
+			) : (
+				null
+			)}
 			</div>
 			</div>
 			</div>
