@@ -17,3 +17,5 @@ export const HISTORY_WITH_JOB_ID = '/history/:jobid';
 export const CHAT = '/chat/:id';
 export const CHAT_WITH_JOB_ID = '/chat/:id/from/:jobid';
 export const FAVORITE = '/favorite';
+
+export const BASE_URL = "http://localhost:3000"

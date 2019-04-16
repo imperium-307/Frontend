@@ -31,7 +31,7 @@ class EditJobPreferences extends Component {
     if (!this.props.match || !this.props.match.params.jobid) {
 				this.props.history.push("/company/" + localStorage.getItem('myemail'));
 			}
-    fetch("http://localhost:3000/api/user/get-job", {
+    fetch(ROUTES.BASE_URL + "/api/user/get-job", {
 				body: JSON.stringify({
 					jobid: this.props.match.params.jobid,
 					token: localStorage.getItem('token')
@@ -82,7 +82,7 @@ class EditJobPreferences extends Component {
 		const {  bio, major, wage, jobType, midwest, northeast,
 			west, south, start, end, jobName, location } = this.state;
 
-		fetch("http://localhost:3000/api/user/ch-job", {
+		fetch(ROUTES.BASE_URL + "/api/user/ch-job", {
 			body: JSON.stringify({
 				jobType: jobType,
 				bio: bio,

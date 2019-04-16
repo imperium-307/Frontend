@@ -31,7 +31,7 @@ class CreateJobPosting extends Component {
 	onClick = event => {
 		const { jobName, wage, major, bio, location, jobType,northeast, west, south, midwest, start, end } = this.state;
 
-		fetch("http://localhost:3000/api/user/create-job", {
+		fetch(ROUTES.BASE_URL + "/api/user/create-job", {
 			body: JSON.stringify({
 				jobName: jobName,
 				bio: bio,

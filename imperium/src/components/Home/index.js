@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
+import * as ROUTES from '../../constants/routes';
 import "./index.css";
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Notification, Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
@@ -22,7 +23,7 @@ class Home extends Component{
 	}
 
 	componentDidMount = () => {
-		var requestURL = "http://localhost:3000/api/user";
+		var requestURL = ROUTES.BASE_URL + "/api/user";
 		if (localStorage.getItem('persona') === "student") {
 			requestURL += "/request-jobs";
 			fetch(requestURL, {
@@ -54,7 +55,7 @@ class Home extends Component{
 					this.setState({ error });
 				});
 
-			fetch("http://localhost:3000/api/user/post-view", {
+			fetch(ROUTES.BASE_URL + "/api/user/post-view", {
 				body: JSON.stringify({
 					token: localStorage.getItem('token'),
 					email: localStorage.getItem('myemail')
@@ -138,7 +139,7 @@ class Home extends Component{
 			likee = this.state.cards[this.state.index].email
 			iam = this.props.match.params.jobid;
 		}
-		fetch("http://localhost:3000/api/user/" + action, {
+		fetch(ROUTES.BASE_URL + "/api/user/" + action, {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
 				likee: likee,
@@ -220,7 +221,7 @@ class Home extends Component{
 							<Heading size={2}>{user.username}</Heading>
 
 							<Button>
-							<a target="_blank" href={"http://localhost:3000/resumes/"+user.email+".pdf"}>View resume</a>
+							<a target="_blank" href={ROUTES.BASE_URL + "/resumes/"+user.email+".pdf"}>View resume</a>
 							</Button>
 							<br/>
 							<br/>

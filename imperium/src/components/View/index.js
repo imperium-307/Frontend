@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
 import './index.css';
 import { Heading } from 'react-bulma-components';
@@ -15,7 +16,7 @@ class ViewComponent extends Component {
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
-		fetch("http://localhost:3000/api/user/view/" + this.props.match.params.email, {
+		fetch(ROUTES.BASE_URL + ROUTES.BASE_URL + "/view/" + this.props.match.params.email, {
 			cache: 'no-cache',
 			credentials: 'same-origin',
 			headers: {
@@ -76,7 +77,7 @@ class ViewComponent extends Component {
 							<br/>,
 							<p>Bio: {user.bio}</p>,
 							<br/>,
-							<a href={"http://localhost:3000/resumes/"+user.email+".pdf"}>View resume</a>,
+							<a href={ROUTES.BASE_URL + "/resumes/"+user.email+".pdf"}>View resume</a>,
 							<br/>,
 							<p>Looking for {user.jobType}</p>,
 							<br/>,

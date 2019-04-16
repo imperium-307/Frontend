@@ -1,5 +1,6 @@
 import React from 'react';
 import './matches.css';
+import * as ROUTES from '../../constants/routes';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { Loader, Columns, Button, Heading } from 'react-bulma-components';
@@ -14,7 +15,7 @@ class Matches extends React.Component {
 		}
 
 		if (localStorage.getItem('persona') === "student"){
-			fetch("http://localhost:3000/api/user/", {
+			fetch(ROUTES.BASE_URL + "/api/user/", {
 				body: JSON.stringify({
 					token: localStorage.getItem('token')
 				}),
@@ -40,7 +41,7 @@ class Matches extends React.Component {
 				});
 
 		} else {
-			fetch("http://localhost:3000/api/user/get-job", {
+			fetch(ROUTES.BASE_URL + "/api/user/get-job", {
 				body: JSON.stringify({
 					jobid: this.props.match.params.jobid,
 					token: localStorage.getItem('token')
@@ -75,7 +76,7 @@ class Matches extends React.Component {
 	}
 
 	unmatch = (email) => {
-		fetch("http://localhost:3000/api/user/unmatch", {
+		fetch(ROUTES.BASE_URL + "/api/user/unmatch", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
 				iam: this.props.match.params.jobid,

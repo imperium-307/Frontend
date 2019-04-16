@@ -17,7 +17,7 @@ class CompanyHome extends Component {
 
     this.state = { ...INITIAL_STATE };
 
-		fetch("http://localhost:3000/api/user/get-all-jobs", {
+		fetch(ROUTES.BASE_URL + "/api/user/get-all-jobs", {
 			body: JSON.stringify({
 				companyemail: this.props.match.params.email,
 				token: localStorage.getItem('token')

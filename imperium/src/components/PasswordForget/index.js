@@ -24,7 +24,7 @@ class PasswordForgetFormBase extends Component {
 
 	onSubmit = event => {
 		const { email } = this.state;
-		fetch("http://localhost:3000/api/user/reset", {
+		fetch(ROUTES.BASE_URL + "/api/user/reset", {
 			body: JSON.stringify({
 				email: email
 			}),

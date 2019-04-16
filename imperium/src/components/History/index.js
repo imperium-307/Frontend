@@ -19,7 +19,7 @@ class HistoryPage extends Component{
 
 	componentDidMount = () => {
 		if (localStorage.getItem('persona') === "student") {
-			fetch("http://localhost:3000/api/user", {
+			fetch(ROUTES.BASE_URL + "/api/user", {
 				body: JSON.stringify({
 					token: localStorage.getItem('token')
 				}),
@@ -47,7 +47,7 @@ class HistoryPage extends Component{
 			if (!this.props.match || !this.props.match.params.jobid) {
 				this.props.history.push("/company/" + localStorage.getItem('myemail'));
 			}
-			fetch("http://localhost:3000/api/user/get-job", {
+			fetch(ROUTES.BASE_URL + "/api/user/get-job", {
 				body: JSON.stringify({
 					jobid: this.props.match.params.jobid,
 					token: localStorage.getItem('token')

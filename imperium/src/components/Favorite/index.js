@@ -17,7 +17,7 @@ class FavoritePage extends Component{
 
 		this.state = { ...INITIAL_STATE };
 
-		fetch("http://localhost:3000/api/user", {
+		fetch(ROUTES.BASE_URL + "/api/user", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token')
 			}),
@@ -50,7 +50,7 @@ class FavoritePage extends Component{
 	}
 
 	unfavorite = (email) => {
-		fetch("http://localhost:3000/api/user/unfavorite", {
+		fetch(ROUTES.BASE_URL + "/api/user/unfavorite", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
 				likee: email

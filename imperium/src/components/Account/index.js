@@ -43,7 +43,7 @@ class AccountPreferences extends Component {
 
 		this.state = { ...INITIAL_STATE };
 
-		fetch("http://localhost:3000/api/user", {
+		fetch(ROUTES.BASE_URL + "/api/user", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token')
 			}),
@@ -118,12 +118,12 @@ class AccountPreferences extends Component {
 		const data = new FormData();
 		data.append('file', resumeFile);
 
-		fetch('http://localhost:3000/api/user/ch-resume/' + email, {
+		fetch(ROUTES.BASE_URL + '/api/user/ch-resume/' + email, {
 			method: 'POST',
 			body: data,
 		})
 
-		fetch("http://localhost:3000/api/user/ch-settings", {
+		fetch(ROUTES.BASE_URL + "/api/user/ch-settings", {
 			//can you send everything like this for employers
 			body: JSON.stringify({
 				username: username,
@@ -201,7 +201,7 @@ class AccountPreferences extends Component {
 	}
 
 	deleteAccount = () => {
-		fetch("http://localhost:3000/api/user/delete", {
+		fetch(ROUTES.BASE_URL + "/api/user/delete", {
 			body: JSON.stringify({
 				token: localStorage.getItem('token')
 			}),
@@ -369,7 +369,7 @@ class AccountPreferences extends Component {
 				placeholder="Minor"
 				/>
 				<br/>
-				<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
+				<a href={ROUTES.BASE_URL + "/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
 				<div className="file">
 				<label className="file-label">
 				<input className="file-input" type="file" name="resume" value={resume} id="resume" onChange={this.onChange}/>

@@ -28,7 +28,7 @@ class SignInFormBase extends Component {
 
 	onSubmit = event => {
 		const { email, password } = this.state;
-		fetch("http://localhost:3000/api/user/login", {
+		fetch(ROUTES.BASE_URL + "/api/user/login", {
 			body: JSON.stringify({
 				email: email,
 				password: password

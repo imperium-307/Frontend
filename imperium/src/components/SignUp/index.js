@@ -60,13 +60,13 @@ class SignUpFormBase extends Component {
 		data.append('file', resumeFile);
 
 		if (persona == 'student') {
-			fetch('http://localhost:3000/api/user/ch-resume/' + email, {
+			fetch(ROUTES.BASE_URL + '/api/user/ch-resume/' + email, {
 				method: 'POST',
 				body: data,
 			})
 		}
 
-		fetch("http://localhost:3000/api/user/signup", {
+		fetch(ROUTES.BASE_URL + "/api/user/signup", {
 			body: JSON.stringify({
 				username: username,
 				email: email,

@@ -30,7 +30,7 @@ class ChatPage extends Component{
 
 		this.state = { ...INITIAL_STATE };
 
-		fetch("http://localhost:3000/api/user/messages-after" , {
+		fetch(ROUTES.BASE_URL + "/api/user/messages-after" , {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
 				after: this.state.lastRefresh,
@@ -74,7 +74,7 @@ class ChatPage extends Component{
 			});
 
 		if (localStorage.getItem("persona") === "student") {
-			fetch("http://localhost:3000/api/user/get-job" , {
+			fetch(ROUTES.BASE_URL + "/api/user/get-job" , {
 				body: JSON.stringify({
 					token: localStorage.getItem('token'),
 					jobid: this.props.match.params.id
@@ -103,7 +103,7 @@ class ChatPage extends Component{
 					this.setState({ error });
 				});
 		} else {
-			fetch("http://localhost:3000/api/user/post-view", {
+			fetch(ROUTES.BASE_URL + "/api/user/post-view", {
 				body: JSON.stringify({
 					token: localStorage.getItem('token'),
 					email: this.props.match.params.id
@@ -134,7 +134,7 @@ class ChatPage extends Component{
 		}
 
 		this.mesTimer = setInterval(() => {
-			fetch("http://localhost:3000/api/user/messages-after" , {
+			fetch(ROUTES.BASE_URL + "/api/user/messages-after" , {
 				body: JSON.stringify({
 					token: localStorage.getItem('token'),
 					after: this.state.lastRefresh,
@@ -205,7 +205,7 @@ class ChatPage extends Component{
 				el.scrollTop = el.scrollHeight;
 			}, 25)
 
-			fetch("http://localhost:3000/api/user/message" , {
+			fetch(ROUTES.BASE_URL + "/api/user/message" , {
 				body: JSON.stringify({
 					token: localStorage.getItem('token'),
 					message: newMessage,
@@ -263,7 +263,7 @@ class ChatPage extends Component{
 			chatMessage: ""
 		})
 
-		fetch("http://localhost:3000/api/user/message" , {
+		fetch(ROUTES.BASE_URL + "/api/user/message" , {
 			body: JSON.stringify({
 				token: localStorage.getItem('token'),
 				message: newMessage,
