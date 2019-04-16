@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { compose } from 'recompose';
-import { Heading } from 'react-bulma-components';
+import { Columns, Button, Heading } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	history: {},
@@ -79,8 +79,14 @@ class HistoryPage extends Component{
 		const { history, peronsa } = this.state;
 
 		return (
+			<Columns className="is-multiline is-centered">
+			<Columns.Column size={8}>
+			<div className="custom-card" >
+			<div className="custom-card__heading">
+			<Heading className="text-center custom-card__heading-text" size={1}>Your History</Heading>
+			</div>
+			<br/>
 			<div>
-			<Heading className="text-center" size={1}>Your History</Heading>
 			{(() => {
 				if (this.state.isLoading) {
 					return (
@@ -90,19 +96,49 @@ class HistoryPage extends Component{
 					);
 				} else {
 					if (this.state.history) {
-						return this.state.history.map((d, i) => {
-							return (
-								<p>You {this.state.history[i].action}d {this.state.history[i].data} on {new Date(this.state.history[i].date).toLocaleDateString("en-US")} at {new Date(this.state.history[i].date).toLocaleTimeString("en-US")}</p>
-							)
-						})
-					} else {
 						return (
-							<h1>You have no history</h1>
+							<table className="table">
+							<thead>
+							<tr>
+							<th>👍/👎</th>
+							<th>👤</th>
+							<th>📅</th>
+							<th>🕒</th>
+							</tr>
+							</thead>
+							<tbody>
+							{(() => {
+								return this.state.history.map((d, i) => {
+									return (
+										<tr>
+										<td>{d.action}</td>
+										<td>{d.data}</td>
+										<td>{new Date(this.state.history[i].date).toLocaleDateString("en-US")}</td>
+										<td>{new Date(this.state.history[i].date).toLocaleTimeString("en-US")}</td>
+										</tr>
+									)
+									/*
+										<div className="flex" style={{padding: 16, "justify-content": "space-between", "background-color": bgcolor}}>
+										<p>hi</p>
+										<p>hi</p>
+										<p>hi</p>
+										<p>hi</p>
+										<p>You {this.state.history[i].action}d {this.state.history[i].data} on {new Date(this.state.history[i].date).toLocaleDateString("en-US")} at {new Date(this.state.history[i].date).toLocaleTimeString("en-US")}</p>
+										</div>
+										*/
+								})
+							})()}
+							</tbody>
+							</table>
 						)
 					}
 				}
 			})()}
 			</div>
+			<br/>
+			</div>
+			</Columns.Column>
+			</Columns>
 		)
 	}
 }
