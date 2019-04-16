@@ -324,6 +324,19 @@ class ChatPage extends Component{
 			</div>
 			<div id="chat-messages" className="hero-body" style={{"height": 0, "overflow-y": "auto"}}>
 			<div style={{ 'width': '100%', 'height': '100%' }}>
+			<div className="has-text-centered">
+			{(() => {
+				if (job) {
+					return (
+						<i>This is the beginning of your messages with {job.jobName}</i>
+					)
+				} else if (student) {
+					return (
+						<i>This is the beginning of your messages with {student.username}</i>
+					)
+				}
+			})()}
+			</div>
 			{(() => {
 				if (messages) {
 					return messages.map((d, i) => {
@@ -387,8 +400,9 @@ class ChatPage extends Component{
 			<input className="input" onChange={this.onChange} type="text" name="chatMessage" placeholder="Type a message..." value={chatMessage}/>
 			</div>
 			<div className="control">
-			<a onClick={this.sendMessage} className="button is-info" style={{"border-radius":0}}>Send</a>
 			{ localStorage.getItem('persona') === 'employer' ? (
+				<span>
+				<a onClick={this.sendMessage} className="button is-info" style={{"border-radius":0}}>Send</a>
 				<Popup trigger={<button className="button is-info">📅</button>} modal closeOnDocumentClick>
 				<div>Schedule an interview</div>
 				<br/>
@@ -406,8 +420,9 @@ class ChatPage extends Component{
 				<br/>
 				<button className="button is-info" onClick={this.createEvent}>Create Calendar Event</button>
 				</Popup>
+				</span>
 			) : (
-				null
+				<a onClick={this.sendMessage} className="button is-info">Send</a>
 			)}
 			</div>
 			</div>

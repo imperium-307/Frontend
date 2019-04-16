@@ -129,7 +129,7 @@ class Matches extends React.Component {
 						return (
 							<div className="flex" style={{padding: 16, "justify-content": "space-between", "background-color": bgcolor}}>
 							<div style={{display: "inherit"}}>
-							<img style={{width: 50, height: 50}} src={d.photo}/>
+							<img style={{width: 50, height: 50, "border-radius":"100%"}} src={d.photo}/>
 							<span className="flex" style={{"align-items": "center", "padding-left": 10}}>{d.name}</span>
 							</div>
 							<div className="buttons has-addons">
