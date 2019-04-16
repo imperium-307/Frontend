@@ -291,6 +291,19 @@ class AccountPreferences extends Component {
 					}
 				})()}
 				<form onSubmit={this.onSubmit}>
+				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
+				<div className="file">
+				<label className="file-label">
+				<input className="file-input" type="file" name="photo" value={photo} id="photo" onChange={this.onChange}/>
+				<span className="file-cta">
+				<span className="file-icon">📤</span>
+				<span className="file-label">
+				Change profile picture...
+				</span>
+				</span>
+				</label>
+				</div>
+				<br/>
 				<input
 				name="username"
 				value={username}
@@ -356,25 +369,18 @@ class AccountPreferences extends Component {
 				placeholder="Minor"
 				/>
 				<br/>
-				<div>
 				<a href={"http://localhost:3000/resumes/"+email+".pdf"} target="_blank" rel="noopener noreferrer">View your current resume</a>
+				<div className="file">
+				<label className="file-label">
+				<input className="file-input" type="file" name="resume" value={resume} id="resume" onChange={this.onChange}/>
+				<span className="file-cta">
+				<span className="file-icon">📤</span>
+				<span className="file-label">
+				Change your resume...
+				</span>
+				</span>
+				</label>
 				</div>
-				<input
-				type="file"
-				value={resume}
-				name="resume"
-				id="resume"
-				onChange={this.onChange}
-				placeholder="resume" />
-				<br/>
-				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
-				<input
-				type="file"
-				value={ photo }
-				name="photo"
-				id="photo"
-				onChange={this.onChange}/>
-
 				<select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
 				<option value="" disabled selected hidden>What type of job are you posting?</option>
 				<option value="fullTime">Full Time</option>
@@ -492,14 +498,19 @@ class AccountPreferences extends Component {
 				placeholder="Bio"
 				/>
 				<br/>
-				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
-				<input
-				type="file"
-				value={ photo }
-				name="photo"
-				id="photo"
-				onChange={this.onChange}/>
 				<br/>
+				<a href={ photoFile } target="_blank" rel="noopener noreferrer"><img alt="profile" id="photoData" src={ photoFile }/></a>
+				<div className="file">
+				<label className="file-label">
+				<input className="file-input" type="file" name="photo" value={photo} id="photo" onChange={this.onChange}/>
+				<span className="file-cta">
+				<span className="file-icon">📤</span>
+				<span className="file-label">
+				Change profile picture...
+				</span>
+				</span>
+				</label>
+				</div>
 				<br/>
 				<input name="isHidden" checked={isHidden} onChange={this.onChange} type="checkbox"/>
 				<p>Hide My Account</p>
