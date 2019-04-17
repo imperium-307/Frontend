@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../../constants/routes';
-import { Notification, Button, Heading, Columns, Field, Label, Control, Input } from 'react-bulma-components';
+import { Loader, Notification, Button, Heading, Columns, Field, Label, Control, Input } from 'react-bulma-components';
 
 //TODO make it so you cant click the create posting button without entering all the fields
 
@@ -19,7 +19,8 @@ var INITIAL_STATE = {
 	wage:'',
 	start: '',
 	end: '',
-	error: ''
+	error: '',
+	isLoading: true
 };
 
 class CreateJobPosting extends Component {
@@ -66,7 +67,7 @@ class CreateJobPosting extends Component {
 				} else {
 					this.props.history.push("/company/" + localStorage.getItem('myemail'));
 				}
-				console.log(res)
+				this.setState({ isLoading: false });
 			})
 			.catch(error => {
 				this.setState({ error });
@@ -105,111 +106,132 @@ class CreateJobPosting extends Component {
 			<div className="custom-card__heading-gradient">
 			<Heading size={3} className="has-text-centered custom-card__heading-text">Create Job</Heading>
 			</div>
-			<form onSubmit={this.onSubmit} style={{padding: 16}}>
-			<div className="field">
-			<label className="label">Job Name</label>
-			<div className="control">
-			<input className="input" name="jobName" value={jobName} onChange={this.handleInputChange} type="text" placeholder="Name of Job"/>
-			</div>
-			</div>
-			<div className="field">
-			<label className="label">Job Description</label>
-			<div className="control">
-			<input className="input" name="bio" value={bio} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>
-			</div>
-			</div>
-			<div className="field">
-			<label className="label">Job Location</label>
-			<div className="control">
-			<input className="input" name="location" value={location} onChange={this.handleInputChange} type="text" placeholder="Exact Location"/>
-			</div>
-			</div>
-			<br/>
-			<Heading size={4} className="has-text-centered">Job Location</Heading>
-			<div className="buttons has-addons is-centered">
-			<span className={"button" + (this.state.northeast ? " is-info": "")} onClick={() => {this.flip("northeast")}}>Northeast</span>
-			<span className={"button" + (this.state.west ? " is-info": "")} onClick={() => {this.flip("west")}}>West</span>
-			<span className={"button" + (this.state.south ? " is-info": "")} onClick={() => {this.flip("south")}}>South</span>
-			<span className={"button" + (this.state.midwest ? " is-info": "")} onClick={() => {this.flip("midwest")}}>Midwest</span>
-			</div>
-			<div className="field">
-			<label className="label">Major</label>
-			<div className="select is-fullwidth">
-			<select name="major" id="major" value={major} onChange={this.handleInputChange}>
-			<option value="" disabled selected hidden>What type of Major are you in?</option>
-			<option value="Art">Art</option>
-			<option value="Biology">Biology</option>
-			<option value="Communications">Communications</option>
-			<option value="Computer Science">Computer Science</option>
-			<option value="Construction Management">Construction Management</option>
-			<option value="Political Science">Political Science</option>
-			<option value="Agriculture">Agriculture</option>
-			<option value="Food Science">Food Science</option>
-			<option value="Music">Music</option>
-			<option value="Studio Arts">Studio Arts</option>
-			<option value="Ecology">Ecology</option>
-			<option value="Biology">Biology</option>
-			<option value="Neuroscience">Neuroscience</option>
-			<option value="Journalism">Journalism</option>
-			<option value="Mathematics">Mathematics</option>
-			<option value="Architecture">Architecture</option>
-			<option value="Engineering">Engineering</option>
-			<option value="Philosophy">Philosophy</option>
-			<option value="Underwater Basket Weaving">Underwater Basket Weaving</option>
-			</select>
-			</div>
-			</div>
-			<br/>
-			<div className="select is-fullwidth">
-			<select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
-			<option value="" disabled selected hidden>What type of job do you want?</option>
-			<option value="fullTime">Full Time</option>
-			<option value="parttime">Part Time</option>
-			<option value="internship">Internship</option>
-			<option value="coop">Co-op</option>
-			</select>
-			</div>
-			<br/>
-			<br/>
-			<div className="field">
-			<label className="label">Start Date</label>
-			<div className="control">
-			<input className="input" name="start" value={this.state.start} onChange={this.handleInputChange} type="date"/>
-			</div>
-			</div>
-			<div className="field">
-			<label className="label">End Date</label>
-			<div className="control">
-			<input className="input" name="end" value={this.state.end} onChange={this.handleInputChange} type="date"/>
-			</div>
-			</div>
-			<div className="field">
-			<label className="label">Estimated wage</label>
-			<div className="control">
-			<input className="input" name="wage" value={this.state.wage} onChange={this.handleInputChange} type="number" step=".1" placeholder="Estimated Wage"/>
-			</div>
-			</div>
-			<br/>
-			<Button className="is-fullwidth is-info" disabled={isDisabled} type="submit">
-			Create Job
-			</Button>
-			<br/>
-			<Button className="is-fullwidth is-danger" to={"/company/" + localStorage.getItem('myemail')} renderAs={Link}>Cancel</Button>
 			{(() => {
-				if (error && error != '' && typeof(error) === "string") {
-					setTimeout(() => {
-						this.setState({error: null})
-					}, 3000);
-
+				if (this.state.isLoading) {
 					return (
-						<Notification color="danger" style={{margin: 16}}>
-						{error}
-						<Button remove onClick={() => {this.setState({error: null})}}/>	
-						</Notification>
+						<span>
+						<Loader className="auto-margin"
+						style={{
+							width: 100,
+								height: 100,
+								border: '4px solid',
+								borderTopColor: 'transparent',
+								borderRightColor: 'transparent',
+						}}
+						/>
+						<br/>
+						</span>
+					)
+				} else {
+					return (
+						<form onSubmit={this.onSubmit} style={{padding: 16}}>
+						<div className="field">
+						<label className="label">Job Name</label>
+						<div className="control">
+						<input className="input" name="jobName" value={jobName} onChange={this.handleInputChange} type="text" placeholder="Name of Job"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Job Description</label>
+						<div className="control">
+						<input className="input" name="bio" value={bio} onChange={this.handleInputChange} type="text" placeholder="Job Description"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Job Location</label>
+						<div className="control">
+						<input className="input" name="location" value={location} onChange={this.handleInputChange} type="text" placeholder="Exact Location"/>
+						</div>
+						</div>
+						<br/>
+						<Heading size={4} className="has-text-centered">Job Region</Heading>
+						<div className="buttons has-addons is-centered">
+						<span className={"button" + (this.state.northeast ? " is-info": "")} onClick={() => {this.flip("northeast")}}>Northeast</span>
+						<span className={"button" + (this.state.west ? " is-info": "")} onClick={() => {this.flip("west")}}>West</span>
+						<span className={"button" + (this.state.south ? " is-info": "")} onClick={() => {this.flip("south")}}>South</span>
+						<span className={"button" + (this.state.midwest ? " is-info": "")} onClick={() => {this.flip("midwest")}}>Midwest</span>
+						</div>
+						<div className="field">
+						<label className="label">Major</label>
+						<div className="select is-fullwidth">
+						<select name="major" id="major" value={major} onChange={this.handleInputChange}>
+						<option value="" disabled selected hidden>What type of Major are you in?</option>
+						<option value="Art">Art</option>
+						<option value="Biology">Biology</option>
+						<option value="Communications">Communications</option>
+						<option value="Computer Science">Computer Science</option>
+						<option value="Construction Management">Construction Management</option>
+						<option value="Political Science">Political Science</option>
+						<option value="Agriculture">Agriculture</option>
+						<option value="Food Science">Food Science</option>
+						<option value="Music">Music</option>
+						<option value="Studio Arts">Studio Arts</option>
+						<option value="Ecology">Ecology</option>
+						<option value="Biology">Biology</option>
+						<option value="Neuroscience">Neuroscience</option>
+						<option value="Journalism">Journalism</option>
+						<option value="Mathematics">Mathematics</option>
+						<option value="Architecture">Architecture</option>
+						<option value="Engineering">Engineering</option>
+						<option value="Philosophy">Philosophy</option>
+						<option value="Underwater Basket Weaving">Underwater Basket Weaving</option>
+						</select>
+						</div>
+						</div>
+						<br/>
+						<div className="select is-fullwidth">
+						<select name="jobType" id="jobType" value={jobType} onChange={this.handleInputChange}>
+						<option value="" disabled selected hidden>What type of job do you want?</option>
+						<option value="fullTime">Full Time</option>
+						<option value="parttime">Part Time</option>
+						<option value="internship">Internship</option>
+						<option value="coop">Co-op</option>
+						</select>
+						</div>
+						<br/>
+						<br/>
+						<div className="field">
+						<label className="label">Start Date</label>
+						<div className="control">
+						<input className="input" name="start" value={this.state.start} onChange={this.handleInputChange} type="date"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">End Date</label>
+						<div className="control">
+						<input className="input" name="end" value={this.state.end} onChange={this.handleInputChange} type="date"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Estimated wage</label>
+						<div className="control">
+						<input className="input" name="wage" value={this.state.wage} onChange={this.handleInputChange} type="number" step=".1" placeholder="Estimated Wage"/>
+						</div>
+						</div>
+						<br/>
+						<Button className="is-fullwidth is-info" disabled={isDisabled} type="submit">
+						Create Job
+						</Button>
+						<br/>
+						<Button className="is-fullwidth is-danger" to={"/company/" + localStorage.getItem('myemail')} renderAs={Link}>Cancel</Button>
+						{(() => {
+							if (error && error != '' && typeof(error) === "string") {
+								setTimeout(() => {
+									this.setState({error: null})
+								}, 3000);
+
+								return (
+									<Notification color="danger" style={{margin: 16}}>
+									{error}
+									<Button remove onClick={() => {this.setState({error: null})}}/>	
+									</Notification>
+								)
+							}
+						})()}
+						</form>
 					)
 				}
 			})()}
-			</form>
 			</div>
 			</Columns.Column>
 			</Columns>

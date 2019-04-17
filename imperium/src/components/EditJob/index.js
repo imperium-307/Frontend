@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import { Loader, Notification, Button, Heading, Columns, Field, Label, Control, Input } from 'react-bulma-components';
 
 const INITIAL_STATE = {
-  jobName: '',
+	jobName: '',
 	bio: '',
 	major: '',
 	resume: '',
@@ -17,9 +18,10 @@ const INITIAL_STATE = {
 	midwest: '',
 	start: '',
 	end: '',
-  jobName: '',
-  location:'',
-  isLoading: true,
+	jobName: '',
+	location:'',
+	isLoading: true,
+	savedPrefPopup: false,
 	error: null,
 };
 
@@ -28,50 +30,51 @@ class EditJobPreferences extends Component {
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
-    if (!this.props.match || !this.props.match.params.jobid) {
-				this.props.history.push("/company/" + localStorage.getItem('myemail'));
-			}
-    fetch(ROUTES.BASE_URL + "/api/user/get-job", {
-				body: JSON.stringify({
-					jobid: this.props.match.params.jobid,
-					token: localStorage.getItem('token')
-				}),
-				cache: 'no-cache',
-				credentials: 'same-origin',
-				headers: {
-					'content-type': 'application/json'
-				},
-				mode: 'cors',
-				method: 'POST'
+		if (!this.props.match || !this.props.match.params.jobid) {
+			this.props.history.push("/company/" + localStorage.getItem('myemail'));
+		}
+		fetch(ROUTES.BASE_URL + "/api/user/get-job", {
+			body: JSON.stringify({
+				jobid: this.props.match.params.jobid,
+				token: localStorage.getItem('token')
+			}),
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors',
+			method: 'POST'
+		})
+			.then((res) => {
+				return res.json()
 			})
-				.then((res) => {
-					return res.json()
-				})
-				.then((res) => {
-					this.setState({
-            bio: res.bio,
-            major: res.major,
-            wage: res.wage,
-            jobType: res.jobType,
-            northeast: res.northeast,
-            west: res.west,
-            south: res.south,
-            midwest: res.midwest,
-            start: res.start,
-            end: res.end,
-            jobName: res.jobName,
-            location: res.location,
-            isLoading: false,
-					});
-				})
-				.catch(error => {
-					this.setState({ error });
+			.then((res) => {
+				this.setState({
+					bio: res.bio,
+					major: res.major,
+					wage: res.wage,
+					jobType: res.jobType,
+					northeast: res.northeast,
+					west: res.west,
+					south: res.south,
+					midwest: res.midwest,
+					start: res.start,
+					end: res.end,
+					jobName: res.jobName,
+					location: res.location,
+					isLoading: false,
 				});
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
 	}
 
-  // componentDidMount = ()=> {
-  //
-  // }
+	flip = (region) => {
+		var toSet = !this.state[region]
+		this.setState({[region]: toSet})
+	}
 
 	onChange = event => {
 		const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
@@ -94,10 +97,10 @@ class EditJobPreferences extends Component {
 				midwest: midwest,
 				start: start,
 				end: end,
-			  jobName: jobName,
+				jobName: jobName,
 				token: localStorage.getItem('token'),
-        location: location,
-        jobid: this.props.match.params.jobid,
+				location: location,
+				jobid: this.props.match.params.jobid,
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
@@ -111,7 +114,16 @@ class EditJobPreferences extends Component {
 				return res.json()
 			})
 			.then((res) => {
-				console.log("setting:" + res)
+				this.setState({
+					savedPrefPopup: true
+				});
+
+				setTimeout(() => {
+					this.setState({
+						savedPrefPopup: false
+					});
+				}, 5000)
+
 				this.setState({
 					bio: res.user.bio,
 					major: res.user.major,
@@ -123,8 +135,8 @@ class EditJobPreferences extends Component {
 					start: res.user.start,
 					jobType: res.user.jobType,
 					end: res.user.end,
-          jobName: res.user.jobName,
-          location: res.user.location,
+					jobName: res.user.jobName,
+					location: res.user.location,
 				});
 			})
 			.catch(error => {
@@ -147,95 +159,189 @@ class EditJobPreferences extends Component {
 			midwest,
 			start,
 			end,
-		  jobName,
-      location,
+			jobName,
+			location,
 			error,
 		} = this.state;
-//TODO update this
 
+		var isDisabled = false;
+		if (jobType === '' || start === '' || end === '' || location === '' || jobName === '' || (!south && !midwest && !northeast && !west) || major === '' || bio === '' || wage === '') {
+			isDisabled = true;
+		}
 
-
-		//add loading symbol
-    
 		return (
-		<div>
-      <h1>Edit Job Posting</h1>
-    <form onSubmit={this.onSubmit}>
-      <input
-      name="jobName"
-      value={jobName}
-      onChange={this.onChange}
-      type="text"
-      placeholder="Job Name"
-      />
-      <br/>
-      <input
-      name="bio"
-      value={bio}
-      onChange={this.onChange}
-      type="text"
-      placeholder="Job Name"
-      />
-      <br/>
-      <input
-      name="location"
-      value={location}
-      onChange={this.onChange}
-      type="text"
-      placeholder="Job Name"
-      />
-      <br/>
-      <p>Please select what reigons you would be interested in working on</p>
-			<br/>
-      <input name="northeast" checked={northeast} onChange={this.onChange} type="checkbox"/>
-			<p>Northeast</p>
-			<br/>
-			<input name="west" checked={west} onChange={this.onChange} type="checkbox"/>
-			<p>West</p>
-			<br/>
-			<input name="south" checked={south} onChange={this.onChange} type="checkbox"/>
-			<p>South</p>
-			<br/>
-			<input name="midwest" checked={midwest} onChange={this.onChange} type="checkbox"/>
-			<p>Midwest</p>
-			<br/>
-      <input
-      name="major"
-      value={major}
-      onChange={this.onChange}
-      type="text"
-      placeholder="Job Name"
-      />
-      <br/>
-      <select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
-      <option value="" disabled selected hidden>What type of job are you posting?</option>
-      <option value="fullTime">Full Time</option>
-      <option value="parttime">Part Time</option>
-      <option value="internship">Internship</option>
-      <option value="coop">Co-op</option>
-    </select>
-      <br/>
-      <input name="start" value={start} onChange={this.onChange} type="date"/>
-			<input name="end" value={end} onChange={this.onChange} type="date"/>
-			<br/>
-      <input name="wage" value={wage} onChange={this.onChange} type="number" step=".1" placeholder="Salary of Job"/>
-			<br/>
-      <button type="submit">
-			   Save Preferences
-			</button>
-    </form>
+			<Columns className="is-multiline is-centered">
+			<Columns.Column size={6}>
+			<div className="custom-card" >
+			<div className="custom-card__heading-gradient">
+			<Heading size={3} className="has-text-centered custom-card__heading-text">Edit Job</Heading>
+			</div>
+			{(() => {
+				if (this.state.isLoading) {
+					return (
+						<span>
+						<br/>
+						<Loader className="auto-margin"
+						style={{
+							width: 100,
+								height: 100,
+								border: '4px solid',
+								borderTopColor: 'transparent',
+								borderRightColor: 'transparent',
+						}}
+						/>
+						<br/>
+						</span>
+					)
+				} else {
+					return (
+						<form onSubmit={this.onSubmit} style={{padding: 16}}>
+						<div className="field">
+						<label className="label">Job Name</label>
+						<div className="control">
+						<input
+						className="input"
+						name="jobName"
+						value={jobName}
+						onChange={this.onChange}
+						type="text"
+						placeholder="Job Name"
+						/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Password</label>
+						<div className="control">
+						<input
+						className="input"
+						name="bio"
+						value={bio}
+						onChange={this.onChange}
+						type="text"
+						placeholder="Job Description"
+						/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Job Location</label>
+						<div className="control">
+						<input
+						className="input"
+						name="location"
+						value={location}
+						onChange={this.onChange}
+						type="text"
+						placeholder="Job Location"
+						/>
+						</div>
+						</div>
+						<Heading size={4} className="has-text-centered">Job Region</Heading>
+						<div className="buttons has-addons is-centered">
+						<span className={"button" + (this.state.northeast ? " is-info": "")} onClick={() => {this.flip("northeast")}}>Northeast</span>
+						<span className={"button" + (this.state.west ? " is-info": "")} onClick={() => {this.flip("west")}}>West</span>
+						<span className={"button" + (this.state.south ? " is-info": "")} onClick={() => {this.flip("south")}}>South</span>
+						<span className={"button" + (this.state.midwest ? " is-info": "")} onClick={() => {this.flip("midwest")}}>Midwest</span>
+						</div>
+						<div className="field">
+						<label className="label">Major</label>
+						<div className="select is-fullwidth">
+						<select name="major" id="major" value={major} onChange={this.onChange}>
+						<option value="" disabled selected hidden>What type of Major are you in?</option>
+						<option value="Art">Art</option>
+						<option value="Biology">Biology</option>
+						<option value="Communications">Communications</option>
+						<option value="Computer Science">Computer Science</option>
+						<option value="Construction Management">Construction Management</option>
+						<option value="Political Science">Political Science</option>
+						<option value="Agriculture">Agriculture</option>
+						<option value="Food Science">Food Science</option>
+						<option value="Music">Music</option>
+						<option value="Studio Arts">Studio Arts</option>
+						<option value="Ecology">Ecology</option>
+						<option value="Biology">Biology</option>
+						<option value="Neuroscience">Neuroscience</option>
+						<option value="Journalism">Journalism</option>
+						<option value="Mathematics">Mathematics</option>
+						<option value="Architecture">Architecture</option>
+						<option value="Engineering">Engineering</option>
+						<option value="Philosophy">Philosophy</option>
+						<option value="Underwater Basket Weaving">Underwater Basket Weaving</option>
+						</select>
+						</div>
+						</div>
+						<br/>
+						<div className="select is-fullwidth">
+						<select name="jobType" id="jobType" value={jobType} onChange={this.onChange}>
+						<option value="" disabled selected hidden>What type of job do you want?</option>
+						<option value="fullTime">Full Time</option>
+						<option value="parttime">Part Time</option>
+						<option value="internship">Internship</option>
+						<option value="coop">Co-op</option>
+						</select>
+						</div>
+						<br/>
+						<br/>
+						<div className="field">
+						<label className="label">Start Date</label>
+						<div className="control">
+						<input className="input" name="start" value={this.state.start} onChange={this.onChange} type="date"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">End Date</label>
+						<div className="control">
+						<input className="input" name="end" value={this.state.end} onChange={this.onChange} type="date"/>
+						</div>
+						</div>
+						<div className="field">
+						<label className="label">Estimated wage</label>
+						<div className="control">
+						<input className="input" name="wage" value={this.state.wage} onChange={this.onChange} type="number" step=".1" placeholder="Estimated Wage"/>
+						</div>
+						</div>
+						<br/>
+						<Button className="is-fullwidth is-info" disabled={isDisabled} type="submit">
+						Save Changes
+						</Button>
+						{(() => {
+							console.log(this.state.savedPrefPopup)
+							if (this.state.savedPrefPopup) {
+								return (
+									<Notification color="success">
+									Your settings have been saved
+									<Button remove onClick={() => {this.setState({savedPrefPopup: false})}}/>
+									</Notification>
+								)
+							}
+						})()}
+						<br/>
+						<Button className="is-fullwidth is-danger" to={"/company/" + localStorage.getItem('myemail')} renderAs={Link}>Cancel</Button>
+						</form>
+					)
+				}
+			})()}
+			</div>
+			{(() => {
+				if (error && error != '' && typeof(error) === "string") {
+					setTimeout(() => {
+						this.setState({error: null})
+					}, 3000);
 
-		</div>
-	);
+					return (
+						<Notification color="danger" style={{margin: 16}}>
+						{error}
+						<Button remove onClick={() => {this.setState({error: null})}}/>	
+						</Notification>
+					)
+				}
+			})()}
+			</Columns.Column>
+			</Columns>
+		);
 
 	}
 }
 
-// const EditJobPage = compose(
-// 	withRouter,
-// 	withFirebase,
-// )(EditJobPreferences)
 export default compose(
-  withRouter
+	withRouter
 )(EditJobPreferences)
-//export default EditJobPage;
