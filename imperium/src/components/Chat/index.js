@@ -355,12 +355,14 @@ class ChatPage extends Component{
 								)
 							}
 							else {
+								console.log("date: " +d.edate);
+								console.log("start time: "+d.estart);
 								this.state.event = {
 									title: d.etitle,
 									description: d.edesc,
 									location: d.eloc,
-									startTime: date+"T"+startTime,
-									endTime: date+"T"+endTime,
+									startTime: d.edate+"T"+d.estart,
+									endTime: d.edate+"T"+d.eend,
 								}
 								return (
 									<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
@@ -381,8 +383,8 @@ class ChatPage extends Component{
 									title: d.etitle,
 									description: d.edesc,
 									location: d.eloc,
-									startTime: date+"T"+startTime,
-									endTime: date+"T"+endTime,
+									startTime: d.edate+"T"+d.estart,
+									endTime: d.edate+"T"+d.eend,
 								}
 								return(
 									<p style={{ padding: '5px', textAlign: 'left', overflowWrap: 'normal', 'margin-right': '35%'}}>
