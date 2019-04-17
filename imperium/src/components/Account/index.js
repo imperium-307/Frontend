@@ -624,12 +624,6 @@ class AccountPreferences extends Component {
 				</div>
 				</div>
 				<br/>
-				<Heading size={4} className="has-text-centered">Notifications</Heading>
-				<div className="buttons has-addons is-centered">
-				<span className={"button" + (this.state.emailNotifications ? " is-info": "")} onClick={() => {this.flip("emailNotifications")}}>Email</span>
-				<span className={"button" + (this.state.desktopNotifications ? " is-info": "")} onClick={() => {this.flip("desktopNotifications")}}>Desktop</span>
-				<span className={"button" + (this.state.favoriteNotifications ? " is-info": "")} onClick={() => {this.flip("favoriteNotifications")}}>Favorites</span>
-				</div>
 				<Heading size={4} className="has-text-centered">General</Heading>
 				<div className="buttons has-addons is-centered">
 				<span className={"button" + (this.state.isHidden ? " is-info": "")} onClick={() => {this.flip("isHidden")}}>Hide Account</span>

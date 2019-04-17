@@ -21,6 +21,9 @@ const INITIAL_STATE = {
 	jobName: '',
 	location:'',
 	isHidden: null,
+	emailNotifications: '',
+	desktopNotifications: '',
+	favoriteNotifications: '',
 	isLoading: true,
 	savedPrefPopup: false,
 	error: null,
@@ -66,6 +69,9 @@ class EditJobPreferences extends Component {
 					isHidden: res.isHidden,
 					location: res.location,
 					isLoading: false,
+					emailNotifications: res.emailNotifications,
+					desktopNotifications: res.desktopNotifications,
+					favoriteNotifications: res.favoriteNotifications,
 				});
 			})
 			.catch(error => {
@@ -85,7 +91,7 @@ class EditJobPreferences extends Component {
 
 	onSubmit = event => {
 		const {  bio, major, wage, jobType, midwest, northeast,
-			west, south, start, end, jobName, location, isHidden } = this.state;
+			west, south, start, emailNotifications, desktopNotifications, favoriteNotifications, end, jobName, location, isHidden } = this.state;
 
 		fetch(ROUTES.BASE_URL + "/api/user/ch-job", {
 			body: JSON.stringify({
@@ -104,6 +110,9 @@ class EditJobPreferences extends Component {
 				token: localStorage.getItem('token'),
 				location: location,
 				jobid: this.props.match.params.jobid,
+				emailNotifications: emailNotifications,
+				desktopNotifications: desktopNotifications,
+				favoriteNotifications: favoriteNotifications,
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
@@ -133,6 +142,9 @@ class EditJobPreferences extends Component {
 					wage: res.user.wage,
 					northeast: res.user.northeast,
 					west: res.user.west,
+					emailNotifications: res.emailNotifications,
+					desktopNotifications: res.desktopNotifications,
+					favoriteNotifications: res.favoriteNotifications,
 					south: res.user.south,
 					midwest: res.user.midwest,
 					start: res.user.start,
@@ -215,7 +227,7 @@ class EditJobPreferences extends Component {
 						</div>
 						</div>
 						<div className="field">
-						<label className="label">Password</label>
+						<label className="label">Job Description</label>
 						<div className="control">
 						<input
 						className="input"
@@ -309,6 +321,12 @@ class EditJobPreferences extends Component {
 						<span className={"button" + (this.state.isHidden ? " is-info": "")} onClick={() => {this.flip("isHidden")}}>Hide Job</span>
 						</div>
 						</div>
+						</div>
+						<Heading size={4} className="has-text-centered">Notifications</Heading>
+						<div className="buttons has-addons is-centered">
+						<span className={"button" + (this.state.emailNotifications ? " is-info": "")} onClick={() => {this.flip("emailNotifications")}}>Email</span>
+						<span className={"button" + (this.state.desktopNotifications ? " is-info": "")} onClick={() => {this.flip("desktopNotifications")}}>Desktop</span>
+						<span className={"button" + (this.state.favoriteNotifications ? " is-info": "")} onClick={() => {this.flip("favoriteNotifications")}}>Favorites</span>
 						</div>
 						<br/>
 						<Button className="is-fullwidth is-info" disabled={isDisabled} type="submit">
