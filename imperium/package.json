@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^3.4.1",
     "firebase": "^5.8.3",
+    "moment-timezone": "^0.5.23",
     "react": "^16.8.1",
     "react-add-to-calendar": "^0.1.5",
     "react-bootstrap": "^1.0.0-beta.5",

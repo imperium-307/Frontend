@@ -6,6 +6,7 @@ import * as ROUTES from '../../constants/routes';
 import { Tag, Heading, Button, Footer, Loader, Media } from 'react-bulma-components';
 import Popup from "reactjs-popup";
 import AddToCalendar from 'react-add-to-calendar';
+import * as moment from 'moment-timezone';
 
 
 var INITIAL_STATE = {
@@ -355,14 +356,17 @@ class ChatPage extends Component{
 								)
 							}
 							else {
-								console.log("date: " +d.edate);
-								console.log("start time: "+d.estart);
+								var tempStart = d.edate + " " + d.estart;
+								var tempEnd = d.edate + " " + d.eend;
+								var m1 = moment.tz(tempStart, "America/Toronto")
+								var m2 = moment.tz(tempEnd, "America/Toronto")
+								console.log(m1);
 								this.state.event = {
 									title: d.etitle,
 									description: d.edesc,
 									location: d.eloc,
-									startTime: d.edate+"T"+d.estart,
-									endTime: d.edate+"T"+d.eend,
+									startTime: m1,
+									endTime: m2,
 								}
 								return (
 									<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
