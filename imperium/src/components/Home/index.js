@@ -216,6 +216,16 @@ class Home extends Component{
 							<div className="has-text-centered">
 							<div className="flex" style={{"justify-content":"center"}}>
 							<img style={{width: 200, height: 200, "margin-right": 16, "border-radius":"100%"}} src={user.photo}/>
+							{(() => {
+								if (user.favorites && this.props && this.props.match && this.props.match.params.jobid && user.favorites.includes(this.props.match.params.jobid)) {
+									console.log("here")
+									return (
+										<div>
+										<Heading size={4}>💖</Heading>
+										</div>
+									)
+								}
+							})()}
 							</div>
 							<br/>
 							<Heading size={2}>{user.username}</Heading>
