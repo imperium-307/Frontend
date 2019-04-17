@@ -384,15 +384,29 @@ class AccountPreferences extends Component {
 				</div>
 				<div className="field">
 				<label className="label">Major</label>
-				<div className="control">
-				<input
-				className="input"
-				name="major"
-				value={major}
-				onChange={this.onChange}
-				type="text"
-				placeholder="Major"
-				/>
+				<div className="select is-fullwidth">
+				<select name="major" id="major" value={major} onChange={this.onChange}>
+				<option value="" disabled selected hidden>What type of Major are you in?</option>
+				<option value="Art">Art</option>
+				<option value="Biology">Biology</option>
+				<option value="Communications">Communications</option>
+				<option value="Computer Science">Computer Science</option>
+				<option value="Construction Management">Construction Management</option>
+				<option value="Political Science">Political Science</option>
+				<option value="Agriculture">Agriculture</option>
+				<option value="Food Science">Food Science</option>
+				<option value="Music">Music</option>
+				<option value="Studio Arts">Studio Arts</option>
+				<option value="Ecology">Ecology</option>
+				<option value="Biology">Biology</option>
+				<option value="Neuroscience">Neuroscience</option>
+				<option value="Journalism">Journalism</option>
+				<option value="Mathematics">Mathematics</option>
+				<option value="Architecture">Architecture</option>
+				<option value="Engineering">Engineering</option>
+				<option value="Philosophy">Philosophy</option>
+				<option value="Underwater Basket Weaving">Underwater Basket Weaving</option>
+				</select>
 				</div>
 				</div>
 				<div className="field">
