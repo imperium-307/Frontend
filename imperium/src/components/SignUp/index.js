@@ -267,7 +267,7 @@ class SignUpFormBase extends Component {
 						<div className="field">
 						<label className="label">University</label>
 						<div className="control">
-						<input className="input" name="university" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="University"/>
+						<input className="input" name="university" value={this.state.university} onChange={this.handleInputChange} type="text" placeholder="University"/>
 						</div>
 						</div>
 						<div className="field">
@@ -288,13 +288,13 @@ class SignUpFormBase extends Component {
 						<div className="field">
 						<label className="label">Minor</label>
 						<div className="control">
-						<input className="input" name="minor" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Minor"/>
+						<input className="input" name="minor" value={this.state.minor} onChange={this.handleInputChange} type="text" placeholder="Minor"/>
 						</div>
 						</div>
 						<div className="field">
 						<label className="label">Bio</label>
 						<div className="control">
-						<textarea className="textarea" name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Tell us a little bit about yourself..."/>
+						<textarea className="textarea" name="bio" value={this.state.bio} onChange={this.handleInputChange} type="text" placeholder="Tell us a little bit about yourself..."/>
 						</div>
 						</div>
 						<br/>
@@ -352,19 +352,19 @@ class SignUpFormBase extends Component {
 						<div className="field">
 						<label className="label">Start Date</label>
 						<div className="control">
-						<input className="input" name="start" value={this.state.text} onChange={this.handleInputChange} type="date"/>
+						<input className="input" name="start" value={this.state.start} onChange={this.handleInputChange} type="date"/>
 						</div>
 						</div>
 						<div className="field">
 						<label className="label">End Date</label>
 						<div className="control">
-						<input className="input" name="end" value={this.state.text} onChange={this.handleInputChange} type="date"/>
+						<input className="input" name="end" value={this.state.end} onChange={this.handleInputChange} type="date"/>
 						</div>
 						</div>
 						<div className="field">
 						<label className="label">Desired wage</label>
 						<div className="control">
-						<input className="input" name="wage" value={this.state.text} onChange={this.handleInputChange} type="number" step=".1" placeholder="Desired Wage"/>
+						<input className="input" name="wage" value={this.state.wage} onChange={this.handleInputChange} type="number" step=".1" placeholder="Desired Wage"/>
 						</div>
 						</div>
 						</div>
@@ -375,14 +375,14 @@ class SignUpFormBase extends Component {
 						<div className="field">
 						<label className="label">Company Name</label>
 						<div className="control">
-						<input className="input" name="company" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Company"/>
+						<input className="input" name="company" value={this.state.company} onChange={this.handleInputChange} type="text" placeholder="Company"/>
 						</div>
 						</div>
 						<br/>
 						<div className="field">
 						<label className="label">Bio</label>
 						<div className="control">
-						<textarea className="textarea" name="bio" value={this.state.text} onChange={this.handleInputChange} type="text" placeholder="Tell us a little about your company..."/>
+						<textarea className="textarea" name="bio" value={this.state.bio} onChange={this.handleInputChange} type="text" placeholder="Tell us a little about your company..."/>
 						</div>
 						</div>
 						<div className="flex">
