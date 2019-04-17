@@ -20,6 +20,7 @@ const INITIAL_STATE = {
 	end: '',
 	jobName: '',
 	location:'',
+	isHidden: null,
 	isLoading: true,
 	savedPrefPopup: false,
 	error: null,
@@ -62,6 +63,7 @@ class EditJobPreferences extends Component {
 					start: res.start,
 					end: res.end,
 					jobName: res.jobName,
+					isHidden: res.isHidden,
 					location: res.location,
 					isLoading: false,
 				});
@@ -83,7 +85,7 @@ class EditJobPreferences extends Component {
 
 	onSubmit = event => {
 		const {  bio, major, wage, jobType, midwest, northeast,
-			west, south, start, end, jobName, location } = this.state;
+			west, south, start, end, jobName, location, isHidden } = this.state;
 
 		fetch(ROUTES.BASE_URL + "/api/user/ch-job", {
 			body: JSON.stringify({
@@ -98,6 +100,7 @@ class EditJobPreferences extends Component {
 				start: start,
 				end: end,
 				jobName: jobName,
+				isHidden: isHidden,
 				token: localStorage.getItem('token'),
 				location: location,
 				jobid: this.props.match.params.jobid,
@@ -134,6 +137,7 @@ class EditJobPreferences extends Component {
 					midwest: res.user.midwest,
 					start: res.user.start,
 					jobType: res.user.jobType,
+					isHidden: isHidden,
 					end: res.user.end,
 					jobName: res.user.jobName,
 					location: res.user.location,
@@ -162,6 +166,7 @@ class EditJobPreferences extends Component {
 			jobName,
 			location,
 			error,
+			isHidden,
 		} = this.state;
 
 		var isDisabled = false;
@@ -297,6 +302,12 @@ class EditJobPreferences extends Component {
 						<label className="label">Estimated wage</label>
 						<div className="control">
 						<input className="input" name="wage" value={this.state.wage} onChange={this.onChange} type="number" step=".1" placeholder="Estimated Wage"/>
+						<br/>
+						<br/>
+						<Heading size={4} className="has-text-centered">General</Heading>
+						<div className="buttons has-addons is-centered">
+						<span className={"button" + (this.state.isHidden ? " is-info": "")} onClick={() => {this.flip("isHidden")}}>Hide Job</span>
+						</div>
 						</div>
 						</div>
 						<br/>
