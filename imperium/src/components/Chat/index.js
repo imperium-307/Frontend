@@ -66,7 +66,9 @@ class ChatPage extends Component{
 
 				setTimeout(() => {
 					var el = document.getElementById("chat-messages");
-					el.scrollTop = el.scrollHeight;
+					if (el) {
+						el.scrollTop = el.scrollHeight;
+					}
 				}, 25)
 			})
 			.catch(error => {
@@ -161,7 +163,9 @@ class ChatPage extends Component{
 
 						setTimeout(() => {
 							var el = document.getElementById("chat-messages");
-							el.scrollTop = el.scrollHeight;
+							if (el) {
+								el.scrollTop = el.scrollHeight;
+							}
 						}, 25)
 					} else if (res.err) {
 						this.setState({ error: res.err });
@@ -202,7 +206,9 @@ class ChatPage extends Component{
 
 			setTimeout(() => {
 				var el = document.getElementById("chat-messages");
-				el.scrollTop = el.scrollHeight;
+				if (el) {
+					el.scrollTop = el.scrollHeight;
+				}
 			}, 25)
 
 			fetch(ROUTES.BASE_URL + "/api/user/message" , {
