@@ -6,10 +6,6 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { Notification, Button, Heading, Columns, Field, Label, Control, Input } from 'react-bulma-components';
 
-var pdf = false;
-var jpeg = false;
-var sub = true;
-
 const SignUpPage = () => (
 	<div>
 	<SignUpForm />
@@ -188,13 +184,28 @@ class SignUpFormBase extends Component {
 			error
 		} = this.state;
 
-		//TODO check if new sign up options are empty
+		var photoExtension = photo.substring(photo.length-4, photo.length).toLowerCase();
 
-		const isInvalid =
+		var isInvalid =
 			passwordOne !== passwordTwo ||
 			passwordOne === '' ||
 			email === '' ||
-			username === '';
+			username === '' ||
+			photoExtension !== '.png' && photoExtension !== '.jpg';
+
+		if (!isInvalid && persona === "student"){
+			if (isInvalid || major === '' || university === '' || bio === '' || jobType === '' || start === '' || end === '' || wage === '' || resume.substring(resume.length-4, resume.length) !== '.pdf') {
+				isInvalid = true
+			} else {
+				isInvalid = false
+			}
+		} else if (!isInvalid) {
+			if (company === '' || bio === '') {
+				isInvalid = true
+			} else {
+				isInvalid = false
+			}
+		}
 
 
 		return (
@@ -320,7 +331,7 @@ class SignUpFormBase extends Component {
 						<br/>
 						<div className="flex">
 						{ photoFile ? (
-						<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin:"auto"}}><img style={{height:200,width:200,"border-radius":"100%"}}id="photoData" src={ photoFile }/></a>
+							<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin:"auto"}}><img style={{height:200,width:200,"border-radius":"100%"}}id="photoData" src={ photoFile }/></a>
 						) : (
 							null
 						)}
@@ -387,7 +398,7 @@ class SignUpFormBase extends Component {
 						</div>
 						<div className="flex">
 						{ photoFile ? (
-						<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin:"auto"}}><img style={{height:200,width:200,"border-radius":"100%"}}id="photoData" src={ photoFile }/></a>
+							<a href={ photoFile } target="_blank" rel="noopener noreferrer" style={{margin:"auto"}}><img style={{height:200,width:200,"border-radius":"100%"}}id="photoData" src={ photoFile }/></a>
 						) : (
 							null
 						)}
@@ -409,71 +420,9 @@ class SignUpFormBase extends Component {
 				}
 			})()}
 
-			{(() => {
-				var rString = resume.substring(resume.length-4, resume.length);
-				if (rString === ".pdf"){
-					pdf = true;
-				}
-				else {
-					pdf = false;
-				}
-				var pString = photo.substring(photo.length-4, photo.length);
-				if (pString.toLowerCase() === ".png"){
-					jpeg = true;
-				}
-				else {
-					jpeg = false;
-				}
-			})()}
-
-			{(() => {
-				if (jpeg){
-					if(!isInvalid){
-						if (persona === "employer" || pdf) {
-							sub = false;
-						}
-						else {
-							sub = true;
-						}
-					}
-					else {
-						sub = true;
-					}
-				}
-				else {
-					sub = true;
-				}
-			})()}
-
-			{(() => {
-				if (persona === "student"){
-					if (major === '' || university === '' || bio === '' || jobType === '' || start === '' || end === '' || wage === '') {
-						sub = true;
-					}
-					else {
-						if (sub === false){
-							sub = false;
-						}
-					}
-				}
-				else if (persona === "employer") {
-					if (company === '' || bio === '') {
-						sub = true;
-					}
-					else {
-						if (sub === false){
-							sub = false;
-						}
-					}
-				}
-				else {
-					sub = true;
-				}
-			})()}
-
 			</div>
 			<br/>
-			<Button className="is-fullwidth is-info" disabled={sub} type="submit">
+			<Button className="is-fullwidth is-info" disabled={isInvalid} type="submit">
 			Sign Up
 			</Button>
 			</form>
