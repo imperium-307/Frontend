@@ -25,6 +25,10 @@ const Landing = () => (
 	<Button className="is-info is-fullwidth is-large" to={ROUTES.SIGN_UP} renderAs={Link} style={{"margin-top":5}}>
 	Sign Up
 	</Button>
+	<Heading className="text-center" size={2}>Already a user?</Heading>
+	<Button className="is-info is-fullwidth is-large" to={ROUTES.SIGN_IN} renderAs={Link} style={{"margin-top":5}}>
+	Sign Up
+	</Button>
 	</div>
 	</div>
 	</Columns.Column>
