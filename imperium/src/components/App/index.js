@@ -14,6 +14,7 @@ import HistoryPage from '../History';
 import ChatPage from '../Chat';
 import EditJobPage from '../EditJob';
 import FavoritePage from '../Favorite';
+import ViewJobsPage from '../ViewJobs';
 import * as ROUTES from '../../constants/routes';
 import {
   BrowserRouter as Router,
@@ -44,6 +45,7 @@ const App = () => (
       <Route path={ROUTES.FAVORITE} component={FavoritePage} />
       <Route exact path={ROUTES.CHAT} component={ChatPage} />
       <Route path={ROUTES.CHAT_WITH_JOB_ID} component={ChatPage} />
+      <Route path={ROUTES.VIEWJOBS} component={ViewJobsPage} />
     </div>
   </Router>
 );

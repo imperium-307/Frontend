@@ -16,7 +16,13 @@ class ViewComponent extends Component {
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
-		fetch(ROUTES.BASE_URL + ROUTES.BASE_URL + "/view/" + this.props.match.params.email, {
+		console.log(ROUTES.BASE_URL);
+		console.log(this.props.match.params.email);
+		fetch(ROUTES.BASE_URL + "/view/" , {
+			body: JSON.stringify({
+				token: localStorage.getItem('token'),
+				email: this.props.match.params.email
+			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
 			headers: {
@@ -34,10 +40,10 @@ class ViewComponent extends Component {
 				});
 			})
 			.catch(error => {
+				console.log("here");
 				this.setState({ error });
 			});
 	}
-
 	render() {
 		if (!this.state || !this.state.user) {
 			return(
