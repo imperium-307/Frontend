@@ -45,7 +45,6 @@ const App = () => (
       <Route path={ROUTES.FAVORITE} component={FavoritePage} />
       <Route exact path={ROUTES.CHAT} component={ChatPage} />
       <Route path={ROUTES.CHAT_WITH_JOB_ID} component={ChatPage} />
-      <Route path={ROUTES.VIEWJOBS} component={ViewJobsPage} />
     </div>
   </Router>
 );

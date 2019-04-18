@@ -44,7 +44,9 @@ class ViewComponent extends Component {
 				this.setState({ error });
 			});
 	}
+
 	render() {
+		console.log(this.state.user);
 		if (!this.state || !this.state.user) {
 			return(
 				<div>
@@ -69,7 +71,6 @@ class ViewComponent extends Component {
 						user.jobType = " a co-op";
 					}
 					if (user.persona === "student") {
-
 						return [
 							<img alt="profile" id="photoData" src= { user.photo }/>,
 							<br/>,

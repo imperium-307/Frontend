@@ -31,7 +31,7 @@ class Matches extends React.Component {
 					return res.json()
 				})
 				.then((res) => {
-					this.setState({ 
+					this.setState({
 						matches: res.matchesObject,
 						isLoading: false
 					});
@@ -58,7 +58,7 @@ class Matches extends React.Component {
 					return res.json()
 				})
 				.then((res) => {
-					this.setState({ 
+					this.setState({
 						matches: res.matchesObject,
 						isLoading: false
 					});
@@ -139,7 +139,7 @@ class Matches extends React.Component {
 							{(() => {
 								if (localStorage.getItem('persona') === "student") {
 									return (
-										<Button to={"/jobs/" + d.email } renderAs={Link}>View</Button>
+										<Button to={"/view/" + d.email } renderAs={Link}>View</Button>
 									);
 								} else {
 									return (
