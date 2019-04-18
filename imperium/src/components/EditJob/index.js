@@ -24,6 +24,7 @@ const INITIAL_STATE = {
 	emailNotifications: '',
 	desktopNotifications: '',
 	favoriteNotifications: '',
+	chatNotifications: '',
 	isLoading: true,
 	savedPrefPopup: false,
 	error: null,
@@ -72,6 +73,7 @@ class EditJobPreferences extends Component {
 					emailNotifications: res.emailNotifications,
 					desktopNotifications: res.desktopNotifications,
 					favoriteNotifications: res.favoriteNotifications,
+					chatNotifications: res.chatNotifications,
 				});
 			})
 			.catch(error => {
@@ -91,7 +93,7 @@ class EditJobPreferences extends Component {
 
 	onSubmit = event => {
 		const {  bio, major, wage, jobType, midwest, northeast,
-			west, south, start, emailNotifications, desktopNotifications, favoriteNotifications, end, jobName, location, isHidden } = this.state;
+			west, south, start, emailNotifications, desktopNotifications, favoriteNotifications, chatNotifications, end, jobName, location, isHidden } = this.state;
 
 		fetch(ROUTES.BASE_URL + "/api/user/ch-job", {
 			body: JSON.stringify({
@@ -113,6 +115,7 @@ class EditJobPreferences extends Component {
 				emailNotifications: emailNotifications,
 				desktopNotifications: desktopNotifications,
 				favoriteNotifications: favoriteNotifications,
+				chatNotifications: chatNotifications,
 			}),
 			cache: 'no-cache',
 			credentials: 'same-origin',
@@ -145,6 +148,7 @@ class EditJobPreferences extends Component {
 					emailNotifications: res.emailNotifications,
 					desktopNotifications: res.desktopNotifications,
 					favoriteNotifications: res.favoriteNotifications,
+					chatNotifications: res.chatNotifications,
 					south: res.user.south,
 					midwest: res.user.midwest,
 					start: res.user.start,
@@ -324,9 +328,10 @@ class EditJobPreferences extends Component {
 						</div>
 						<Heading size={4} className="has-text-centered">Notifications</Heading>
 						<div className="buttons has-addons is-centered">
-						<span className={"button" + (this.state.emailNotifications ? " is-info": "")} onClick={() => {this.flip("emailNotifications")}}>Email</span>
+						<span className={"button" + (this.state.emailNotifications ? " is-info": "")} onClick={() => {this.flip("emailNotifications")}}>Match</span>
 						<span className={"button" + (this.state.desktopNotifications ? " is-info": "")} onClick={() => {this.flip("desktopNotifications")}}>Desktop</span>
 						<span className={"button" + (this.state.favoriteNotifications ? " is-info": "")} onClick={() => {this.flip("favoriteNotifications")}}>Favorites</span>
+						<span className={"button" + (this.state.chatNotifications ? " is-info": "")} onClick={() => {this.flip("chatNotifications")}}>Chat</span>
 						</div>
 						<br/>
 						<Button className="is-fullwidth is-info" disabled={isDisabled} type="submit">

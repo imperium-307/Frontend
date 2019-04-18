@@ -29,6 +29,7 @@ const INITIAL_STATE = {
 	isHidden: '',
 	emailNotifications: '',
 	desktopNotifications: '',
+	chatNotifications: '',
 	persona: '',
 	company: '',
 	favoriteNotifications: '',
@@ -82,6 +83,7 @@ class AccountPreferences extends Component {
 					persona: res.persona,
 					company: res.company,
 					favoriteNotifications: res.favoriteNotifications,
+					chatNotifications: res.chatNotifications,
 					isLoading: false
 				});
 			})
@@ -120,7 +122,7 @@ class AccountPreferences extends Component {
 
 	onSubmit = event => {
 		const { username, email, bio, passwordOne, passwordTwo, minor, major, university, photoFile,
-			resumeFile, wage, jobType, midwest, northeast, emailNotifications, desktopNotifications, favoriteNotifications,
+			resumeFile, wage, jobType, midwest, northeast, emailNotifications, desktopNotifications, favoriteNotifications, chatNotifications,
 			west, south, start, end, isHidden, company } = this.state;
 		const data = new FormData();
 		data.append('file', resumeFile);
@@ -155,6 +157,7 @@ class AccountPreferences extends Component {
 				desktopNotifications: desktopNotifications,
 				company: company,
 				favoriteNotifications: favoriteNotifications,
+				chatNotifications: chatNotifications,
 				token: localStorage.getItem('token')
 			}),
 			cache: 'no-cache',
@@ -191,6 +194,7 @@ class AccountPreferences extends Component {
 					emailNotifications: res.user.emailNotifications,
 					company: res.user.company,
 					favoriteNotifications: res.user.favoriteNotifications,
+					chatNotifications: res.user.chatNotifications,
 					savedPrefPopup: true
 				});
 
@@ -266,6 +270,7 @@ class AccountPreferences extends Component {
 			desktopNotifications,
 			company,
 			favoriteNotifications,
+			chatNotifications,
 			error,
 			savedPrefPopup,
 		} = this.state;
@@ -483,6 +488,7 @@ class AccountPreferences extends Component {
 				<span className={"button" + (this.state.isHidden ? " is-info": "")} onClick={() => {this.flip("isHidden")}}>Hide Account</span>
 				<span className={"button" + (this.state.emailNotifications ? " is-info": "")} onClick={() => {this.flip("emailNotifications")}}>Email Notifications</span>
 				<span className={"button" + (this.state.desktopNotifications ? " is-info": "")} onClick={() => {this.flip("desktopNotifications")}}>Desktop Notifications</span>
+				<span className={"button" + (this.state.chatNotifications ? " is-info": "")} onClick={() => {this.flip("chatNotifications")}}>Chat</span>
 				</div>
 				<br/>
 				<Heading size={4} className="has-text-centered">Danger Zone</Heading>
@@ -624,10 +630,6 @@ class AccountPreferences extends Component {
 				</div>
 				</div>
 				<br/>
-				<Heading size={4} className="has-text-centered">General</Heading>
-				<div className="buttons has-addons is-centered">
-				<span className={"button" + (this.state.isHidden ? " is-info": "")} onClick={() => {this.flip("isHidden")}}>Hide Account</span>
-				</div>
 				<Heading size={4} className="has-text-centered">Danger Zone</Heading>
 				<div className="buttons has-addons is-centered">
 				<Button type="button" onClick={this.deleteAccount} className="is-danger">
