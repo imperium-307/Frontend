@@ -19,6 +19,37 @@ class ViewComponent extends Component {
 		this.state = { ...INITIAL_STATE };
 		console.log(ROUTES.BASE_URL);
 		console.log(this.props.match.params.email);
+		 if (localStorage.getItem('persona') === "student") {
+		fetch(ROUTES.BASE_URL + "/api/user/get-job"  , {
+			body: JSON.stringify({
+				token: localStorage.getItem('token'),
+				jobid: this.props.match.params.email
+			}),
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors',
+			method: 'POST'
+		})
+			.then((res) => {
+				return res.json()
+			})
+			.then((res) => {
+				if (res.err) {
+
+				} else {
+					this.setState({
+						user: res
+					});
+				}
+			})
+			.catch(error => {
+				this.setState({ error });
+			});
+		}
+			else {
 		fetch("http://localhost:3000/api/user/view/" + this.props.match.params.email , {
 			// body: JSON.stringify({
 			// 	token: localStorage.getItem('token'),
@@ -44,6 +75,8 @@ class ViewComponent extends Component {
 				console.log("here");
 				this.setState({ error });
 			});
+		}
+
 	}
 
 	render() {
@@ -61,22 +94,22 @@ class ViewComponent extends Component {
 				<div>
 				<Heading className="has-text-centered" size={1}>View Student</Heading>
 				{(() => {
-					if (user.persona === "student") {
-						var jobType = "";
-				switch(user.jobType) {
-					case "fullTime":
-						jobType = "a full time job";
-						break;
-					case "internship":
-						jobType = "an internship";
-						break;
-					case "coop":
-						jobType = " a co-op";
-						break;
-					case "parttime":
-						jobType = " a part time job"
-						break;
+					var jobType = "";
+			switch(user.jobType) {
+				case "fullTime":
+					jobType = "a full time job";
+					break;
+				case "internship":
+					jobType = "an internship";
+					break;
+				case "coop":
+					jobType = " a co-op";
+					break;
+				case "parttime":
+					jobType = " a part time job"
+					break;
 				}
+					if (user.persona === "student") {
 						return [
 							<div className="has-text-centered">
 							<div className="flex" style={{"justify-content":"center"}}>
@@ -133,21 +166,33 @@ class ViewComponent extends Component {
 					}
 					else {
 						return[
-							<p>job profile</p>,
-							<img alt="profile" id="photoData" src= { user.photo }/>,
-							<br/>,
-							<p>Compnay: {user.company}</p>,
-							<br/>,
-							<p>Major: {user.major}</p>,
-							<br/>,
-							<p>Job Description: {user.bio}</p>,
-							<br/>,
-							<p>Type of job is {user.jobType}</p>,
-							<br/>,
-							<p>Start: {user.start} End: {user.end}</p>,
-							<br/>,
-							<p>Wage: {user.wage}</p>,
-							<br/>,
+							<div className="has-text-centered">
+							<div className="flex" style={{"justify-content":"center"}}>
+							<img style={{width: 200, height: 200, "margin-right": 16, "border-radius":"100%"}} src={user.photo}/>
+							</div>
+							<br/>
+							<Heading size={2}>{user.jobName}</Heading>
+
+							<i>{user.bio}</i>
+
+							<br/>
+							<br/>
+							<span><b>Desired major:</b> {user.major}</span>
+							<br/>
+							<span><b>Job type:</b> {jobType}</span>
+							<br/>
+
+							<br/>
+							<span><b>Location:</b> {user.location}</span>
+							<br/>
+							<span><b>Start:</b> {user.start}</span>
+							<br/>
+							<span><b>End:</b> {user.end}</span>
+							<br/>
+							<span><b>Estimated wage:</b> {user.wage}</span>
+							<br/>
+
+							</div>
 						]
 					}
 				})()}
