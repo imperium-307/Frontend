@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import * as ROUTES from '../../constants/routes';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
-import './index.css';
-import { Heading } from 'react-bulma-components';
+import * as ROUTES from '../../constants/routes';
+import "./index.css";
+import 'react-bulma-components/dist/react-bulma-components.min.css';
+import { Notification, Columns, Content, Image, Heading, Button, Card, Loader, Media } from 'react-bulma-components';
 
 var INITIAL_STATE = {
 	user: null,
@@ -60,38 +61,74 @@ class ViewComponent extends Component {
 				<div>
 				<Heading className="has-text-centered" size={1}>View Student</Heading>
 				{(() => {
-
-					if (user.jobType === "fullTime") {
-						user.jobType = "a full time job";
-					}
-					else if (user.jobType === "internship") {
-						user.jobType = "an internship";
-					}
-					else {
-						user.jobType = " a co-op";
-					}
 					if (user.persona === "student") {
+						var jobType = "";
+				switch(user.jobType) {
+					case "fullTime":
+						jobType = "a full time job";
+						break;
+					case "internship":
+						jobType = "an internship";
+						break;
+					case "coop":
+						jobType = " a co-op";
+						break;
+					case "parttime":
+						jobType = " a part time job"
+						break;
+				}
 						return [
-							<img alt="profile" id="photoData" src= { user.photo }/>,
-							<br/>,
-							<p>Name: {user.username}</p>,
-							<br/>,
-							<p>University: {user.university}</p>,
-							<br/>,
-							<p>Major: {user.major}</p>,
-							<br/>,
-							<p>Minor: {user.minor}</p>,
-							<br/>,
-							<p>Bio: {user.bio}</p>,
-							<br/>,
-							<a href={ROUTES.BASE_URL + "/resumes/"+user.email+".pdf"}>View resume</a>,
-							<br/>,
-							<p>Looking for {user.jobType}</p>,
-							<br/>,
-							<p>Start: {user.start} End: {user.end}</p>,
-							<br/>,
-							<p>Prefered Wage: {user.wage}</p>,
-							<br/>,
+							<div className="has-text-centered">
+							<div className="flex" style={{"justify-content":"center"}}>
+							<img style={{width: 200, height: 200, "margin-right": 16, "border-radius":"100%"}} src={user.photo}/>
+							{(() => {
+								if (user.favorites && this.props && this.props.match && this.props.match.params.jobid && user.favorites.includes(this.props.match.params.jobid)) {
+									console.log("here")
+									return (
+										<div>
+										<Heading size={4}>💖</Heading>
+										</div>
+									)
+								}
+							})()}
+							</div>
+							<br/>
+							<Heading size={2}>{user.username}</Heading>
+
+							<Button>
+							<a target="_blank" href={ROUTES.BASE_URL + "/resumes/"+user.email+".pdf"}>View resume</a>
+							</Button>
+							<br/>
+							<br/>
+
+							<i>{user.bio}</i>
+							<br/>
+
+							<br/>
+							<span><b>Major:</b> {user.major}</span>
+							{ (user.minor !== '' && user.minor !== 'none') ? (
+								<span>
+								<br/>
+								<span><b>Minor:</b> {user.minor}</span>
+								</span>
+							) : (
+								null
+							)}
+							<br/>
+							<span><b>Looking for:</b> {user.jobType}</span>
+							<br/>
+
+							<br/>
+							<span><b>Start:</b> {user.start}</span>
+							<br/>
+							<span><b>End:</b> {user.end}</span>
+							<br/>
+							<span><b>Desired wage:</b> {user.wage}</span>
+							<br/>
+
+
+
+							</div>
 						]
 					}
 					else {
