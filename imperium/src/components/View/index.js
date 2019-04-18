@@ -18,11 +18,11 @@ class ViewComponent extends Component {
 		this.state = { ...INITIAL_STATE };
 		console.log(ROUTES.BASE_URL);
 		console.log(this.props.match.params.email);
-		fetch(ROUTES.BASE_URL + "/view/" , {
-			body: JSON.stringify({
-				token: localStorage.getItem('token'),
-				email: this.props.match.params.email
-			}),
+		fetch("http://localhost:3000/api/user/view/" + this.props.match.params.email , {
+			// body: JSON.stringify({
+			// 	token: localStorage.getItem('token'),
+			// 	email: this.props.match.params.email
+			// }),
 			cache: 'no-cache',
 			credentials: 'same-origin',
 			headers: {
