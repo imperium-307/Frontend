@@ -16,7 +16,7 @@ class ViewComponent extends Component {
 		super(props);
 
 		this.state = { ...INITIAL_STATE };
-		fetch(ROUTES.BASE_URL + ROUTES.BASE_URL + "/view/" + this.props.match.params.email, {
+		fetch(ROUTES.BASE_URL + "/view/" + this.props.match.params.email, {
 			cache: 'no-cache',
 			credentials: 'same-origin',
 			headers: {
