@@ -104,13 +104,15 @@ class SignUpFormBase extends Component {
 					localStorage.setItem('persona', persona)
 					localStorage.setItem('myemail', email)
 
-					if (persona === "student"){
-						localStorage.setItem('token', res.token)
-						this.props.history.push(ROUTES.HOME);
-					} else {
-						localStorage.setItem('token', res.token)
-						this.props.history.push("/company/" + email);
-					}
+					setTimeout(() => {
+						if (persona === "student"){
+							localStorage.setItem('token', res.token)
+							this.props.history.push(ROUTES.HOME);
+						} else {
+							localStorage.setItem('token', res.token)
+							this.props.history.push("/company/" + email);
+						}
+					}, 250)
 
 					console.log("signed up and logged in with token" + res.token)
 				} else if (res.err) {

@@ -11,9 +11,6 @@ const Landing = () => (
 	<Heading className="text-center custom-card__heading-text" size={1}>Imperium</Heading>
 	</div>
 	<div style={{padding: 16}}>
-	<br/>
-	<Heading className="text-center" size={2}>Our Ethos</Heading>
-	<br/>
 	<div className="has-text-centered">
 	<Heading className="text-center" size={4}>We believe that</Heading>
 	<p className="is-centered" style={{"font-size": 20}}>{"{You} "}<strong>while</strong> ¬Employed <strong>do</strong> Imperium <strong>done</strong> {"{You ∧ Employed}"}</p>
@@ -25,7 +22,6 @@ const Landing = () => (
 	<Button className="is-info is-fullwidth is-large" to={ROUTES.SIGN_UP} renderAs={Link} style={{"margin-top":5}}>
 	Sign Up
 	</Button>
-	<Heading className="text-center" size={2}>Already a user?</Heading>
 	<Button className="is-info is-fullwidth is-large" to={ROUTES.SIGN_IN} renderAs={Link} style={{"margin-top":5}}>
 	Sign In
 	</Button>
