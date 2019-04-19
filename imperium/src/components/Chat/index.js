@@ -354,8 +354,7 @@ class ChatPage extends Component{
 									<Tag className="is-medium is-info">{d.text}</Tag>
 									</p>
 								)
-							}
-							else {
+							} else {
 								var tempStart = d.edate + " " + d.estart;
 								var tempEnd = d.edate + " " + d.eend;
 								var m1 = moment.tz(tempStart, "America/Toronto")
@@ -370,7 +369,9 @@ class ChatPage extends Component{
 								}
 								return (
 									<p style={{ padding: '5px', textAlign: 'right', overflowWrap: 'normal', 'margin-left': '35%' }}>
-									<AddToCalendar  className="is-medium is-info" event={this.state.event}/>
+									<Tag className="is-medium is-info sender-side" style={{height: "100%", paddingTop: 5, paddingBottom: 5}}>
+									<AddToCalendar event={this.state.event}/>
+									</Tag>
 									</p>
 								)
 							}
@@ -392,7 +393,9 @@ class ChatPage extends Component{
 								}
 								return(
 									<p style={{ padding: '5px', textAlign: 'left', overflowWrap: 'normal', 'margin-right': '35%'}}>
-									<AddToCalendar className="is-medium is-info" event={this.state.event}/>
+									<Tag className="is-medium" style={{height: "100%", paddingTop: 5, paddingBottom: 5}}>
+									<AddToCalendar event={this.state.event}/>
+									</Tag>
 									</p>
 								)
 							}

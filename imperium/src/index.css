@@ -54,3 +54,19 @@ code {
 .custom-card__heading-text {
 	color: white !important;
 }
+
+.sender-side .react-add-to-calendar__button {
+	color: white !important;
+	text-decoration: underline;
+}
+
+.sender-side .react-add-to-calendar__dropdown > ul > li > a {
+	color: white !important;
+	text-decoration: underline;
+}
+
+.react-add-to-calendar__button {
+}
+
+.react-add-to-calendar__dropdown > ul > li > a {
+}

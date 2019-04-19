@@ -52,7 +52,6 @@ class CompanyHome extends Component {
 	render() {
 		const {company, isLoading, jobs, error} = this.state;
 
-		// TODO we should use the company thing (see line above) to show a nice heading with a prof pic and all that
 		if (isLoading) {
 			return (
 				<div style={{'maxWidth': '960px', 'margin': 'auto'}}>
